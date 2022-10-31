@@ -1,0 +1,10 @@
+La idea es usar el patron de diseño de java.
+
+Creamos el package llamado modelo donde adentro tenemos la clase java que contiene los atributos, contructores, get and setters.
+Ejemplo: Persona.java
+
+Creamos el package llamado view, aca van las vistas y se presentan los datos del modelo.
+Ejemplo: PersonaView.java
+
+El package controler, responde a eventos y llama al modelo cuando se solicita info.
+Ejemplo: PersonaController.java
