@@ -10,6 +10,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PntCrearLicencia extends JPanel {
 	private JTextField tfNombreCliente;
@@ -20,7 +23,7 @@ public class PntCrearLicencia extends JPanel {
 	private JTextField tfApellidoAdmin;
 	
 	public PntCrearLicencia() {
-	setPreferredSize(new Dimension(980, 590));
+	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
 	
 	JTextPane txtDatosAdmin = new JTextPane();
@@ -66,7 +69,7 @@ public class PntCrearLicencia extends JPanel {
 	txtNombreCliente.setText("Nombre completo (*)");
 	txtNombreCliente.setEditable(false);
 	txtNombreCliente.setBackground(SystemColor.menu);
-	txtNombreCliente.setBounds(28, 11, 107, 20);
+	txtNombreCliente.setBounds(10, 11, 125, 20);
 	panelConductor.add(txtNombreCliente);
 	
 	tfNombreCliente = new JTextField();
@@ -78,7 +81,7 @@ public class PntCrearLicencia extends JPanel {
 	txtApellidoCliente.setText("Apellido(s) (*)");
 	txtApellidoCliente.setEditable(false);
 	txtApellidoCliente.setBackground(SystemColor.menu);
-	txtApellidoCliente.setBounds(501, 11, 74, 20);
+	txtApellidoCliente.setBounds(486, 11, 89, 20);
 	panelConductor.add(txtApellidoCliente);
 	
 	tfApellidoCliente = new JTextField();
@@ -97,7 +100,7 @@ public class PntCrearLicencia extends JPanel {
 	txtTipoDocumentoCliente.setText("Tipo (*)");
 	txtTipoDocumentoCliente.setEditable(false);
 	txtTipoDocumentoCliente.setBackground(SystemColor.menu);
-	txtTipoDocumentoCliente.setBounds(10, 11, 44, 20);
+	txtTipoDocumentoCliente.setBounds(10, 11, 58, 20);
 	panelDocumento.add(txtTipoDocumentoCliente);
 	
 	tfNroDocumentoCliente = new JTextField();
@@ -109,18 +112,18 @@ public class PntCrearLicencia extends JPanel {
 	txtNroDocumentoCliente.setText("N\u00FAmero (*)");
 	txtNroDocumentoCliente.setEditable(false);
 	txtNroDocumentoCliente.setBackground(SystemColor.menu);
-	txtNroDocumentoCliente.setBounds(173, 11, 61, 20);
+	txtNroDocumentoCliente.setBounds(173, 11, 71, 20);
 	panelDocumento.add(txtNroDocumentoCliente);
 	
 	JComboBox cbTipoDocumentoCliente = new JComboBox();
-	cbTipoDocumentoCliente.setBounds(64, 11, 85, 22);
+	cbTipoDocumentoCliente.setBounds(78, 11, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
 	
 	JTextPane txtDireccionCliente = new JTextPane();
 	txtDireccionCliente.setText("Direcci\u00F3n (*)");
 	txtDireccionCliente.setEditable(false);
 	txtDireccionCliente.setBackground(SystemColor.menu);
-	txtDireccionCliente.setBounds(508, 82, 67, 20);
+	txtDireccionCliente.setBounds(501, 82, 74, 20);
 	panelConductor.add(txtDireccionCliente);
 	
 	tfDireccionCliente = new JTextField();
@@ -132,7 +135,7 @@ public class PntCrearLicencia extends JPanel {
 	txtFechaNacCliente.setText("Fecha de nacimiento (*)");
 	txtFechaNacCliente.setEditable(false);
 	txtFechaNacCliente.setBackground(SystemColor.menu);
-	txtFechaNacCliente.setBounds(453, 165, 122, 20);
+	txtFechaNacCliente.setBounds(445, 157, 141, 20);
 	panelConductor.add(txtFechaNacCliente);
 	
 	JTextPane txtGrupoSangYFactRH = new JTextPane();
@@ -147,36 +150,36 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento_1.setLayout(null);
 	panelDocumento_1.setToolTipText("");
 	panelDocumento_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-	panelDocumento_1.setBounds(28, 147, 388, 68);
+	panelDocumento_1.setBounds(28, 147, 388, 78);
 	panelConductor.add(panelDocumento_1);
 	
 	JTextPane txtGrupoSanguineo = new JTextPane();
 	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
 	txtGrupoSanguineo.setEditable(false);
 	txtGrupoSanguineo.setBackground(SystemColor.menu);
-	txtGrupoSanguineo.setBounds(10, 24, 105, 20);
+	txtGrupoSanguineo.setBounds(10, 22, 94, 33);
 	panelDocumento_1.add(txtGrupoSanguineo);
 	
 	JTextPane txtFactorRH = new JTextPane();
 	txtFactorRH.setText("Factor RH (*)");
 	txtFactorRH.setEditable(false);
 	txtFactorRH.setBackground(SystemColor.menu);
-	txtFactorRH.setBounds(214, 24, 76, 20);
+	txtFactorRH.setBounds(205, 35, 82, 20);
 	panelDocumento_1.add(txtFactorRH);
 	
 	JComboBox cbGrupoSanguineoConductor = new JComboBox();
-	cbGrupoSanguineoConductor.setBounds(125, 24, 69, 22);
+	cbGrupoSanguineoConductor.setBounds(114, 33, 69, 22);
 	panelDocumento_1.add(cbGrupoSanguineoConductor);
 	
 	JComboBox cbFactorRHConductor = new JComboBox();
-	cbFactorRHConductor.setBounds(295, 24, 69, 22);
+	cbFactorRHConductor.setBounds(287, 33, 69, 22);
 	panelDocumento_1.add(cbFactorRHConductor);
 	
 	JTextPane txtpnDonadorDeOrganos = new JTextPane();
 	txtpnDonadorDeOrganos.setText("Donador de organos (*)");
 	txtpnDonadorDeOrganos.setEditable(false);
 	txtpnDonadorDeOrganos.setBackground(SystemColor.menu);
-	txtpnDonadorDeOrganos.setBounds(41, 263, 67, 34);
+	txtpnDonadorDeOrganos.setBounds(28, 263, 80, 34);
 	panelConductor.add(txtpnDonadorDeOrganos);
 	
 	JComboBox cbDonanteDeOrganos = new JComboBox();
@@ -187,18 +190,18 @@ public class PntCrearLicencia extends JPanel {
 	txtpnClaseLicencia.setText("Clase (*)");
 	txtpnClaseLicencia.setEditable(false);
 	txtpnClaseLicencia.setBackground(SystemColor.menu);
-	txtpnClaseLicencia.setBounds(248, 275, 50, 20);
+	txtpnClaseLicencia.setBounds(239, 275, 59, 20);
 	panelConductor.add(txtpnClaseLicencia);
 	
 	JComboBox cbClaseLicencia = new JComboBox();
-	cbClaseLicencia.setBounds(313, 275, 100, 22);
+	cbClaseLicencia.setBounds(316, 275, 100, 22);
 	panelConductor.add(cbClaseLicencia);
 	
 	JTextPane txtpnObservaciones = new JTextPane();
 	txtpnObservaciones.setText("Observaciones (*)");
 	txtpnObservaciones.setEditable(false);
 	txtpnObservaciones.setBackground(SystemColor.menu);
-	txtpnObservaciones.setBounds(480, 226, 95, 22);
+	txtpnObservaciones.setBounds(468, 226, 107, 22);
 	panelConductor.add(txtpnObservaciones);
 	
 	JTextArea taObservaciones = new JTextArea();
@@ -216,7 +219,7 @@ public class PntCrearLicencia extends JPanel {
 	txtNombreAdmin.setText("Nombre completo (*)");
 	txtNombreAdmin.setEditable(false);
 	txtNombreAdmin.setBackground(SystemColor.menu);
-	txtNombreAdmin.setBounds(34, 25, 107, 20);
+	txtNombreAdmin.setBounds(10, 25, 131, 20);
 	panelAdmin.add(txtNombreAdmin);
 	
 	tfNombreAdmin = new JTextField();
@@ -228,7 +231,7 @@ public class PntCrearLicencia extends JPanel {
 	txtApellidoAdmin.setText("Apellido(s) (*)");
 	txtApellidoAdmin.setEditable(false);
 	txtApellidoAdmin.setBackground(SystemColor.menu);
-	txtApellidoAdmin.setBounds(502, 25, 74, 20);
+	txtApellidoAdmin.setBounds(491, 25, 85, 20);
 	panelAdmin.add(txtApellidoAdmin);
 	
 	tfApellidoAdmin = new JTextField();
@@ -240,8 +243,24 @@ public class PntCrearLicencia extends JPanel {
 	txtFechaEmision.setText("Fecha de emisi\u00F3n (*)");
 	txtFechaEmision.setEditable(false);
 	txtFechaEmision.setBackground(SystemColor.menu);
-	txtFechaEmision.setBounds(34, 90, 107, 20);
+	txtFechaEmision.setBounds(10, 89, 131, 20);
 	panelAdmin.add(txtFechaEmision);
+	
+	JButton btnAtras = new JButton("Atr\u00E1s");
+	btnAtras.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	});
+	btnAtras.setBounds(41, 602, 118, 37);
+	add(btnAtras);
+	
+	JButton btnSiguiente = new JButton("Siguiente");
+	btnSiguiente.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		}
+	});
+	btnSiguiente.setBounds(810, 602, 118, 37);
+	add(btnSiguiente);
 	
 	}
 }
