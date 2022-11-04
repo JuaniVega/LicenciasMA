@@ -8,6 +8,8 @@
 /target/classes/*
 /target/
 
+/postgres_data/*
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,maven
 
