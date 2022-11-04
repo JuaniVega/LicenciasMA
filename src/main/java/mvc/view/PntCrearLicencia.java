@@ -1,4 +1,4 @@
-package view;
+package mvc.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
