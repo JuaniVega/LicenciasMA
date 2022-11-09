@@ -238,9 +238,34 @@ public class PntImprimirLicencia extends JPanel {
 		add(pagoPanel);
 		pagoPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Gastos administrativos");
-		lblNewLabel.setBounds(10, 25, 120, 14);
-		pagoPanel.add(lblNewLabel);
+		JLabel lblGastoAdmin = new JLabel("Gastos administrativos");
+		lblGastoAdmin.setBounds(10, 25, 154, 14);
+		pagoPanel.add(lblGastoAdmin);
+		
+		JLabel lblCostoLicencia = new JLabel("Costo licencia ");
+		lblCostoLicencia.setBounds(10, 50, 154, 14);
+		pagoPanel.add(lblCostoLicencia);
+		
+		JLabel gastoAdminLbl = new JLabel("$8");
+		gastoAdminLbl.setBounds(185, 25, 52, 14);
+		pagoPanel.add(gastoAdminLbl);
+		
+		JLabel costoLicenciaLbl = new JLabel("$80");
+		costoLicenciaLbl.setBounds(185, 50, 52, 14);
+		pagoPanel.add(costoLicenciaLbl);
+		
+		JLabel lblTotal = new JLabel("TOTAL");
+		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotal.setBounds(10, 97, 120, 14);
+		pagoPanel.add(lblTotal);
+		
+		JLabel totalLbl = new JLabel("$88");
+		totalLbl.setBounds(185, 99, 52, 14);
+		pagoPanel.add(totalLbl);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(10, 84, 380, 2);
+		pagoPanel.add(separator_2);
 		
 		
 
