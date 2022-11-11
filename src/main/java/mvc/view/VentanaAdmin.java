@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
@@ -67,5 +68,22 @@ public class VentanaAdmin extends JFrame {
 		contentPane.revalidate(); // "limpiar el contenedor o VentanaAdmin"
 		contentPane.repaint(); // "repintar el contenedor"		
 	}
+	
+	//Ventana de buscar por DNI
+	public static String mensajeBusqueda(String[] args, String mensaje) {
+		String val =JOptionPane.showInputDialog(
+					mensaje,
+					JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+		
+		return val;
+	}
+	
+	//Ventana emergente de error
+		public static void mensajeError(String error, String titulo) {
+			// TODO Auto-generated method stub
+			if (JOptionPane.showConfirmDialog(null, error, titulo, 
+				JOptionPane.PLAIN_MESSAGE, 
+				JOptionPane.ERROR_MESSAGE)==0);
+		}
 	
 }

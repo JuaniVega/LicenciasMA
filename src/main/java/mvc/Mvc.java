@@ -24,7 +24,7 @@ public class Mvc {
 		
 		
 		//Prueba de conexion TODO: borrar
-		Connection con = null;
+		/*Connection con = null;
         try {
             con = ConexionP.conectarDB();
             System.out.println("PROBANDO CONEXION");
@@ -35,7 +35,7 @@ public class Mvc {
             if(con != null){
                 con.close();
             }
-        }
+        }*/
 
 }
 }
