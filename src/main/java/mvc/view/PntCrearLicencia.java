@@ -7,12 +7,30 @@ import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.border.EtchedBorder;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+
+import mvc.controller.gestores.GestorLicencia;
+import mvc.controller.gestores.GestorPersona;
+import mvc.model.Conductor;
+import mvc.model.Persona;
+import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
+import mvc.model.TipoLicencia;
+import mvc.view.VentanaAdmin;
 
 public class PntCrearLicencia extends JPanel {
 	private JTextField tfNombreCliente;
@@ -24,6 +42,16 @@ public class PntCrearLicencia extends JPanel {
 	private JTextField tfNumDirCliente;
 	private JTextField tfDptoCliente;
 	private JTextField tfPisoCliente;
+	private JTextField tfFechaEmision;
+	private JDateChooser dcFechaNacimiento;
+	private JComboBox cbTipoDocumentoCliente;
+	private JComboBox cbGrupoSanguineoConductor;
+	private JComboBox cbFactorRHConductor;
+	private JComboBox cbDonanteDeOrganos;
+	private JComboBox cbClaseLicencia;
+	private JComboBox cbSexoCliente;
+	
+	JButton btnCrearTitular = new JButton("Crear titular");
 	
 	public PntCrearLicencia() {
 		setLocation(-31, -63);
@@ -127,7 +155,7 @@ public class PntCrearLicencia extends JPanel {
 	txtNroDocumentoCliente.setBounds(173, 11, 71, 20);
 	panelDocumento.add(txtNroDocumentoCliente);
 	
-	JComboBox cbTipoDocumentoCliente = new JComboBox();
+	cbTipoDocumentoCliente = new JComboBox();
 	cbTipoDocumentoCliente.setBounds(78, 11, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
 	
@@ -135,7 +163,7 @@ public class PntCrearLicencia extends JPanel {
 	txtFechaNacCliente.setText("Fecha de nacimiento (*)");
 	txtFechaNacCliente.setEditable(false);
 	txtFechaNacCliente.setBackground(SystemColor.menu);
-	txtFechaNacCliente.setBounds(30, 143, 141, 20);
+	txtFechaNacCliente.setBounds(30, 143, 133, 20);
 	panelConductor.add(txtFechaNacCliente);
 	
 	JTextPane txtGrupoSangYFactRH = new JTextPane();
@@ -167,11 +195,11 @@ public class PntCrearLicencia extends JPanel {
 	txtFactorRH.setBounds(205, 35, 82, 20);
 	panelDocumento_1.add(txtFactorRH);
 	
-	JComboBox cbGrupoSanguineoConductor = new JComboBox();
+	cbGrupoSanguineoConductor = new JComboBox();
 	cbGrupoSanguineoConductor.setBounds(114, 33, 69, 22);
 	panelDocumento_1.add(cbGrupoSanguineoConductor);
 	
-	JComboBox cbFactorRHConductor = new JComboBox();
+	cbFactorRHConductor = new JComboBox();
 	cbFactorRHConductor.setBounds(287, 33, 69, 22);
 	panelDocumento_1.add(cbFactorRHConductor);
 	
@@ -182,7 +210,7 @@ public class PntCrearLicencia extends JPanel {
 	txtpnDonadorDeOrganos.setBounds(28, 310, 80, 34);
 	panelConductor.add(txtpnDonadorDeOrganos);
 	
-	JComboBox cbDonanteDeOrganos = new JComboBox();
+	cbDonanteDeOrganos = new JComboBox();
 	cbDonanteDeOrganos.setBounds(118, 322, 100, 22);
 	panelConductor.add(cbDonanteDeOrganos);
 	
@@ -193,7 +221,7 @@ public class PntCrearLicencia extends JPanel {
 	txtpnClaseLicencia.setBounds(239, 322, 59, 20);
 	panelConductor.add(txtpnClaseLicencia);
 	
-	JComboBox cbClaseLicencia = new JComboBox();
+	cbClaseLicencia = new JComboBox();
 	cbClaseLicencia.setBounds(316, 322, 100, 22);
 	panelConductor.add(cbClaseLicencia);
 	
@@ -216,7 +244,7 @@ public class PntCrearLicencia extends JPanel {
 	txtpnSexoCliente.setBounds(287, 143, 58, 20);
 	panelConductor.add(txtpnSexoCliente);
 	
-	JComboBox cbSexoCliente = new JComboBox();
+	cbSexoCliente = new JComboBox();
 	cbSexoCliente.setBounds(352, 143, 64, 22);
 	panelConductor.add(cbSexoCliente);
 	
@@ -275,6 +303,10 @@ public class PntCrearLicencia extends JPanel {
 	tfPisoCliente.setBounds(209, 42, 64, 20);
 	panelDocumento_2.add(tfPisoCliente);
 	
+	dcFechaNacimiento = new JDateChooser();
+	dcFechaNacimiento.setBounds(162, 143, 115, 20);
+	panelConductor.add(dcFechaNacimiento);
+	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	panelAdmin.setBounds(31, 454, 908, 121);
@@ -312,6 +344,12 @@ public class PntCrearLicencia extends JPanel {
 	txtFechaEmision.setBounds(10, 76, 131, 20);
 	panelAdmin.add(txtFechaEmision);
 	
+	tfFechaEmision = new JTextField();
+	tfFechaEmision.setEditable(false);
+	tfFechaEmision.setColumns(10);
+	tfFechaEmision.setBounds(147, 76, 275, 20);
+	panelAdmin.add(tfFechaEmision);
+	
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -321,6 +359,7 @@ public class PntCrearLicencia extends JPanel {
 	add(btnAtras);
 	
 	JButton btnEmitirLicencia = new JButton("Emitir licencia");
+	btnEmitirLicencia.setEnabled(false);
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		}
@@ -328,13 +367,112 @@ public class PntCrearLicencia extends JPanel {
 	btnEmitirLicencia.setBounds(810, 602, 118, 37);
 	add(btnEmitirLicencia);
 	
-	JButton btnBuscarTitular = new JButton("Buscar titular");
-	btnBuscarTitular.setBounds(231, 602, 232, 37);
-	add(btnBuscarTitular);
-	
-	JButton btnCrearTitular = new JButton("Crear titular");
+
+	btnCrearTitular.setEnabled(false);
 	btnCrearTitular.setBounds(513, 602, 232, 37);
 	add(btnCrearTitular);
 	
+	JButton btnBuscarTitular = new JButton("Buscar titular");
+	btnBuscarTitular.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			String val = VentanaAdmin.mensajeBusqueda(null, "Ingrese DNI del titular");
+			if(esDniValido(val)) {
+				int dni = Integer.parseInt(val);
+				List<Conductor> conductor;
+				try {
+					
+					conductor = GestorPersona.obtenerConductorxDni(dni);
+					
+					if(conductor.size()==0) {
+						btnCrearTitular.setEnabled(true);
+						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
+					}else {
+						cargarDatosenCampos(conductor.get(0));
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+	});
+	btnBuscarTitular.setBounds(231, 602, 232, 37);
+	add(btnBuscarTitular);
+	
+	try {
+		llenarCB();
+	} catch (Exception e1) {
+		e1.printStackTrace();
+	}
+	
+	}
+
+	private void cargarDatosenCampos(Conductor conductor) throws ParseException {
+		tfNombreCliente.setText(conductor.getNombre());
+		tfApellidoCliente.setText(conductor.getApellido());
+		cbTipoDocumentoCliente.setSelectedIndex(conductor.getTipoDoc());
+		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
+		tfCalleCliente.setText(conductor.getDireccion());
+		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
+		//TODO : Preguntar sobre num de dir, dpto y piso
+		
+		
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String fechaNac = dateFormat.format(conductor.getFechaNacimiento());
+		dcFechaNacimiento.setDate(Date.parse(fechaNac));*/
+		
+	}
+	
+	private void llenarCB() throws Exception {
+		
+		//Llena el combo box de tipo de documento
+		List<TipoDocumento> tipoDoc= GestorPersona.obtenerTipoDocumento();
+		int tamList = tipoDoc.size();
+
+		cbTipoDocumentoCliente.addItem("Seleccionar opción");
+		for(int i=0; i<tamList; i++) {
+			cbTipoDocumentoCliente.addItem(tipoDoc.get(i).getTipoDocumentoTexto());
+		}
+		
+		//Llena el combo box del tipo de sangre
+		List<TipoGrupoSanguineo> tipoGrupoSang= GestorPersona.obtenerTipoGrupoSanguineo();
+		int tamList1 = tipoGrupoSang.size();
+
+		cbGrupoSanguineoConductor.addItem("Seleccionar opción");
+		for(int i=0; i<tamList1; i++) {
+			cbGrupoSanguineoConductor.addItem(tipoGrupoSang.get(i).getTipoGrupoSanguineoTexto());
+		}
+		
+		//Llena el combo box del tipo de licencia
+		List<TipoLicencia> tipoLicencia= GestorLicencia.obtenerTipoLicencia();
+		int tamList2 = tipoLicencia.size();
+
+		cbClaseLicencia.addItem("Seleccionar opción");
+		for(int i=0; i<tamList2; i++) {
+			cbClaseLicencia.addItem(tipoLicencia.get(i).getTipoLicenciaTexto());
+		}
+		
+		//Llena el combo box de donante
+			cbDonanteDeOrganos.addItem("Seleccionar opción");
+			cbDonanteDeOrganos.addItem("SI");
+			cbDonanteDeOrganos.addItem("NO");
+	}
+
+	private boolean esDniValido(String val) {
+		int dni=0;
+		if(!val.equals(null) && Integer.parseInt(val) > 0 ) {
+			if (val.length() <= 8 && val.length() >= 7) {
+				dni= Integer.parseInt(val);
+				return true;
+			}else {
+				VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+				return false;
+			}
+		}else {
+			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
+			return false;
+		}
+		
 	}
 }
