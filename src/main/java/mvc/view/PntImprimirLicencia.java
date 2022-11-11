@@ -18,6 +18,7 @@ import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.DropMode;
+import javax.swing.JButton;
 
 public class PntImprimirLicencia extends JPanel {
 
@@ -266,6 +267,18 @@ public class PntImprimirLicencia extends JPanel {
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(10, 84, 380, 2);
 		pagoPanel.add(separator_2);
+		
+		JButton btnImprimirLicencia = new JButton("Imprimir licencia");
+		btnImprimirLicencia.setBounds(852, 602, 118, 37);
+		add(btnImprimirLicencia);
+		
+		JButton btnAtras = new JButton("Atras");
+		btnAtras.setBounds(724, 602, 118, 37);
+		add(btnAtras);
+		
+		JButton btnImprimirComprobante = new JButton("Imprimir comprobante ");
+		btnImprimirComprobante.setBounds(243, 507, 167, 20);
+		add(btnImprimirComprobante);
 		
 		
 
