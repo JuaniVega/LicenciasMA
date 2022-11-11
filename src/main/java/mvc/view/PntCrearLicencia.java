@@ -414,6 +414,9 @@ public class PntCrearLicencia extends JPanel {
 		cbTipoDocumentoCliente.setSelectedIndex(conductor.getTipoDoc());
 		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
 		tfCalleCliente.setText(conductor.getDireccion());
+		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
+		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		//TODO : Preguntar sobre num de dir, dpto y piso
 		
