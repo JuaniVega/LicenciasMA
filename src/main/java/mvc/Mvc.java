@@ -1,10 +1,8 @@
 package mvc;
 
 import java.awt.EventQueue;
-import java.sql.Connection;
 
 import mvc.view.VentanaAdmin;
-import util.ConexionP;
 
 public class Mvc {
 
