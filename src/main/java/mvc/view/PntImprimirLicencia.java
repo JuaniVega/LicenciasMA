@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,10 +15,27 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
+
+import mvc.model.Licencia;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 
 public class PntImprimirLicencia extends JPanel {
+
+	private JLabel numLicenciaLbl;
+	private JLabel apellidoLbl;
+	private JLabel nombreLbl;
+	private JLabel domicilioLbl;
+	private JLabel fechaNacLbl;
+	private JLabel fechaVencimLbl;
+	private JLabel tipoLicLbl;
+	private JTextArea descripLicLbl;
+	private JLabel donanteLbl;
+	private JLabel grupoSangreLbl;
+	private JLabel ObservacionesLbl;
+	private JLabel documentoLbl;
+	private JLabel tipoDocumentoLbl;
 
 	/**
 	 * Create the panel.
@@ -69,7 +87,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblNumLicencia.setBounds(150, 60, 140, 14);
 		licFrentePanel.add(lblNumLicencia);
 		
-		JLabel numLicenciaLbl = new JLabel("0000");
+		numLicenciaLbl = new JLabel();
 		numLicenciaLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		numLicenciaLbl.setBounds(160, 80, 46, 14);
 		licFrentePanel.add(numLicenciaLbl);
@@ -79,7 +97,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblApellido.setBounds(150, 100, 140, 14);
 		licFrentePanel.add(lblApellido);
 		
-		JLabel apellidoLbl = new JLabel("aaaa");
+		apellidoLbl = new JLabel();
 		apellidoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		apellidoLbl.setBounds(160, 120, 46, 14);
 		licFrentePanel.add(apellidoLbl);
@@ -89,7 +107,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblNombre.setBounds(150, 140, 140, 14);
 		licFrentePanel.add(lblNombre);
 		
-		JLabel nombreLbl = new JLabel("aaaa");
+		nombreLbl = new JLabel();
 		nombreLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		nombreLbl.setBounds(160, 160, 46, 14);
 		licFrentePanel.add(nombreLbl);
@@ -99,7 +117,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblDomicilio.setBounds(150, 180, 140, 14);
 		licFrentePanel.add(lblDomicilio);
 		
-		JLabel domicilioLbl = new JLabel("aaaa 000 ");
+		domicilioLbl = new JLabel();
 		domicilioLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		domicilioLbl.setBounds(160, 200, 104, 14);
 		licFrentePanel.add(domicilioLbl);
@@ -109,7 +127,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblFechaNac.setBounds(150, 220, 190, 14);
 		licFrentePanel.add(lblFechaNac);
 		
-		JLabel fechaNacLbl = new JLabel("23/07/2022");
+		fechaNacLbl = new JLabel();
 		fechaNacLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		fechaNacLbl.setBounds(160, 240, 104, 14);
 		licFrentePanel.add(fechaNacLbl);
@@ -119,7 +137,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblfechaVencim.setBounds(150, 260, 140, 14);
 		licFrentePanel.add(lblfechaVencim);
 		
-		JLabel fechaVencimLbl = new JLabel("23/07/2023");
+		fechaVencimLbl = new JLabel();
 		fechaVencimLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		fechaVencimLbl.setBounds(160, 280, 89, 14);
 		licFrentePanel.add(fechaVencimLbl);
@@ -137,13 +155,13 @@ public class PntImprimirLicencia extends JPanel {
 		lblTipoLic.setBounds(10, 60, 197, 14);
 		licDorsoPanel.add(lblTipoLic);
 		
-		JLabel tipoLicLbl = new JLabel("B1");
+		tipoLicLbl = new JLabel();
 		tipoLicLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		tipoLicLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		tipoLicLbl.setBounds(20, 80, 46, 14);
 		licDorsoPanel.add(tipoLicLbl);
 		
-		JTextArea descripLicLbl = new JTextArea("Camiones articulados o con acoplado, maquinaria especial no agr\u00EDcola y los comprendidos en la clase B y C.");
+		descripLicLbl = new JTextArea();
 		descripLicLbl.setWrapStyleWord(true);
 		descripLicLbl.setEditable(false);
 		descripLicLbl.setBackground(new Color(230, 255, 255));
@@ -162,30 +180,45 @@ public class PntImprimirLicencia extends JPanel {
 		lblGrupoYFactor.setBounds(150, 120, 180, 14);
 		licDorsoPanel.add(lblGrupoYFactor);
 		
-		JLabel donanteLbl = new JLabel("Si");
+		donanteLbl = new JLabel();
 		donanteLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		donanteLbl.setBounds(120, 120, 46, 14);
 		licDorsoPanel.add(donanteLbl);
 		
-		JLabel grupoSangreLbl = new JLabel("0+");
+		grupoSangreLbl = new JLabel();
 		grupoSangreLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		grupoSangreLbl.setBounds(332, 120, 46, 14);
 		licDorsoPanel.add(grupoSangreLbl);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBackground(SystemColor.textHighlight);
-		separator_1.setBounds(10, 40, 380, 10);
-		licDorsoPanel.add(separator_1);
+		JLabel lblDocumento = new JLabel("Documento / ID Card");
+		lblDocumento.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDocumento.setBounds(10, 140, 135, 14);
+		licDorsoPanel.add(lblDocumento);
 		
+		documentoLbl = new JLabel();
+		documentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		documentoLbl.setBounds(60, 160, 85, 14);
+		licDorsoPanel.add(documentoLbl);
+		
+		tipoDocumentoLbl = new JLabel();
+		tipoDocumentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tipoDocumentoLbl.setBounds(10, 160, 46, 14);
+		licDorsoPanel.add(tipoDocumentoLbl);
+
 		JLabel lblObservaciones = new JLabel("Observaciones / Observations");
 		lblObservaciones.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblObservaciones.setBounds(10, 180, 211, 14);
 		licDorsoPanel.add(lblObservaciones);
 		
-		JLabel ObservacionesLbl = new JLabel("algo");
+		ObservacionesLbl = new JLabel();
 		ObservacionesLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		ObservacionesLbl.setBounds(10, 200, 330, 14);
 		licDorsoPanel.add(ObservacionesLbl);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBackground(SystemColor.textHighlight);
+		separator_1.setBounds(10, 40, 380, 10);
+		licDorsoPanel.add(separator_1);
 		
 		JLabel lblLnc = new JLabel("LNC");
 		lblLnc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -206,21 +239,6 @@ public class PntImprimirLicencia extends JPanel {
 		panelAzul.setBorder(new LineBorder(SystemColor.desktop));
 		panelAzul.setBounds(0, 260, 400, 40);
 		licDorsoPanel.add(panelAzul);
-		
-		JLabel lblDocumento = new JLabel("Documento / ID Card");
-		lblDocumento.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDocumento.setBounds(10, 140, 135, 14);
-		licDorsoPanel.add(lblDocumento);
-		
-		JLabel documentoLbl = new JLabel("41256321");
-		documentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		documentoLbl.setBounds(60, 160, 85, 14);
-		licDorsoPanel.add(documentoLbl);
-		
-		JLabel tipoDocumentoLbl = new JLabel("DNI");
-		tipoDocumentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		tipoDocumentoLbl.setBounds(10, 160, 46, 14);
-		licDorsoPanel.add(tipoDocumentoLbl);
 		
 		JTextPane txtGrupoSangYFactRH = new JTextPane();
 		txtGrupoSangYFactRH.setText("Detalle de pago");
