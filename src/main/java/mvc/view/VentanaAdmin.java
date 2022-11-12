@@ -16,12 +16,14 @@ public class VentanaAdmin extends JFrame {
 	
 	/*DEFINIMOS TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
+	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
 	
 	/*DEFINIMOS EL NOMBRE TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
 	public static String n_pntCrearLicencia = "n_pntCrearLicencia";
+	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	
 	/**
 	 * Launch the application.
@@ -57,9 +59,11 @@ public class VentanaAdmin extends JFrame {
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
 		contentPane.add(n_pntCrearLicencia, pntCrearLicencia);
-	
+		contentPane.add(n_pntImprimirLicencia, pntImprimirLicencia);
+		
 		cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 	
+		cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
