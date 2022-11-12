@@ -2,13 +2,13 @@ package mvc.controller.gestores;
 
 import java.util.List;
 
-import mvc.controller.dao.TipoLicenciaDao;
+import mvc.controller.dao.LicenciaDao;
 import mvc.model.TipoLicencia;
 
 public class GestorLicencia {
 	
 	public static List<TipoLicencia> obtenerTipoLicencia() throws Exception{
-		return TipoLicenciaDao.getTipoLicencia();
+		return LicenciaDao.getTipoLicencia();
 	}
 
 }
