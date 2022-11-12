@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,11 +12,9 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
-import javax.swing.JLayeredPane;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 
 public class PntImprimirLicencia extends JPanel {
