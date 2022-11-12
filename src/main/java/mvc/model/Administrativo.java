@@ -5,12 +5,12 @@ import java.time.LocalDate;
 public class Administrativo extends Persona{
 	
 	private String email;
-	private String contraseña;
+	private String contrasenia;
 	
-	public Administrativo(Integer id, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento, String email, String contraseña) {
+	public Administrativo(Integer id, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento, String email, String contrasenia) {
 		super(id, dni, tipoDoc, nombre, apellido, fechaNacimiento);
 		this.email = email;
-		this.contraseña = contraseña;
+		this.contrasenia = contrasenia;
 	}
 	
 	public Administrativo() {
@@ -26,7 +26,7 @@ public class Administrativo extends Persona{
 		this.apellido=atributo[4];
 		this.fechaNacimiento=LocalDate.parse(atributo[5]);
 		this.email=atributo[6];
-		this.contraseña=atributo[7];
+		this.contrasenia=atributo[7];
 	}
 
 	public String getEmail() {
@@ -37,12 +37,12 @@ public class Administrativo extends Persona{
 		this.email = email;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasenia() {
+		return contrasenia;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 
 	
