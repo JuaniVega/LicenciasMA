@@ -24,7 +24,7 @@ public class LicenciaDao {
 	
 	public static List<Licencia> getAllLicencia() throws Exception {
 		try {
-			String query = "select l.* from licencia;";                            
+			String query = "select id, id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia from public.licencia;";
 			ArrayList<Licencia> licencias = (ArrayList<Licencia>)((Object) ConexionP.consultar(query, Licencia.class));
 			return licencias;
 		}
