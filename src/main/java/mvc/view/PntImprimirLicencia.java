@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -38,6 +39,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JPanel carnetConductorPanel;
 	private JPanel licFrentePanel;
 	private JPanel licDorsoPanel;
+	private JPanel pagoPanel;
 	
 	private JLabel numLicenciaLbl;
 	private JLabel apellidoLbl;
@@ -55,6 +57,9 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel costoLicenciaLbl;
 	private JLabel totalLbl;
 	private JLabel tipoDocumentoLbl;
+	
+	private JButton btnImprimirLicencia;
+	private JButton btnImprimirComprobante;
 
 	/**
 	 * Create the panel.
@@ -274,7 +279,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		txtGrupoSangYFactRH.setBounds(20, 364, 103, 22);
 		add(txtGrupoSangYFactRH);
 		
-		JPanel pagoPanel = new JPanel();
+		pagoPanel = new JPanel();
 		pagoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pagoPanel.setBounds(10, 374, 400, 122);
 		add(pagoPanel);
@@ -309,17 +314,17 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		separator_2.setBounds(10, 84, 380, 2);
 		pagoPanel.add(separator_2);
 		
-		JButton btnImprimirLicencia = new JButton("Imprimir licencia");
+		btnImprimirLicencia = new JButton("Imprimir licencia");
 		btnImprimirLicencia.addActionListener(imprimirLicenciaPDF);
-
-		btnImprimirLicencia.setBounds(852, 602, 118, 37);
+		btnImprimirLicencia.setBounds(828, 600, 142, 37);
 		add(btnImprimirLicencia);
 		
 		JButton btnAtras = new JButton("Atras");
-		btnAtras.setBounds(724, 602, 118, 37);
+		btnAtras.setBounds(700, 600, 118, 37);
 		add(btnAtras);
 		
-		JButton btnImprimirComprobante = new JButton("Imprimir comprobante ");
+		btnImprimirComprobante = new JButton("Imprimir comprobante");
+		//btnImprimirComprobante.addActionListener();
 		btnImprimirComprobante.setBounds(243, 507, 167, 20);
 		add(btnImprimirComprobante);
 		
@@ -333,10 +338,15 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 			PageFormat pf = job.defaultPage();
  			pf.setOrientation(PageFormat.LANDSCAPE);
 			job.setPrintable(new PntImprimirLicencia(), pf);
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				e.printStackTrace();
+			if(job.printDialog()) {
+				try {					
+					job.print();
+				} catch (PrinterException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(carnetConductorPanel, "La impresion se cancelo", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	};
