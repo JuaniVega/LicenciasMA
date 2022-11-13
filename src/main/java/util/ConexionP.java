@@ -2,6 +2,7 @@ package util;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConexionP {
 	
@@ -20,7 +21,7 @@ public class ConexionP {
 		try {
 			Class.forName("org.postgresql.Driver");
 			conexion = DriverManager.getConnection(url, user, pass);
-			System.out.println("Conexión exitosa");
+			System.out.println("Conexion exitosa");
 		} catch (Exception e) {
 			System.out.println("Error en la conexion a la BDD");
 		}
@@ -32,7 +33,8 @@ public class ConexionP {
         Connection con = null;
         try {
             con =ConexionP.conectarDB();
-            ResultSet rs = con.createStatement().executeQuery(query);
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
             String objeto;
             while(rs.next()){
                 objeto = "";
@@ -54,7 +56,7 @@ public class ConexionP {
         return result;
     }
 	
-	// Metodo que ejecuta una acción en la BDD (insertar, eliminar etc.)
+	// Metodo que ejecuta una acciï¿½n en la BDD (insertar, eliminar etc.)
 	
 	public static void ejecutar(String query) throws Exception{
         Connection con = null;
