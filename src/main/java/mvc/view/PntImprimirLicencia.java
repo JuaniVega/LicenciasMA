@@ -25,7 +25,6 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.border.LineBorder;
 
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 
@@ -59,7 +58,6 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel tipoDocumentoLbl;
 	
 	private JButton btnImprimirLicencia;
-	private JButton btnImprimirComprobante;
 
 	/**
 	 * Create the panel.
@@ -76,7 +74,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		add(lblTituloImpresion);
 		
 		carnetConductorPanel = new JPanel();
-		carnetConductorPanel.setBounds(0, 40, 980, 325);
+		carnetConductorPanel.setBounds(0, 40, 980, 467);
 		carnetConductorPanel.setLayout(null);
 		add(carnetConductorPanel);
 		
@@ -271,18 +269,18 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		panelAzul.setBounds(0, 260, 400, 40);
 		licDorsoPanel.add(panelAzul);
 		
-		JTextPane txtGrupoSangYFactRH = new JTextPane();
-		txtGrupoSangYFactRH.setText("Detalle de pago");
-		txtGrupoSangYFactRH.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtGrupoSangYFactRH.setEditable(false);
-		txtGrupoSangYFactRH.setBackground(SystemColor.menu);
-		txtGrupoSangYFactRH.setBounds(20, 364, 103, 22);
-		add(txtGrupoSangYFactRH);
+		JTextPane txtDetallePago = new JTextPane();
+		txtDetallePago.setText("Detalle de pago");
+		txtDetallePago.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtDetallePago.setEditable(false);
+		txtDetallePago.setBackground(SystemColor.menu);
+		txtDetallePago.setBounds(20, 330, 96, 22);
+		carnetConductorPanel.add(txtDetallePago);
 		
 		pagoPanel = new JPanel();
 		pagoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pagoPanel.setBounds(10, 374, 400, 122);
-		add(pagoPanel);
+		pagoPanel.setBounds(10, 340, 400, 122);
+		carnetConductorPanel.add(pagoPanel);
 		pagoPanel.setLayout(null);
 		
 		JLabel lblGastoAdmin = new JLabel("Gastos administrativos");
@@ -322,11 +320,6 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.setBounds(700, 600, 118, 37);
 		add(btnAtras);
-		
-		btnImprimirComprobante = new JButton("Imprimir comprobante");
-		//btnImprimirComprobante.addActionListener();
-		btnImprimirComprobante.setBounds(243, 507, 167, 20);
-		add(btnImprimirComprobante);
 		
 		
 
@@ -370,8 +363,8 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		if(pageIndex > 0) return NO_SUCH_PAGE;
 	
 		Graphics2D g2d = (Graphics2D)graphics;
-		g2d.translate(pageFormat.getImageableX()+50, pageFormat.getImageableY()+50);
-		g2d.scale(0.65,0.65);
+		g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+		g2d.scale(0.70,0.80);
 		carnetConductorPanel.printAll(graphics);
 		return PAGE_EXISTS;
 		
