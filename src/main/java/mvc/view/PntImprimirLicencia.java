@@ -35,6 +35,9 @@ public class PntImprimirLicencia extends JPanel {
 	private JLabel grupoSangreLbl;
 	private JLabel ObservacionesLbl;
 	private JLabel documentoLbl;
+	private JLabel gastoAdminLbl;
+	private JLabel costoLicenciaLbl;
+	private JLabel totalLbl;
 	private JLabel tipoDocumentoLbl;
 
 	/**
@@ -262,11 +265,11 @@ public class PntImprimirLicencia extends JPanel {
 		lblCostoLicencia.setBounds(10, 50, 154, 14);
 		pagoPanel.add(lblCostoLicencia);
 		
-		JLabel gastoAdminLbl = new JLabel("$8");
+		gastoAdminLbl = new JLabel("$8");
 		gastoAdminLbl.setBounds(185, 25, 52, 14);
 		pagoPanel.add(gastoAdminLbl);
 		
-		JLabel costoLicenciaLbl = new JLabel("$80");
+		costoLicenciaLbl = new JLabel("$80");
 		costoLicenciaLbl.setBounds(185, 50, 52, 14);
 		pagoPanel.add(costoLicenciaLbl);
 		
@@ -275,7 +278,7 @@ public class PntImprimirLicencia extends JPanel {
 		lblTotal.setBounds(10, 97, 120, 14);
 		pagoPanel.add(lblTotal);
 		
-		JLabel totalLbl = new JLabel("$88");
+		totalLbl = new JLabel("$88");
 		totalLbl.setBounds(185, 99, 52, 14);
 		pagoPanel.add(totalLbl);
 		
