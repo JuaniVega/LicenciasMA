@@ -3,8 +3,9 @@ package mvc.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
-import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,15 +15,30 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
 import javax.swing.border.LineBorder;
 
-import mvc.model.Licencia;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 
-public class PntImprimirLicencia extends JPanel {
+public class PntImprimirLicencia extends JPanel implements Printable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5995874360565210693L;
+	
+	private JPanel carnetConductorPanel;
+	private JPanel licFrentePanel;
+	private JPanel licDorsoPanel;
+	
 	private JLabel numLicenciaLbl;
 	private JLabel apellidoLbl;
 	private JLabel nombreLbl;
@@ -47,17 +63,24 @@ public class PntImprimirLicencia extends JPanel {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
 		
+		//cargarDatosenCampo(); 
+
 		JLabel lblTituloImpresion = new JLabel("Previsualizaci\u00F3n de Licencia", SwingConstants.CENTER);
 		lblTituloImpresion.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblTituloImpresion.setBounds(0, 10, 980, 20);
 		add(lblTituloImpresion);
 		
-		JPanel licFrentePanel = new JPanel();
-		licFrentePanel.setBounds(10, 50, 400, 300);
+		carnetConductorPanel = new JPanel();
+		carnetConductorPanel.setBounds(0, 40, 980, 325);
+		carnetConductorPanel.setLayout(null);
+		add(carnetConductorPanel);
+		
+		licFrentePanel = new JPanel();
+		licFrentePanel.setBounds(10, 10, 400, 300);
 		licFrentePanel.setBackground(new Color(230, 255, 255));
 		licFrentePanel.setBorder(new LineBorder(SystemColor.desktop));
 		licFrentePanel.setLayout(null);
-		add(licFrentePanel);
+		carnetConductorPanel.add(licFrentePanel);
 		
 		JLabel lblTituloLicencia = new JLabel("Licencia Nacional de Conducir");
 		lblTituloLicencia.setForeground(new Color(4, 130, 255));
@@ -146,12 +169,12 @@ public class PntImprimirLicencia extends JPanel {
 		licFrentePanel.add(fechaVencimLbl);
 		
 		
-		JPanel licDorsoPanel = new JPanel();
-		licDorsoPanel.setBounds(570, 50, 400, 300);
+		licDorsoPanel = new JPanel();
+		licDorsoPanel.setBounds(570, 10, 400, 300);
 		licDorsoPanel.setBackground(new Color(230, 255, 255));
 		licDorsoPanel.setBorder(new LineBorder(SystemColor.desktop));
 		licDorsoPanel.setLayout(null);
-		add(licDorsoPanel);
+		carnetConductorPanel.add(licDorsoPanel);
 	
 		JLabel lblTipoLic = new JLabel("Tipo de licencia / Type of license");
 		lblTipoLic.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -287,6 +310,8 @@ public class PntImprimirLicencia extends JPanel {
 		pagoPanel.add(separator_2);
 		
 		JButton btnImprimirLicencia = new JButton("Imprimir licencia");
+		btnImprimirLicencia.addActionListener(imprimirLicenciaPDF);
+
 		btnImprimirLicencia.setBounds(852, 602, 118, 37);
 		add(btnImprimirLicencia);
 		
@@ -300,5 +325,45 @@ public class PntImprimirLicencia extends JPanel {
 		
 		
 
+	}
+	
+	ActionListener imprimirLicenciaPDF = new ActionListener() { 
+		public void actionPerformed(ActionEvent evt) {		
+			PrinterJob job = PrinterJob.getPrinterJob();
+			PageFormat pf = job.defaultPage();
+ 			pf.setOrientation(PageFormat.LANDSCAPE);
+			job.setPrintable(new PntImprimirLicencia(), pf);
+			try {
+				job.print();
+			} catch (PrinterException e) {
+				e.printStackTrace();
+			}
+		}
+	};
+
+	// private void cargarDatosenCampo() {
+	// 	List<Licencia> licencias;
+		
+	// 	try {
+	// 		licencias = GestorLicencia.obtenerAllLicencias();
+
+	// 		if(licencias.size() != 0) {
+	// 			System.out.println(licencias);
+	// 		}
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	// 	}
+		
+	// }
+
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		if(pageIndex > 0) return NO_SUCH_PAGE;
+	
+		Graphics2D g2d = (Graphics2D)graphics;
+		g2d.translate(pageFormat.getImageableX()+50, pageFormat.getImageableY()+50);
+		g2d.scale(0.65,0.65);
+		carnetConductorPanel.printAll(graphics);
+		return PAGE_EXISTS;
+		
 	}
 }
