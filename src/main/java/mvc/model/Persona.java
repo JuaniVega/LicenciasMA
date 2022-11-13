@@ -10,8 +10,9 @@ public class Persona {
 	protected String nombre; 
 	protected String apellido;
 	protected LocalDate fechaNacimiento;
+	protected String sexo;
 	
-	public Persona(Integer idPersona, Integer dni, Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento) {
+	public Persona(Integer idPersona, Integer dni, Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento, String sexo) {
 		super();
 		this.idPersona = idPersona;
 		this.dni=dni;
@@ -19,6 +20,7 @@ public class Persona {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
+		this.sexo = sexo;
 	}
 	
 	public Persona(String datos) {
@@ -29,6 +31,7 @@ public class Persona {
 		this.nombre=atributo[3];
 		this.apellido=atributo[4];
 		this.fechaNacimiento=LocalDate.parse(atributo[5]);
+		this.sexo=atributo[6];
 		
 	}
 
@@ -90,6 +93,27 @@ public class Persona {
 
 	public void setDni(Integer dni) {
 		this.dni = dni;
+	}
+
+	//1=Masculino 2=Femenino
+	public Integer getCodSexo() {
+		if(sexo.equals("M")) {
+			return 1;
+		}else {
+			return 2;
+		}
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Integer sexo) {
+		if(sexo.equals(1)) {
+			this.sexo="M";
+		}else{
+			this.sexo="F";
+		}
 	}
 	
 	

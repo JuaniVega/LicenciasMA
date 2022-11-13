@@ -11,8 +11,8 @@ public class Conductor extends Persona {
 	private Integer tipoGrupoSanguineo;
 	private Boolean donaOrganos;
 	
-	public Conductor(Integer idPersona, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento, String direccion,String departamento, Integer numDir, Integer piso, Integer tipoGrupoSanguineo, Boolean donaOrganos) {
-		super(idPersona, dni, tipoDoc, nombre, apellido, fechaNacimiento);
+	public Conductor(Integer idPersona, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento,String sexo, String direccion,String departamento, Integer numDir, Integer piso, Integer tipoGrupoSanguineo, Boolean donaOrganos) {
+		super(idPersona, dni, tipoDoc, nombre, apellido, fechaNacimiento, sexo);
 		this.direccion = direccion;
 		this.numDir=numDir;
 		this.piso=piso;
@@ -39,6 +39,7 @@ public class Conductor extends Persona {
 		this.dpto=atributo[9];
 		this.tipoGrupoSanguineo=Integer.parseInt(atributo[10]);
 		this.donaOrganos=Boolean.parseBoolean(atributo[11]);
+		this.sexo=atributo[12];
 	}
 
 	public String getDireccion() {
