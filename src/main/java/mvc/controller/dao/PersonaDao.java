@@ -13,7 +13,7 @@ import util.ConexionP;
 public class PersonaDao {
 	public static List<Persona> getPersonaxDni(int dni) throws Exception {
 		try {
-			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento  from public.persona p where p.dni="+dni+";";                            
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo  from public.persona p where p.dni="+dni+";";                            
 			ArrayList<Persona> persona = (ArrayList<Persona>)((Object)ConexionP.consultar(query, Persona.class));
 			return persona;
 		}
@@ -24,7 +24,7 @@ public class PersonaDao {
 	
 	public static List<Conductor> getConductorxDni(int dni) throws Exception {
 		try {
-			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, c.direccion, c.num_dir, c.piso, c.departamento, c.grupo_sanguineo, c.dona_organos  from public.persona p inner join public.conductor c on p.dni=c.dni  where p.dni="+dni+";";                            
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, c.direccion, c.num_dir, c.piso, c.departamento, c.grupo_sanguineo, c.dona_organos, p.sexo  from public.persona p inner join public.conductor c on p.dni=c.dni  where p.dni="+dni+";";                            
 			ArrayList<Conductor> conductor = (ArrayList<Conductor>)((Object)ConexionP.consultar(query, Conductor.class));
 			return conductor;
 		}

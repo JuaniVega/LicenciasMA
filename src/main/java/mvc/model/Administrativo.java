@@ -7,8 +7,8 @@ public class Administrativo extends Persona{
 	private String email;
 	private String contraseña;
 	
-	public Administrativo(Integer id, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento, String email, String contraseña) {
-		super(id, dni, tipoDoc, nombre, apellido, fechaNacimiento);
+	public Administrativo(Integer id, Integer dni,Integer tipoDoc, String nombre, String apellido, LocalDate fechaNacimiento,String sexo, String email, String contraseña) {
+		super(id, dni, tipoDoc, nombre, apellido, fechaNacimiento, sexo);
 		this.email = email;
 		this.contraseña = contraseña;
 	}
