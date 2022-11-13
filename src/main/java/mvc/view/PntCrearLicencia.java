@@ -36,6 +36,8 @@ import mvc.model.TipoGrupoSanguineo;
 import mvc.model.TipoLicencia;
 import mvc.view.VentanaAdmin;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import java.awt.Color;
 
 public class PntCrearLicencia extends JPanel {
 	private JTextField tfNombreCliente;
@@ -61,6 +63,7 @@ public class PntCrearLicencia extends JPanel {
 	private JCheckBox chbxTipoLicenciaE;
 	private JCheckBox chbxTipoLicenciaF;
 	private JCheckBox chbxTipoLicenciaG;
+	private JLabel lblErrorLicencias;
 	
 	private JButton btnCrearTitular = new JButton("Crear titular");
 	private JButton btnEmitirLicencia;
@@ -392,6 +395,11 @@ public class PntCrearLicencia extends JPanel {
 	chbxTipoLicenciaG.setBounds(287, 7, 68, 23);
 	panelClasesDeLicencias.add(chbxTipoLicenciaG);
 	
+	lblErrorLicencias = new JLabel("");
+	lblErrorLicencias.setForeground(Color.RED);
+	lblErrorLicencias.setBounds(28, 348, 388, 25);
+	panelConductor.add(lblErrorLicencias);
+	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	panelAdmin.setBounds(31, 454, 908, 121);
@@ -450,9 +458,6 @@ public class PntCrearLicencia extends JPanel {
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			cargarEmitirLicenciaDTO();
-			for(int i =0; i<emitirLicenciaDTO.getLicenciasSeleccionadas().size();i++) {
-				System.out.println(emitirLicenciaDTO.getLicenciasSeleccionadas().get(i));
-			}
 			
 		}
 	});
@@ -475,6 +480,7 @@ public class PntCrearLicencia extends JPanel {
 					
 					conductor = GestorPersona.obtenerConductorxDni(dni);
 					
+					limpiarPantalla();
 					if(conductor.size()==0) {
 						btnCrearTitular.setEnabled(true);
 						btnEmitirLicencia.setEnabled(false);
@@ -505,6 +511,20 @@ public class PntCrearLicencia extends JPanel {
 	
 	}
 
+	protected void limpiarPantalla() {
+		tfNombreCliente.setText("");
+		tfApellidoCliente.setText("");
+		cbTipoDocumentoCliente.setSelectedIndex(0);
+		tfNroDocumentoCliente.setText("");
+		tfCalleCliente.setText("");
+		tfNumDirCliente.setText("");
+		tfPisoCliente.setText("");
+		tfDptoCliente.setText("");
+		cbGrupoSanguineoConductor.setSelectedIndex(0);
+		cbSexoCliente.setSelectedIndex(0);
+		tfFechaNacimConductor.setText("");
+	}
+
 	protected void habilitarChbxLicencias() {
 		chbxTipoLicenciaA.setEnabled(true);
 		chbxTipoLicenciaB.setEnabled(true);
@@ -518,10 +538,8 @@ public class PntCrearLicencia extends JPanel {
 	protected void agregarALista(JCheckBox chbxTipoLicencia, String i) {
 		if(chbxTipoLicencia.isSelected()==true) {
 			licenciasSelec.add(i);
-			System.out.println("agregado "+i);
 		}else {
 			licenciasSelec.remove(i);
-			System.out.println("eliminado "+i);
 		}
 		
 	}
