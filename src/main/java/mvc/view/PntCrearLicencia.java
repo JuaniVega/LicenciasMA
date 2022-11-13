@@ -19,10 +19,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
+import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
@@ -31,6 +35,7 @@ import mvc.model.TipoDocumento;
 import mvc.model.TipoGrupoSanguineo;
 import mvc.model.TipoLicencia;
 import mvc.view.VentanaAdmin;
+import javax.swing.JCheckBox;
 
 public class PntCrearLicencia extends JPanel {
 	private JTextField tfNombreCliente;
@@ -43,15 +48,27 @@ public class PntCrearLicencia extends JPanel {
 	private JTextField tfDptoCliente;
 	private JTextField tfPisoCliente;
 	private JTextField tfFechaEmision;
-	private JDateChooser dcFechaNacimiento;
+	private JTextField tfFechaNacimConductor;
 	private JComboBox cbTipoDocumentoCliente;
-	private JComboBox cbGrupoSanguineoConductor;
-	private JComboBox cbFactorRHConductor;
 	private JComboBox cbDonanteDeOrganos;
-	private JComboBox cbClaseLicencia;
 	private JComboBox cbSexoCliente;
+	private JComboBox cbGrupoSanguineoConductor;
+	private JTextPane txtpnObservaciones;
+	private JCheckBox chbxTipoLicenciaA;
+	private JCheckBox chbxTipoLicenciaB;
+	private JCheckBox chbxTipoLicenciaC;
+	private JCheckBox chbxTipoLicenciaD;
+	private JCheckBox chbxTipoLicenciaE;
+	private JCheckBox chbxTipoLicenciaF;
+	private JCheckBox chbxTipoLicenciaG;
 	
-	JButton btnCrearTitular = new JButton("Crear titular");
+	private JButton btnCrearTitular = new JButton("Crear titular");
+	private JButton btnEmitirLicencia;
+	
+	private ArrayList<String> licenciasSelec = new ArrayList<String>();
+	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
 	
 	public PntCrearLicencia() {
 		setLocation(-31, -63);
@@ -89,12 +106,20 @@ public class PntCrearLicencia extends JPanel {
 	add(panelConductor);
 	panelConductor.setLayout(null);
 	
+	JTextPane txtpnClasesDeLicencias = new JTextPane();
+	txtpnClasesDeLicencias.setText("Clases de licencias");
+	txtpnClasesDeLicencias.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	txtpnClasesDeLicencias.setEditable(false);
+	txtpnClasesDeLicencias.setBackground(SystemColor.menu);
+	txtpnClasesDeLicencias.setBounds(41, 254, 114, 22);
+	panelConductor.add(txtpnClasesDeLicencias);
+	
 	JTextPane txtpnDireccion = new JTextPane();
 	txtpnDireccion.setText("Direcci\u00F3n");
 	txtpnDireccion.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	txtpnDireccion.setEditable(false);
 	txtpnDireccion.setBackground(SystemColor.menu);
-	txtpnDireccion.setBounds(481, 57, 71, 22);
+	txtpnDireccion.setBounds(481, 66, 59, 22);
 	panelConductor.add(txtpnDireccion);
 	
 	JTextPane txtDocumentoCliente = new JTextPane();
@@ -102,18 +127,19 @@ public class PntCrearLicencia extends JPanel {
 	txtDocumentoCliente.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	txtDocumentoCliente.setEditable(false);
 	txtDocumentoCliente.setBackground(SystemColor.menu);
-	txtDocumentoCliente.setBounds(41, 57, 71, 22);
+	txtDocumentoCliente.setBounds(41, 66, 71, 22);
 	panelConductor.add(txtDocumentoCliente);
 	
 	JTextPane txtNombreCliente = new JTextPane();
 	txtNombreCliente.setText("Nombre completo (*)");
 	txtNombreCliente.setEditable(false);
 	txtNombreCliente.setBackground(SystemColor.menu);
-	txtNombreCliente.setBounds(28, 11, 125, 20);
+	txtNombreCliente.setBounds(28, 25, 125, 20);
 	panelConductor.add(txtNombreCliente);
 	
 	tfNombreCliente = new JTextField();
-	tfNombreCliente.setBounds(156, 11, 260, 20);
+	tfNombreCliente.setEditable(false);
+	tfNombreCliente.setBounds(156, 25, 260, 20);
 	panelConductor.add(tfNombreCliente);
 	tfNombreCliente.setColumns(10);
 	
@@ -121,19 +147,20 @@ public class PntCrearLicencia extends JPanel {
 	txtApellidoCliente.setText("Apellido(s) (*)");
 	txtApellidoCliente.setEditable(false);
 	txtApellidoCliente.setBackground(SystemColor.menu);
-	txtApellidoCliente.setBounds(468, 11, 89, 20);
+	txtApellidoCliente.setBounds(468, 25, 89, 20);
 	panelConductor.add(txtApellidoCliente);
 	
 	tfApellidoCliente = new JTextField();
+	tfApellidoCliente.setEditable(false);
 	tfApellidoCliente.setColumns(10);
-	tfApellidoCliente.setBounds(567, 11, 293, 20);
+	tfApellidoCliente.setBounds(567, 25, 293, 20);
 	panelConductor.add(tfApellidoCliente);
 	
 	JPanel panelDocumento = new JPanel();
 	panelDocumento.setLayout(null);
 	panelDocumento.setToolTipText("");
 	panelDocumento.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-	panelDocumento.setBounds(28, 68, 388, 49);
+	panelDocumento.setBounds(28, 77, 388, 49);
 	panelConductor.add(panelDocumento);
 	
 	JTextPane txtTipoDocumentoCliente = new JTextPane();
@@ -144,6 +171,7 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento.add(txtTipoDocumentoCliente);
 	
 	tfNroDocumentoCliente = new JTextField();
+	tfNroDocumentoCliente.setEditable(false);
 	tfNroDocumentoCliente.setColumns(10);
 	tfNroDocumentoCliente.setBounds(244, 11, 120, 20);
 	panelDocumento.add(tfNroDocumentoCliente);
@@ -156,6 +184,7 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento.add(txtNroDocumentoCliente);
 	
 	cbTipoDocumentoCliente = new JComboBox();
+	cbTipoDocumentoCliente.setEnabled(false);
 	cbTipoDocumentoCliente.setBounds(78, 11, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
 	
@@ -163,69 +192,22 @@ public class PntCrearLicencia extends JPanel {
 	txtFechaNacCliente.setText("Fecha de nacimiento (*)");
 	txtFechaNacCliente.setEditable(false);
 	txtFechaNacCliente.setBackground(SystemColor.menu);
-	txtFechaNacCliente.setBounds(30, 143, 133, 20);
+	txtFechaNacCliente.setBounds(30, 154, 133, 20);
 	panelConductor.add(txtFechaNacCliente);
 	
-	JTextPane txtGrupoSangYFactRH = new JTextPane();
-	txtGrupoSangYFactRH.setText("Grupo sangu\u00EDneo");
-	txtGrupoSangYFactRH.setFont(new Font("Tahoma", Font.PLAIN, 13));
-	txtGrupoSangYFactRH.setEditable(false);
-	txtGrupoSangYFactRH.setBackground(SystemColor.menu);
-	txtGrupoSangYFactRH.setBounds(41, 186, 103, 22);
-	panelConductor.add(txtGrupoSangYFactRH);
-	
-	JPanel panelDocumento_1 = new JPanel();
-	panelDocumento_1.setLayout(null);
-	panelDocumento_1.setToolTipText("");
-	panelDocumento_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-	panelDocumento_1.setBounds(28, 197, 388, 78);
-	panelConductor.add(panelDocumento_1);
-	
-	JTextPane txtGrupoSanguineo = new JTextPane();
-	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
-	txtGrupoSanguineo.setEditable(false);
-	txtGrupoSanguineo.setBackground(SystemColor.menu);
-	txtGrupoSanguineo.setBounds(10, 22, 94, 33);
-	panelDocumento_1.add(txtGrupoSanguineo);
-	
-	JTextPane txtFactorRH = new JTextPane();
-	txtFactorRH.setText("Factor RH (*)");
-	txtFactorRH.setEditable(false);
-	txtFactorRH.setBackground(SystemColor.menu);
-	txtFactorRH.setBounds(205, 35, 82, 20);
-	panelDocumento_1.add(txtFactorRH);
-	
-	cbGrupoSanguineoConductor = new JComboBox();
-	cbGrupoSanguineoConductor.setBounds(114, 33, 69, 22);
-	panelDocumento_1.add(cbGrupoSanguineoConductor);
-	
-	cbFactorRHConductor = new JComboBox();
-	cbFactorRHConductor.setBounds(287, 33, 69, 22);
-	panelDocumento_1.add(cbFactorRHConductor);
-	
 	JTextPane txtpnDonadorDeOrganos = new JTextPane();
-	txtpnDonadorDeOrganos.setText("Donador de organos (*)");
+	txtpnDonadorDeOrganos.setText("Donante de organos (*)");
 	txtpnDonadorDeOrganos.setEditable(false);
 	txtpnDonadorDeOrganos.setBackground(SystemColor.menu);
-	txtpnDonadorDeOrganos.setBounds(28, 310, 80, 34);
+	txtpnDonadorDeOrganos.setBounds(265, 209, 80, 34);
 	panelConductor.add(txtpnDonadorDeOrganos);
 	
 	cbDonanteDeOrganos = new JComboBox();
-	cbDonanteDeOrganos.setBounds(118, 322, 100, 22);
+	cbDonanteDeOrganos.setEnabled(false);
+	cbDonanteDeOrganos.setBounds(345, 209, 71, 22);
 	panelConductor.add(cbDonanteDeOrganos);
 	
-	JTextPane txtpnClaseLicencia = new JTextPane();
-	txtpnClaseLicencia.setText("Clase (*)");
-	txtpnClaseLicencia.setEditable(false);
-	txtpnClaseLicencia.setBackground(SystemColor.menu);
-	txtpnClaseLicencia.setBounds(239, 322, 59, 20);
-	panelConductor.add(txtpnClaseLicencia);
-	
-	cbClaseLicencia = new JComboBox();
-	cbClaseLicencia.setBounds(316, 322, 100, 22);
-	panelConductor.add(cbClaseLicencia);
-	
-	JTextPane txtpnObservaciones = new JTextPane();
+	txtpnObservaciones = new JTextPane();
 	txtpnObservaciones.setText("Observaciones (*)");
 	txtpnObservaciones.setEditable(false);
 	txtpnObservaciones.setBackground(SystemColor.menu);
@@ -241,18 +223,19 @@ public class PntCrearLicencia extends JPanel {
 	txtpnSexoCliente.setText("Sexo (*)");
 	txtpnSexoCliente.setEditable(false);
 	txtpnSexoCliente.setBackground(SystemColor.menu);
-	txtpnSexoCliente.setBounds(287, 143, 58, 20);
+	txtpnSexoCliente.setBounds(287, 154, 58, 20);
 	panelConductor.add(txtpnSexoCliente);
 	
 	cbSexoCliente = new JComboBox();
-	cbSexoCliente.setBounds(352, 143, 64, 22);
+	cbSexoCliente.setEnabled(false);
+	cbSexoCliente.setBounds(352, 154, 64, 22);
 	panelConductor.add(cbSexoCliente);
 	
 	JPanel panelDocumento_2 = new JPanel();
 	panelDocumento_2.setLayout(null);
 	panelDocumento_2.setToolTipText("");
 	panelDocumento_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-	panelDocumento_2.setBounds(468, 68, 392, 78);
+	panelDocumento_2.setBounds(468, 77, 392, 78);
 	panelConductor.add(panelDocumento_2);
 	
 	JTextPane txtCalle = new JTextPane();
@@ -263,6 +246,7 @@ public class PntCrearLicencia extends JPanel {
 	txtCalle.setBackground(SystemColor.menu);
 	
 	tfCalleCliente = new JTextField();
+	tfCalleCliente.setEditable(false);
 	tfCalleCliente.setBounds(70, 11, 160, 20);
 	panelDocumento_2.add(tfCalleCliente);
 	tfCalleCliente.setColumns(10);
@@ -275,6 +259,7 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento_2.add(txtpnNumero);
 	
 	tfNumDirCliente = new JTextField();
+	tfNumDirCliente.setEditable(false);
 	tfNumDirCliente.setColumns(10);
 	tfNumDirCliente.setBounds(314, 11, 64, 20);
 	panelDocumento_2.add(tfNumDirCliente);
@@ -287,6 +272,7 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento_2.add(txtpnDpto);
 	
 	tfDptoCliente = new JTextField();
+	tfDptoCliente.setEditable(false);
 	tfDptoCliente.setColumns(10);
 	tfDptoCliente.setBounds(70, 42, 59, 20);
 	panelDocumento_2.add(tfDptoCliente);
@@ -299,13 +285,112 @@ public class PntCrearLicencia extends JPanel {
 	panelDocumento_2.add(txtpnPiso);
 	
 	tfPisoCliente = new JTextField();
+	tfPisoCliente.setEditable(false);
 	tfPisoCliente.setColumns(10);
 	tfPisoCliente.setBounds(209, 42, 64, 20);
 	panelDocumento_2.add(tfPisoCliente);
 	
-	dcFechaNacimiento = new JDateChooser();
-	dcFechaNacimiento.setBounds(162, 143, 115, 20);
-	panelConductor.add(dcFechaNacimiento);
+	tfFechaNacimConductor = new JTextField();
+	tfFechaNacimConductor.setEditable(false);
+	tfFechaNacimConductor.setColumns(10);
+	tfFechaNacimConductor.setBounds(169, 154, 107, 20);
+	panelConductor.add(tfFechaNacimConductor);
+	
+	JTextPane txtGrupoSanguineo = new JTextPane();
+	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
+	txtGrupoSanguineo.setEditable(false);
+	txtGrupoSanguineo.setBackground(SystemColor.menu);
+	txtGrupoSanguineo.setBounds(28, 209, 122, 33);
+	panelConductor.add(txtGrupoSanguineo);
+	
+	cbGrupoSanguineoConductor = new JComboBox();
+	cbGrupoSanguineoConductor.setEnabled(false);
+	cbGrupoSanguineoConductor.setBounds(156, 209, 88, 22);
+	panelConductor.add(cbGrupoSanguineoConductor);
+	
+	JPanel panelClasesDeLicencias = new JPanel();
+	panelClasesDeLicencias.setLayout(null);
+	panelClasesDeLicencias.setToolTipText("");
+	panelClasesDeLicencias.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panelClasesDeLicencias.setBounds(28, 265, 388, 79);
+	panelConductor.add(panelClasesDeLicencias);
+	
+	chbxTipoLicenciaA = new JCheckBox("A");
+	chbxTipoLicenciaA.setEnabled(false);
+	chbxTipoLicenciaA.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaA,"1");
+			
+		}
+	});
+	chbxTipoLicenciaA.setBounds(19, 7, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaA);
+	
+	chbxTipoLicenciaB = new JCheckBox("B");
+	chbxTipoLicenciaB.setEnabled(false);
+	chbxTipoLicenciaB.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaB,"2");
+			
+		}
+	});
+	chbxTipoLicenciaB.setBounds(19, 49, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaB);
+	
+	chbxTipoLicenciaC = new JCheckBox("C");
+	chbxTipoLicenciaC.setEnabled(false);
+	chbxTipoLicenciaC.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaC,"3");
+			
+		}
+	});
+	chbxTipoLicenciaC.setBounds(102, 7, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaC);
+	
+	chbxTipoLicenciaD = new JCheckBox("D");
+	chbxTipoLicenciaD.setEnabled(false);
+	chbxTipoLicenciaD.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaD,"4");
+			
+		}
+	});
+	chbxTipoLicenciaD.setBounds(102, 49, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaD);
+	
+	chbxTipoLicenciaE = new JCheckBox("E");
+	chbxTipoLicenciaE.setEnabled(false);
+	chbxTipoLicenciaE.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaE,"5");
+			
+		}
+	});
+	chbxTipoLicenciaE.setBounds(193, 7, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaE);
+	
+	chbxTipoLicenciaF = new JCheckBox("F");
+	chbxTipoLicenciaF.setEnabled(false);
+	chbxTipoLicenciaF.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaF,"6");
+			
+		}
+	});
+	chbxTipoLicenciaF.setBounds(193, 49, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaF);
+	
+	chbxTipoLicenciaG = new JCheckBox("G");
+	chbxTipoLicenciaG.setEnabled(false);
+	chbxTipoLicenciaG.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			agregarALista(chbxTipoLicenciaG,"7");
+			
+		}
+	});
+	chbxTipoLicenciaG.setBounds(287, 7, 68, 23);
+	panelClasesDeLicencias.add(chbxTipoLicenciaG);
 	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -321,6 +406,7 @@ public class PntCrearLicencia extends JPanel {
 	panelAdmin.add(txtNombreAdmin);
 	
 	tfNombreAdmin = new JTextField();
+	tfNombreAdmin.setEditable(false);
 	tfNombreAdmin.setColumns(10);
 	tfNombreAdmin.setBounds(147, 25, 275, 20);
 	panelAdmin.add(tfNombreAdmin);
@@ -333,6 +419,7 @@ public class PntCrearLicencia extends JPanel {
 	panelAdmin.add(txtApellidoAdmin);
 	
 	tfApellidoAdmin = new JTextField();
+	tfApellidoAdmin.setEditable(false);
 	tfApellidoAdmin.setColumns(10);
 	tfApellidoAdmin.setBounds(586, 25, 275, 20);
 	panelAdmin.add(tfApellidoAdmin);
@@ -358,10 +445,12 @@ public class PntCrearLicencia extends JPanel {
 	btnAtras.setBounds(41, 602, 118, 37);
 	add(btnAtras);
 	
-	JButton btnEmitirLicencia = new JButton("Emitir licencia");
+	btnEmitirLicencia = new JButton("Emitir licencia");
 	btnEmitirLicencia.setEnabled(false);
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			cargarEmitirLicenciaDTO();
+			
 		}
 	});
 	btnEmitirLicencia.setBounds(810, 602, 118, 37);
@@ -385,8 +474,13 @@ public class PntCrearLicencia extends JPanel {
 					
 					if(conductor.size()==0) {
 						btnCrearTitular.setEnabled(true);
+						btnEmitirLicencia.setEnabled(false);
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
 					}else {
+						habilitarChbxLicencias();
+						cbDonanteDeOrganos.setEnabled(true);
+						btnCrearTitular.setEnabled(false);
+						btnEmitirLicencia.setEnabled(true);
 						cargarDatosenCampos(conductor.get(0));
 					}
 					
@@ -408,6 +502,50 @@ public class PntCrearLicencia extends JPanel {
 	
 	}
 
+	protected void habilitarChbxLicencias() {
+		chbxTipoLicenciaA.setEnabled(true);
+		chbxTipoLicenciaB.setEnabled(true);
+		chbxTipoLicenciaC.setEnabled(true);
+		chbxTipoLicenciaD.setEnabled(true);
+		chbxTipoLicenciaE.setEnabled(true);
+		chbxTipoLicenciaF.setEnabled(true);
+		chbxTipoLicenciaG.setEnabled(true);
+	}
+
+	protected void agregarALista(JCheckBox chbxTipoLicencia, String i) {
+		if(chbxTipoLicencia.isSelected()==true) {
+			licenciasSelec.add(i);
+		}else {
+			licenciasSelec.remove(i);
+		}
+		
+	}
+
+	protected void cargarEmitirLicenciaDTO() {
+		emitirLicenciaDTO.setNombreCond(tfNombreCliente.getText());
+		emitirLicenciaDTO.setApellidoCond(tfApellidoCliente.getText());
+		emitirLicenciaDTO.setTipoDoc(cbTipoDocumentoCliente.getSelectedIndex());
+		emitirLicenciaDTO.setNumDoc(Integer.parseInt(tfNroDocumentoCliente.getText()));
+		emitirLicenciaDTO.setFechaNacimiento(LocalDate.parse(tfFechaNacimConductor.getText(),formatter));
+		emitirLicenciaDTO.setSexo(cbSexoCliente.getSelectedItem().toString());
+		emitirLicenciaDTO.setGrupoSang(cbGrupoSanguineoConductor.getSelectedIndex()); //1-Masc 2-Fem
+		emitirLicenciaDTO.setEsDonante(esDonante());
+		emitirLicenciaDTO.setCalle(tfCalleCliente.getText());
+		emitirLicenciaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
+		emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+		emitirLicenciaDTO.setDpto(tfDptoCliente.getText());
+		emitirLicenciaDTO.setObservaciones(txtpnObservaciones.getText());
+		emitirLicenciaDTO.setLicenciasSeleccionadas(licenciasSelec);
+	}
+
+	private Boolean esDonante() {
+		if(cbDonanteDeOrganos.getSelectedIndex()==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
 	private void cargarDatosenCampos(Conductor conductor) throws ParseException {
 		tfNombreCliente.setText(conductor.getNombre());
 		tfApellidoCliente.setText(conductor.getApellido());
@@ -418,13 +556,9 @@ public class PntCrearLicencia extends JPanel {
 		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
-		//TODO : Preguntar sobre num de dir, dpto y piso
-		
-		
-		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String fechaNac = dateFormat.format(conductor.getFechaNacimiento());
-		dcFechaNacimiento.setDate(Date.parse(fechaNac));*/
-		
+		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
+
+		tfFechaNacimConductor.setText(String.valueOf(conductor.getFechaNacimiento().format(formatter)));
 	}
 	
 	private void llenarCB() throws Exception {
@@ -441,25 +575,21 @@ public class PntCrearLicencia extends JPanel {
 		//Llena el combo box del tipo de sangre
 		List<TipoGrupoSanguineo> tipoGrupoSang= GestorPersona.obtenerTipoGrupoSanguineo();
 		int tamList1 = tipoGrupoSang.size();
-
+		
 		cbGrupoSanguineoConductor.addItem("Seleccionar opción");
 		for(int i=0; i<tamList1; i++) {
 			cbGrupoSanguineoConductor.addItem(tipoGrupoSang.get(i).getTipoGrupoSanguineoTexto());
 		}
 		
-		//Llena el combo box del tipo de licencia
-		List<TipoLicencia> tipoLicencia= GestorLicencia.obtenerTipoLicencia();
-		int tamList2 = tipoLicencia.size();
-
-		cbClaseLicencia.addItem("Seleccionar opción");
-		for(int i=0; i<tamList2; i++) {
-			cbClaseLicencia.addItem(tipoLicencia.get(i).getTipoLicenciaTexto());
-		}
-		
 		//Llena el combo box de donante
-			cbDonanteDeOrganos.addItem("Seleccionar opción");
-			cbDonanteDeOrganos.addItem("SI");
-			cbDonanteDeOrganos.addItem("NO");
+		cbDonanteDeOrganos.addItem("Seleccionar opción");
+		cbDonanteDeOrganos.addItem("SI");
+		cbDonanteDeOrganos.addItem("NO");
+
+		//Llena el combo box de sexo
+		cbSexoCliente.addItem("Seleccionar opción");
+		cbSexoCliente.addItem("M");
+		cbSexoCliente.addItem("F");
 	}
 
 	private boolean esDniValido(String val) {
