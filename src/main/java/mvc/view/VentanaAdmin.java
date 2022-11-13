@@ -15,7 +15,7 @@ public class VentanaAdmin extends JFrame {
 	public static JPanel contentPane;
 	
 	/*DEFINIMOS TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
-	//public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
+	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
 	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	
 	private static Dimension sizePnt;
@@ -58,10 +58,10 @@ public class VentanaAdmin extends JFrame {
 		
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
-		//contentPane.add(n_pntCrearLicencia, pntCrearLicencia);
+		contentPane.add(n_pntCrearLicencia, pntCrearLicencia);
 		contentPane.add(n_pntImprimirLicencia, pntImprimirLicencia);
 		
-		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
+		cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 	
 		cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 	}
