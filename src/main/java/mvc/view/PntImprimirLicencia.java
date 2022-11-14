@@ -25,6 +25,8 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.border.LineBorder;
 
+import mvc.controller.dto.EmitirLicenciaDTO;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 
@@ -58,6 +60,8 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel tipoDocumentoLbl;
 	
 	private JButton btnImprimirLicencia;
+	
+	private EmitirLicenciaDTO emitirLicenciaDTO=new EmitirLicenciaDTO();
 
 	/**
 	 * Create the panel.
@@ -314,11 +318,16 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		
 		btnImprimirLicencia = new JButton("Imprimir licencia");
 		btnImprimirLicencia.addActionListener(imprimirLicenciaPDF);
-		btnImprimirLicencia.setBounds(828, 600, 142, 37);
+		btnImprimirLicencia.setBounds(810, 602, 118, 37);
 		add(btnImprimirLicencia);
 		
 		JButton btnAtras = new JButton("Atras");
-		btnAtras.setBounds(700, 600, 118, 37);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntCrearLicencia,VentanaAdmin.n_pntCrearLicencia);
+			}
+		});
+		btnAtras.setBounds(41, 602, 118, 37);
 		add(btnAtras);
 		
 		
@@ -344,7 +353,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		}
 	};
 
-	// private void cargarDatosenCampo() {
+	 private void cargarDatosenCampo() {
 	// 	List<Licencia> licencias;
 		
 	// 	try {
@@ -357,7 +366,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	// 		e.printStackTrace();
 	// 	}
 		
-	// }
+	 }
 
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		if(pageIndex > 0) return NO_SUCH_PAGE;
@@ -369,4 +378,10 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		return PAGE_EXISTS;
 		
 	}
+
+	public void setEmitirLicenciaDTO(EmitirLicenciaDTO emitirLicenciaDTO) {
+		this.emitirLicenciaDTO = emitirLicenciaDTO;
+	}
+	
+	
 }

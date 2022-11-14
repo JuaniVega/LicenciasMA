@@ -62,8 +62,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntImprimirLicencia, pntImprimirLicencia);
 		
 		cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
-	
-		cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
+		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {

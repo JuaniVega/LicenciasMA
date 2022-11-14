@@ -472,8 +472,11 @@ public class PntCrearLicencia extends JPanel {
 			if(validarSelecciones()) {
 				cargarEmitirLicenciaDTO();
 				try {
-					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
-					GestorLicencia.crearLicencia(emitirLicenciaDTO);
+					//GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
+					//GestorLicencia.crearLicencia(emitirLicenciaDTO);
+					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
+					pntImprimirLicencia.setEmitirLicenciaDTO(emitirLicenciaDTO);
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
