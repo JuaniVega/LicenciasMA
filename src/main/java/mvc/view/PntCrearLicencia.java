@@ -546,7 +546,7 @@ public class PntCrearLicencia extends JPanel {
 			return false;
 		}
 		if(cbDonanteDeOrganos.getSelectedIndex()==0) {
-			lblErrorDonantes.setText("Por favor seleccione una opción.");
+			lblErrorDonantes.setText("Por favor seleccione una opciï¿½n.");
 			return false;
 		}
 		return true;
@@ -556,16 +556,16 @@ public class PntCrearLicencia extends JPanel {
 	protected void validarLicenciaASeleccionar(LocalDate fechaNacimiento, int dni) throws Exception {
 		LocalDate fechaActual=LocalDate.now();
 		Period periodAniosCond = Period.between(fechaNacimiento, fechaActual);
-		int añosConductor= periodAniosCond.getYears();
+		int aniosConductor= periodAniosCond.getYears();
 		
-		int añosAntiguedad= calcularAntiguedadLicB(dni, fechaActual);
+		int aniosAntiguedad= calcularAntiguedadLicB(dni, fechaActual);
 		int licenciasCDE= calcularCantLicCDE(dni);
 		
-		if(añosConductor<17) {
+		if(aniosConductor<17) {
 			cbDonanteDeOrganos.setEnabled(false);
 			btnEmitirLicencia.setEnabled(false);
-			lblErrorLicencias.setText("Menores de 17 años no pueden solicitar NINGUNA licencia.");
-		}else if(añosConductor<21) {
+			lblErrorLicencias.setText("Menores de 17 aï¿½os no pueden solicitar NINGUNA licencia.");
+		}else if(aniosConductor<21) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
 			btnEmitirLicencia.setEnabled(true);
@@ -573,8 +573,8 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("Menores de 21 años no pueden solicitar licencias C, D o E.");
-		}else if((añosConductor>=21 && añosAntiguedad<1)) {
+			lblErrorLicencias.setText("Menores de 21 aï¿½os no pueden solicitar licencias C, D o E.");
+		}else if((aniosConductor>=21 && aniosAntiguedad<1)) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
 			btnEmitirLicencia.setEnabled(true);
@@ -582,8 +582,8 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("No posee 1 año o mas de antiguedad con licencia B.");
-		}else if(añosConductor>65 && licenciasCDE==0) {
+			lblErrorLicencias.setText("No posee 1 aï¿½o o mas de antiguedad con licencia B.");
+		}else if(aniosConductor>65 && licenciasCDE==0) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
 			btnEmitirLicencia.setEnabled(true);
@@ -591,8 +591,8 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("Mayores de 65 años no pueden solicitar licencias C, D o E por primera vez.");
-		}else if(añosConductor>=21 && añosAntiguedad>=1) {
+			lblErrorLicencias.setText("Mayores de 65 aï¿½os no pueden solicitar licencias C, D o E por primera vez.");
+		}else if(aniosConductor>=21 && aniosAntiguedad>=1) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
 			btnEmitirLicencia.setEnabled(true);
@@ -626,13 +626,13 @@ public class PntCrearLicencia extends JPanel {
 
 
 	private int calcularAntiguedadLicB(int dni, LocalDate fechaActual) throws Exception {
-		int añosAntiguedad=0;
+		int aniosAntiguedad=0;
 		List<Licencia> licencia= GestorLicencia.obtenerLicenciaxDnixTipo(dni, 2); 
 		LocalDate fechaEmision=licencia.get(0).getFechaEmision();
 		
 		Period periodAniosEmision = Period.between(fechaEmision, fechaActual);
-		añosAntiguedad= periodAniosEmision.getYears();
-		return añosAntiguedad;
+		aniosAntiguedad= periodAniosEmision.getYears();
+		return aniosAntiguedad;
 	}
 
 
@@ -759,7 +759,7 @@ public class PntCrearLicencia extends JPanel {
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
+			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor vï¿½lido.", "ERROR");
 			return false;
 		}
 		
