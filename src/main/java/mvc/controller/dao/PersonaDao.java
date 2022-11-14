@@ -1,5 +1,7 @@
 package mvc.controller.dao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,5 +66,30 @@ public class PersonaDao {
 		catch(Exception ex) {
 			throw ex;
 		}
+	}
+	
+	public static void updateConductorDonante (Integer doc, boolean esDonante) {
+		
+		Connection con = ConexionP.conectarDB();
+		try {
+			//Comienza transacción
+			con.setAutoCommit(false);
+				
+			String query = "update public.conductor set dona_organos ="+esDonante+" where dni ="+doc+";";
+				
+			con.createStatement().executeUpdate(query);
+				
+			con.commit();
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
+		
 	}
 }
