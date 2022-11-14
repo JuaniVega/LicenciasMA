@@ -484,6 +484,11 @@ public class PntCrearLicencia extends JPanel {
 	});
 	btnEmitirLicencia.setBounds(810, 602, 118, 37);
 	add(btnEmitirLicencia);
+	btnCrearTitular.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntDarAltaTitularUI,VentanaAdmin.n_pntDarAltaTitularUI);
+		}
+	});
 	
 
 	btnCrearTitular.setEnabled(false);
@@ -718,7 +723,7 @@ public class PntCrearLicencia extends JPanel {
 		List<TipoDocumento> tipoDoc= GestorPersona.obtenerTipoDocumento();
 		int tamList = tipoDoc.size();
 
-		cbTipoDocumentoCliente.addItem("Seleccionar opción");
+		cbTipoDocumentoCliente.addItem("-Seleccione-");
 		for(int i=0; i<tamList; i++) {
 			cbTipoDocumentoCliente.addItem(tipoDoc.get(i).getTipoDocumentoTexto());
 		}
@@ -727,18 +732,18 @@ public class PntCrearLicencia extends JPanel {
 		List<TipoGrupoSanguineo> tipoGrupoSang= GestorPersona.obtenerTipoGrupoSanguineo();
 		int tamList1 = tipoGrupoSang.size();
 		
-		cbGrupoSanguineoConductor.addItem("Seleccionar opción");
+		cbGrupoSanguineoConductor.addItem("-Seleccione-");
 		for(int i=0; i<tamList1; i++) {
 			cbGrupoSanguineoConductor.addItem(tipoGrupoSang.get(i).getTipoGrupoSanguineoTexto());
 		}
 		
 		//Llena el combo box de donante
-		cbDonanteDeOrganos.addItem("Seleccionar opción");
+		cbDonanteDeOrganos.addItem("-Seleccione-");
 		cbDonanteDeOrganos.addItem("SI");
 		cbDonanteDeOrganos.addItem("NO");
 
 		//Llena el combo box de sexo
-		cbSexoCliente.addItem("Seleccionar opción");
+		cbSexoCliente.addItem("-Seleccione-");
 		cbSexoCliente.addItem("M");
 		cbSexoCliente.addItem("F");
 	}
