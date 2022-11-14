@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
+import mvc.model.Licencia;
 import mvc.model.Persona;
 import mvc.model.TipoDocumento;
 import mvc.model.TipoGrupoSanguineo;
@@ -63,7 +65,9 @@ public class PntCrearLicencia extends JPanel {
 	private JCheckBox chbxTipoLicenciaE;
 	private JCheckBox chbxTipoLicenciaF;
 	private JCheckBox chbxTipoLicenciaG;
+	private JTextArea taObservaciones;
 	private JLabel lblErrorLicencias;
+	private JLabel lblErrorDonantes;
 	
 	private JButton btnCrearTitular = new JButton("Crear titular");
 	private JButton btnEmitirLicencia;
@@ -72,6 +76,8 @@ public class PntCrearLicencia extends JPanel {
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+	
+	private boolean licenciasConCDE=false;
 	
 	public PntCrearLicencia() {
 		setLocation(-31, -63);
@@ -217,7 +223,8 @@ public class PntCrearLicencia extends JPanel {
 	txtpnObservaciones.setBounds(468, 197, 107, 22);
 	panelConductor.add(txtpnObservaciones);
 	
-	JTextArea taObservaciones = new JTextArea();
+	taObservaciones = new JTextArea();
+	taObservaciones.setEnabled(false);
 	taObservaciones.setToolTipText("Observaciones");
 	taObservaciones.setBounds(585, 197, 275, 147);
 	panelConductor.add(taObservaciones);
@@ -400,6 +407,11 @@ public class PntCrearLicencia extends JPanel {
 	lblErrorLicencias.setBounds(28, 348, 388, 25);
 	panelConductor.add(lblErrorLicencias);
 	
+	lblErrorDonantes = new JLabel("");
+	lblErrorDonantes.setForeground(Color.RED);
+	lblErrorDonantes.setBounds(265, 242, 243, 14);
+	panelConductor.add(lblErrorDonantes);
+	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 	panelAdmin.setBounds(31, 454, 908, 121);
@@ -457,8 +469,15 @@ public class PntCrearLicencia extends JPanel {
 	btnEmitirLicencia.setEnabled(false);
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			cargarEmitirLicenciaDTO();
-			
+			if(validarSelecciones()) {
+				cargarEmitirLicenciaDTO();
+				try {
+					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
+					GestorLicencia.crearLicencia(emitirLicenciaDTO);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
 	});
 	btnEmitirLicencia.setBounds(810, 602, 118, 37);
@@ -486,11 +505,10 @@ public class PntCrearLicencia extends JPanel {
 						btnEmitirLicencia.setEnabled(false);
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
 					}else {
-						habilitarChbxLicencias();
-						cbDonanteDeOrganos.setEnabled(true);
+						validarLicenciaASeleccionar(conductor.get(0).getFechaNacimiento(), conductor.get(0).getDni());
 						btnCrearTitular.setEnabled(false);
-						btnEmitirLicencia.setEnabled(true);
 						cargarDatosenCampos(conductor.get(0));
+						
 					}
 					
 				} catch (Exception e) {
@@ -510,6 +528,107 @@ public class PntCrearLicencia extends JPanel {
 	}
 	
 	}
+	
+
+	protected boolean validarSelecciones() {
+		lblErrorDonantes.setText("");
+		lblErrorLicencias.setText("");
+		
+		if(licenciasSelec.size()==0) {
+			lblErrorLicencias.setText("Por favor seleccione un tipo de licencia.");
+			return false;
+		}
+		if(cbDonanteDeOrganos.getSelectedIndex()==0) {
+			lblErrorDonantes.setText("Por favor seleccione una opción.");
+			return false;
+		}
+		return true;
+		
+	}
+
+	protected void validarLicenciaASeleccionar(LocalDate fechaNacimiento, int dni) throws Exception {
+		LocalDate fechaActual=LocalDate.now();
+		Period periodAniosCond = Period.between(fechaNacimiento, fechaActual);
+		int añosConductor= periodAniosCond.getYears();
+		
+		int añosAntiguedad= calcularAntiguedadLicB(dni, fechaActual);
+		int licenciasCDE= calcularCantLicCDE(dni);
+		
+		if(añosConductor<17) {
+			cbDonanteDeOrganos.setEnabled(false);
+			btnEmitirLicencia.setEnabled(false);
+			lblErrorLicencias.setText("Menores de 17 años no pueden solicitar NINGUNA licencia.");
+		}else if(añosConductor<21) {
+			taObservaciones.setEnabled(true);
+			cbDonanteDeOrganos.setEnabled(true);
+			btnEmitirLicencia.setEnabled(true);
+			chbxTipoLicenciaA.setEnabled(true);
+			chbxTipoLicenciaB.setEnabled(true);
+			chbxTipoLicenciaF.setEnabled(true);
+			chbxTipoLicenciaG.setEnabled(true);
+			lblErrorLicencias.setText("Menores de 21 años no pueden solicitar licencias C, D o E.");
+		}else if((añosConductor>=21 && añosAntiguedad<1)) {
+			taObservaciones.setEnabled(true);
+			cbDonanteDeOrganos.setEnabled(true);
+			btnEmitirLicencia.setEnabled(true);
+			chbxTipoLicenciaA.setEnabled(true);
+			chbxTipoLicenciaB.setEnabled(true);
+			chbxTipoLicenciaF.setEnabled(true);
+			chbxTipoLicenciaG.setEnabled(true);
+			lblErrorLicencias.setText("No posee 1 año o mas de antiguedad con licencia B.");
+		}else if(añosConductor>65 && licenciasCDE==0) {
+			taObservaciones.setEnabled(true);
+			cbDonanteDeOrganos.setEnabled(true);
+			btnEmitirLicencia.setEnabled(true);
+			chbxTipoLicenciaA.setEnabled(true);
+			chbxTipoLicenciaB.setEnabled(true);
+			chbxTipoLicenciaF.setEnabled(true);
+			chbxTipoLicenciaG.setEnabled(true);
+			lblErrorLicencias.setText("Mayores de 65 años no pueden solicitar licencias C, D o E por primera vez.");
+		}else if(añosConductor>=21 && añosAntiguedad>=1) {
+			taObservaciones.setEnabled(true);
+			cbDonanteDeOrganos.setEnabled(true);
+			btnEmitirLicencia.setEnabled(true);
+			chbxTipoLicenciaA.setEnabled(true);
+			chbxTipoLicenciaB.setEnabled(true);
+			chbxTipoLicenciaC.setEnabled(true);
+			chbxTipoLicenciaD.setEnabled(true);
+			chbxTipoLicenciaE.setEnabled(true);
+			chbxTipoLicenciaF.setEnabled(true);
+			chbxTipoLicenciaG.setEnabled(true);
+			licenciasConCDE=true;
+		}
+		
+	}
+
+
+
+	private int calcularCantLicCDE(int dni) throws Exception {
+		int cantLic=0;
+		List<Licencia> licencias= GestorLicencia.obtenerLicenciaxDni(dni);
+		
+		for(int i=0; i<licencias.size();i++) {
+			if(licencias.get(i).getIdTipoLicencia()==3 || licencias.get(i).getIdTipoLicencia()==4 || licencias.get(i).getIdTipoLicencia()==5) {
+				cantLic++;
+			}
+		}
+		
+		return cantLic;
+	}
+
+
+
+	private int calcularAntiguedadLicB(int dni, LocalDate fechaActual) throws Exception {
+		int añosAntiguedad=0;
+		List<Licencia> licencia= GestorLicencia.obtenerLicenciaxDnixTipo(dni, 2); 
+		LocalDate fechaEmision=licencia.get(0).getFechaEmision();
+		
+		Period periodAniosEmision = Period.between(fechaEmision, fechaActual);
+		añosAntiguedad= periodAniosEmision.getYears();
+		return añosAntiguedad;
+	}
+
+
 
 	protected void limpiarPantalla() {
 		tfNombreCliente.setText("");
@@ -523,6 +642,9 @@ public class PntCrearLicencia extends JPanel {
 		cbGrupoSanguineoConductor.setSelectedIndex(0);
 		cbSexoCliente.setSelectedIndex(0);
 		tfFechaNacimConductor.setText("");
+		taObservaciones.setText("");
+		lblErrorLicencias.setText("");
+		lblErrorDonantes.setText("");
 	}
 
 	protected void habilitarChbxLicencias() {
@@ -557,8 +679,11 @@ public class PntCrearLicencia extends JPanel {
 		emitirLicenciaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
 		emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
 		emitirLicenciaDTO.setDpto(tfDptoCliente.getText());
-		emitirLicenciaDTO.setObservaciones(txtpnObservaciones.getText());
+		emitirLicenciaDTO.setObservaciones(taObservaciones.getText());
 		emitirLicenciaDTO.setLicenciasSeleccionadas(licenciasSelec);
+		emitirLicenciaDTO.setFechaEmision(LocalDate.parse(tfFechaEmision.getText()));
+		emitirLicenciaDTO.setEsCopia(false);
+		emitirLicenciaDTO.setEstaVigente(true);
 	}
 
 	private Boolean esDonante() {
@@ -580,6 +705,7 @@ public class PntCrearLicencia extends JPanel {
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
+		tfFechaEmision.setText(LocalDate.now().toString());
 
 		tfFechaNacimConductor.setText(String.valueOf(conductor.getFechaNacimiento().format(formatter)));
 	}

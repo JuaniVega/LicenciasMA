@@ -12,6 +12,7 @@ public class Licencia {
 	private LocalDate fechaVigencia;
 	private Boolean esCopia;
 	private Boolean estaVigente;
+	private String observaciones;
 	
 	public Licencia() {
 		super();
@@ -19,7 +20,7 @@ public class Licencia {
 
 
 	public Licencia(Integer idLicencia, Integer idPersona, Integer idTipoLicencia, Integer costo,
-			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente) {
+			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente, String observaciones) {
 		super();
 		this.idLicencia = idLicencia;
 		this.idPersona = idPersona;
@@ -29,6 +30,20 @@ public class Licencia {
 		this.fechaVigencia = fechaVigencia;
 		this.esCopia = esCopia;
 		this.estaVigente = estaVigente;
+		this.observaciones=observaciones;
+	}
+	
+	public Licencia(String datos) {
+		String[] atributo = datos.split("\t");
+		this.idLicencia=Integer.parseInt(atributo[0]);
+		this.idPersona=Integer.parseInt(atributo[1]);
+		this.idTipoLicencia=Integer.parseInt(atributo[2]);
+		this.costo=Integer.parseInt(atributo[3]);
+		this.fechaEmision=LocalDate.parse(atributo[4]);
+		this.fechaVigencia=LocalDate.parse(atributo[5]);
+		this.esCopia=Boolean.parseBoolean(atributo[6]);
+		this.estaVigente=Boolean.parseBoolean(atributo[7]);
+		this.observaciones=atributo[8];
 	}
 
 
@@ -110,7 +125,15 @@ public class Licencia {
 	public void setEstaVigente(Boolean estaVigente) {
 		this.estaVigente = estaVigente;
 	}
-	
-	
+
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
 
 }

@@ -3,6 +3,7 @@ package mvc.controller.gestores;
 import java.util.List;
 
 import mvc.controller.dao.PersonaDao;
+import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -29,5 +30,9 @@ public class GestorPersona {
 	
 	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{
 		return PersonaDao.getTipoGrupoSanguineo();
+	}
+	
+	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
+		PersonaDao.updateConductorDonante(emitirLicenciaDTO.getNumDoc(), emitirLicenciaDTO.getEsDonante());
 	}
 }
