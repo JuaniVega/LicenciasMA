@@ -720,12 +720,12 @@ public class PntCrearLicencia extends JPanel {
 	private void llenarCB() throws Exception {
 		
 		//Llena el combo box de tipo de documento
-		List<TipoDocumento> tipoDoc= GestorPersona.obtenerTipoDocumento();
+		List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
 		int tamList = tipoDoc.size();
 
 		cbTipoDocumentoCliente.addItem("-Seleccione-");
 		for(int i=0; i<tamList; i++) {
-			cbTipoDocumentoCliente.addItem(tipoDoc.get(i).getTipoDocumentoTexto());
+			cbTipoDocumentoCliente.addItem(tipoDoc.get(i).getTipo_doc());
 		}
 		
 		//Llena el combo box del tipo de sangre

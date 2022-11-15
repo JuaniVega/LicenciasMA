@@ -24,8 +24,8 @@ public class GestorPersona {
 		return PersonaDao.getAdministrativoxDni(dni);
 	}
 	
-	public static List<TipoDocumento> obtenerTipoDocumento() throws Exception{
-		return PersonaDao.getTipoDocumento();
+	public static List<TipoDocumento> obtenerTiposDocumentos() throws Exception{
+		return PersonaDao.getTiposDocumentos();
 	}
 	
 	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{

@@ -1,6 +1,7 @@
 package mvc.controller.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +47,20 @@ public class PersonaDao {
 		}
 	}
 	
-	public static List<TipoDocumento> getTipoDocumento() throws Exception {
+	public static List<TipoDocumento> getTiposDocumentos() throws Exception {
+		List<TipoDocumento> tipoDoc = new ArrayList<TipoDocumento>();
 		try {
-			String query = "select td.id from public.tipo_documento td;";                            
-			ArrayList<TipoDocumento> tipoDoc = (ArrayList<TipoDocumento>)((Object)ConexionP.consultar(query, TipoDocumento.class));
-			return tipoDoc;
+			String query = "select td.id, td.tipo_doc, td.descripcion from public.tipo_documento td;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				TipoDocumento tipoDocumento = new TipoDocumento(rs.getInt("id"),rs.getString("tipo_doc"), rs.getString("descripcion"));
+				tipoDoc.add(tipoDocumento);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return tipoDoc;
 	}
 	
 	public static List<TipoGrupoSanguineo> getTipoGrupoSanguineo() throws Exception {
@@ -72,7 +78,7 @@ public class PersonaDao {
 		
 		Connection con = ConexionP.conectarDB();
 		try {
-			//Comienza transacción
+			//Comienza transacciï¿½n
 			con.setAutoCommit(false);
 				
 			String query = "update public.conductor set dona_organos ="+esDonante+" where dni ="+doc+";";

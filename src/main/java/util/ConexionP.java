@@ -27,6 +27,24 @@ public class ConexionP {
 		return conexion;
 	}
 	
+    public static ResultSet consultarDatos(String query) throws Exception {
+    	Connection con = null;
+    	ResultSet rs = null;
+        try {
+            con =ConexionP.conectarDB();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+        }catch (Exception ex) {
+        	throw ex;
+		}
+        finally{
+            if(con != null){
+                con.close();
+            }
+        }
+        return rs;
+    }
+    
 	public static ArrayList<Object> consultar(String query, Class<? extends Object> ob) throws Exception{
         ArrayList<Object> result = new ArrayList<Object>();
         Connection con = null;
