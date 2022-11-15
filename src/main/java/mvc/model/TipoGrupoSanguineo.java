@@ -3,7 +3,7 @@ package mvc.model;
 public class TipoGrupoSanguineo {
 	
 	private Integer id_grupo_sanguineo;
-	private String tipo_grupo_sanguineo;
+	private String 	tipo_grupo_sanguineo;
 	
 	public TipoGrupoSanguineo() {
 		super();
@@ -11,8 +11,8 @@ public class TipoGrupoSanguineo {
 	
 	public TipoGrupoSanguineo(Integer id_grupo_sanguineo, String tipo_grupo_sanguineo) {
 		super();
-		this.id_grupo_sanguineo = id_grupo_sanguineo;
-		this.tipo_grupo_sanguineo = tipo_grupo_sanguineo;
+		this.id_grupo_sanguineo 	= id_grupo_sanguineo;
+		this.tipo_grupo_sanguineo 	= tipo_grupo_sanguineo;
 	}
 	
 	public Integer getId_grupo_sanguineo() {

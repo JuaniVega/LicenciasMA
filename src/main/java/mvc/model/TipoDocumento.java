@@ -4,7 +4,7 @@ public class TipoDocumento {
 	
 	private Integer id_doc;
 	private String 	tipo_doc;
-	private String descripcion;
+	private String 	descripcion;
 
 	public TipoDocumento(){
 		super();
