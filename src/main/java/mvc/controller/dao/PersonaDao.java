@@ -15,36 +15,51 @@ import util.ConexionP;
 
 public class PersonaDao {
 	public static List<Persona> getPersonaxDni(int dni) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
 		try {
-			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo  from public.persona p where p.dni="+dni+";";                            
-			ArrayList<Persona> persona = (ArrayList<Persona>)((Object)ConexionP.consultar(query, Persona.class));
-			return persona;
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.dni="+dni+";";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return persona;
 	}
 	
 	public static List<Conductor> getConductorxDni(int dni) throws Exception {
+		ArrayList<Conductor> conductor = new ArrayList<Conductor>();
 		try {
 			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, c.direccion, c.num_dir, c.piso, c.departamento, c.grupo_sanguineo, c.dona_organos, p.sexo  from public.persona p inner join public.conductor c on p.dni=c.dni  where p.dni="+dni+";";                            
-			ArrayList<Conductor> conductor = (ArrayList<Conductor>)((Object)ConexionP.consultar(query, Conductor.class));
-			return conductor;
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Conductor conduc = new Conductor(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"), rs.getString("direccion"), rs.getInt("num_dir"), rs.getInt("piso"), rs.getString("departamento"), rs.getInt("grupo_sanguineo"), rs.getBoolean("dona_organos"));
+				conductor.add(conduc);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return conductor;
 	}
 	
 	public static List<Administrativo> getAdministrativoxDni(int dni) throws Exception {
+		ArrayList<Administrativo> administrativo= new ArrayList<Administrativo>();
 		try {
-			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, a.email, a.pass from public.persona p inner join public.administrativo a on p.dni=a.dni where p.dni="+dni+";";                            
-			ArrayList<Administrativo> admin = (ArrayList<Administrativo>)((Object)ConexionP.consultar(query, Administrativo.class));
-			return admin;
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo, a.email, a.pass from public.persona p inner join public.administrativo a on p.dni=a.dni where p.dni="+dni+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Administrativo admin = new Administrativo(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"), rs.getString("email"), rs.getString("pass"));
+				administrativo.add(admin);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return administrativo;
 	}
 	
 	public static List<TipoDocumento> getTiposDocumentos() throws Exception {
