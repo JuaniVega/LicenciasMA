@@ -13,35 +13,31 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import com.toedter.calendar.JDateChooser;
 
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
 import mvc.model.Licencia;
-import mvc.model.Persona;
 import mvc.model.TipoDocumento;
 import mvc.model.TipoGrupoSanguineo;
-import mvc.model.TipoLicencia;
-import mvc.view.VentanaAdmin;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import java.awt.Color;
 
 public class PntCrearLicencia extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2439382630198569769L;
+	
 	private JTextField tfNombreCliente;
 	private JTextField tfApellidoCliente;
 	private JTextField tfNroDocumentoCliente;
