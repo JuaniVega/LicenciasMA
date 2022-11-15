@@ -63,15 +63,20 @@ public class PersonaDao {
 		return tipoDoc;
 	}
 	
-	public static List<TipoGrupoSanguineo> getTipoGrupoSanguineo() throws Exception {
+	public static List<TipoGrupoSanguineo> getTiposGrupoSanguineos() throws Exception {
+		List<TipoGrupoSanguineo> tipoGrupSang = new ArrayList<TipoGrupoSanguineo>();
 		try {
-			String query = "select tgs.id  from public.tipo_grupo_sanguineo tgs;";                            
-			ArrayList<TipoGrupoSanguineo> tipoGrupoSang = (ArrayList<TipoGrupoSanguineo>)((Object)ConexionP.consultar(query, TipoGrupoSanguineo.class));
-			return tipoGrupoSang;
+			String query = "select tgs.id, tgs.tipo_grupo_sanguineo from public.tipo_grupo_sanguineo tgs;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				TipoGrupoSanguineo tipoGS = new TipoGrupoSanguineo(rs.getInt("id"),rs.getString("tipo_grupo_sanguineo"));
+				tipoGrupSang.add(tipoGS);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return tipoGrupSang;
 	}
 	
 	public static void updateConductorDonante (Integer doc, boolean esDonante) {

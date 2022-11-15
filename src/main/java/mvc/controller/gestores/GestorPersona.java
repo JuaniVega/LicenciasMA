@@ -29,7 +29,7 @@ public class GestorPersona {
 	}
 	
 	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{
-		return PersonaDao.getTipoGrupoSanguineo();
+		return PersonaDao.getTiposGrupoSanguineos();
 	}
 	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {

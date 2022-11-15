@@ -53,10 +53,10 @@ public class PntCrearLicencia extends JPanel {
 	private JTextField tfPisoCliente;
 	private JTextField tfFechaEmision;
 	private JTextField tfFechaNacimConductor;
-	private JComboBox cbTipoDocumentoCliente;
+	private JComboBox<String> cbTipoDocumentoCliente;
 	private JComboBox cbDonanteDeOrganos;
 	private JComboBox cbSexoCliente;
-	private JComboBox cbGrupoSanguineoConductor;
+	private JComboBox<String> cbGrupoSanguineoConductor;
 	private JTextPane txtpnObservaciones;
 	private JCheckBox chbxTipoLicenciaA;
 	private JCheckBox chbxTipoLicenciaB;
@@ -734,7 +734,7 @@ public class PntCrearLicencia extends JPanel {
 		
 		cbGrupoSanguineoConductor.addItem("-Seleccione-");
 		for(int i=0; i<tamList1; i++) {
-			cbGrupoSanguineoConductor.addItem(tipoGrupoSang.get(i).getTipoGrupoSanguineoTexto());
+			cbGrupoSanguineoConductor.addItem(tipoGrupoSang.get(i).getTipo_grupo_sanguineo());
 		}
 		
 		//Llena el combo box de donante
