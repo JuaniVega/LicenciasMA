@@ -16,7 +16,7 @@ public class VentanaAdmin extends JFrame {
 	
 	/*DEFINIMOS TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
-	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
+	//public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(null);
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
 	
 	private static Dimension sizePnt;
@@ -60,15 +60,15 @@ public class VentanaAdmin extends JFrame {
 		
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
-		contentPane.add(n_pntCrearLicencia, pntCrearLicencia);
-		contentPane.add(n_pntImprimirLicencia, pntImprimirLicencia);
-		contentPane.add(n_pntDarAltaTitularUI, pntDarAltaTitularUI);
+		//contentPane.add(n_pntCrearLicencia, pntCrearLicencia);
+		//contentPane.add(n_pntImprimirLicencia, pntImprimirLicencia);
+		//contentPane.add(n_pntDarAltaTitularUI, pntDarAltaTitularUI);
 		
 		cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
-		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
+		contentPane.add(nombrePnt, panel); //Agrego la pantalla a contentPane, previamente debe estar inicializada
 		panel.setSize(sizePnt);
 		cl.show(contentPane, nombrePnt); // show: muestra esa Pnt en ese contenedor
 		contentPane.revalidate(); // "limpiar el contenedor o VentanaAdmin"
