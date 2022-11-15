@@ -468,8 +468,8 @@ public class PntCrearLicencia extends JPanel {
 			if(validarSelecciones()) {
 				cargarEmitirLicenciaDTO();
 				try {
-					//GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
-					//GestorLicencia.crearLicencia(emitirLicenciaDTO);
+					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
+					GestorLicencia.crearLicencia(emitirLicenciaDTO);
 					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 					pntImprimirLicencia.setEmitirLicenciaDTO(emitirLicenciaDTO);
 					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
@@ -542,7 +542,7 @@ public class PntCrearLicencia extends JPanel {
 			return false;
 		}
 		if(cbDonanteDeOrganos.getSelectedIndex()==0) {
-			lblErrorDonantes.setText("Por favor seleccione una opciï¿½n.");
+			lblErrorDonantes.setText("Por favor seleccione una opción.");
 			return false;
 		}
 		return true;
@@ -560,7 +560,7 @@ public class PntCrearLicencia extends JPanel {
 		if(aniosConductor<17) {
 			cbDonanteDeOrganos.setEnabled(false);
 			btnEmitirLicencia.setEnabled(false);
-			lblErrorLicencias.setText("Menores de 17 aï¿½os no pueden solicitar NINGUNA licencia.");
+			lblErrorLicencias.setText("Menores de 17 años no pueden solicitar NINGUNA licencia.");
 		}else if(aniosConductor<21) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
@@ -569,7 +569,7 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("Menores de 21 aï¿½os no pueden solicitar licencias C, D o E.");
+			lblErrorLicencias.setText("Menores de 21 años no pueden solicitar licencias C, D o E.");
 		}else if((aniosConductor>=21 && aniosAntiguedad<1)) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
@@ -578,7 +578,7 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("No posee 1 aï¿½o o mas de antiguedad con licencia B.");
+			lblErrorLicencias.setText("No posee 1 año o mas de antiguedad con licencia B.");
 		}else if(aniosConductor>65 && licenciasCDE==0) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
@@ -587,7 +587,7 @@ public class PntCrearLicencia extends JPanel {
 			chbxTipoLicenciaB.setEnabled(true);
 			chbxTipoLicenciaF.setEnabled(true);
 			chbxTipoLicenciaG.setEnabled(true);
-			lblErrorLicencias.setText("Mayores de 65 aï¿½os no pueden solicitar licencias C, D o E por primera vez.");
+			lblErrorLicencias.setText("Mayores de 65 años no pueden solicitar licencias C, D o E por primera vez.");
 		}else if(aniosConductor>=21 && aniosAntiguedad>=1) {
 			taObservaciones.setEnabled(true);
 			cbDonanteDeOrganos.setEnabled(true);
