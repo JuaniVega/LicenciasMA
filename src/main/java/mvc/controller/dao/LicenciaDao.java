@@ -1,6 +1,7 @@
 package mvc.controller.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +12,22 @@ import util.ConexionP;
 
 public class LicenciaDao {
 
-
-	public static List<TipoLicencia> getTipoLicencia() throws Exception {
+	public static List<TipoLicencia> getTiposLicencias() throws Exception {
+		ArrayList<TipoLicencia> tipoLicencia = new ArrayList<TipoLicencia>();
 		try {
-			String query = "select tl.id from public.tipo_licencia tl ;";                            
-			ArrayList<TipoLicencia> tipoLicencia = (ArrayList<TipoLicencia>)((Object) ConexionP.consultar(query, TipoLicencia.class));
-			return tipoLicencia;
+			String query = "select tl.id, tl.clase, tl.descripcion from public.tipo_licencia tl ;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				TipoLicencia tipoLic = new TipoLicencia(rs.getInt("id"),rs.getString("clase"),rs.getString("descripcion"));
+				tipoLicencia.add(tipoLic);
+			}
 		}
 		catch(Exception ex) {
 			throw ex;
 		}
+		return tipoLicencia;
 	}
 
-	
 	public static List<Licencia> getAllLicencia() throws Exception {
 		try {
 			String query = "select id, id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia from public.licencia;";
@@ -63,7 +67,7 @@ public class LicenciaDao {
 		
 		Connection con = ConexionP.conectarDB();
 		try {
-			//Comienza transacción
+			//Comienza transacciï¿½n
 			con.setAutoCommit(false);
 			
 			con.createStatement().executeUpdate(query);
@@ -85,7 +89,7 @@ public class LicenciaDao {
 		
 		Connection con = ConexionP.conectarDB();
 		try {
-			//Comienza transacción
+			//Comienza transacciï¿½n
 			con.setAutoCommit(false);
 			
 			for(int i=0; i<licencias.size();i++) {

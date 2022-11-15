@@ -10,7 +10,7 @@ import mvc.model.Licencia;import mvc.model.TipoLicencia;
 public class GestorLicencia {
 	
 	public static List<TipoLicencia> obtenerTipoLicencia() throws Exception{
-		return LicenciaDao.getTipoLicencia();
+		return LicenciaDao.getTiposLicencias();
 	}
 	
 	public static List<Licencia> obtenerLicenciaxDni(int dni) throws Exception{
