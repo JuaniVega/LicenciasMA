@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmitirLicenciaDTO {
+	
 	private String nombreCond;
 	private String apellidoCond;
 	private Integer tipoDoc;
