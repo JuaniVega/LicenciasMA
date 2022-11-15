@@ -45,33 +45,33 @@ public class ConexionP {
         return rs;
     }
     
-	public static ArrayList<Object> consultar(String query, Class<? extends Object> ob) throws Exception{
-        ArrayList<Object> result = new ArrayList<Object>();
-        Connection con = null;
-        try {
-            con =ConexionP.conectarDB();
-            PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-            String objeto;
-            while(rs.next()){
-                objeto = "";
+	// public static ArrayList<Object> consultar(String query, Class<? extends Object> ob) throws Exception{
+    //     ArrayList<Object> result = new ArrayList<Object>();
+    //     Connection con = null;
+    //     try {
+    //         con =ConexionP.conectarDB();
+    //         PreparedStatement pstmt = con.prepareStatement(query);
+    //         ResultSet rs = pstmt.executeQuery();
+    //         String objeto;
+    //         while(rs.next()){
+    //             objeto = "";
                 
-                    for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
-                        objeto += rs.getString(i) + "\t";
-                    }
-                Object obj = ob.getConstructor(String.class).newInstance(objeto);
-                result.add(obj);
-            }
-        } catch (Exception ex) {
-            throw ex;
-        }
-        finally{
-            if(con != null){
-                con.close();
-            }
-        }
-        return result;
-    }
+    //                 for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
+    //                     objeto += rs.getString(i) + "\t";
+    //                 }
+    //             Object obj = ob.getConstructor(String.class).newInstance(objeto);
+    //             result.add(obj);
+    //         }
+    //     } catch (Exception ex) {
+    //         throw ex;
+    //     }
+    //     finally{
+    //         if(con != null){
+    //             con.close();
+    //         }
+    //     }
+    //     return result;
+    // }
 	
 	// Metodo que ejecuta una acci�n en la BDD (insertar, eliminar etc.)
 	
