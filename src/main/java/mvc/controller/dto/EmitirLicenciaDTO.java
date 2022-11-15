@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmitirLicenciaDTO {
+	
 	private String nombreCond;
 	private String apellidoCond;
 	private Integer tipoDoc;
@@ -18,6 +19,14 @@ public class EmitirLicenciaDTO {
 	private String dpto;
 	private String observaciones;
 	private ArrayList<String> licenciasSeleccionadas;
+	
+	private Integer costo=50; //Calcular
+	
+	private LocalDate fechaEmision;
+	private LocalDate fechaVigencia=LocalDate.parse("2028-12-12"); //Calcular
+	
+	private Boolean esCopia; //True solamente cuando se carga desde renovar por perdida
+	private Boolean estaVigente;
 	
 	public String getNombreCond() {
 		return nombreCond;
@@ -109,7 +118,39 @@ public class EmitirLicenciaDTO {
 	public void setLicenciasSeleccionadas(ArrayList<String> licenciasSeleccionadas) {
 		this.licenciasSeleccionadas = licenciasSeleccionadas;
 	}
-	
+	public int getCosto() {
+		return costo;
+	}
+	public void setCosto(int costo) {
+		this.costo = costo;
+	}
+	public LocalDate getFechaEmision() {
+		return fechaEmision;
+	}
+	public void setFechaEmision(LocalDate fechaEmision) {
+		this.fechaEmision = fechaEmision;
+	}
+	public LocalDate getFechaVigencia() {
+		return fechaVigencia;
+	}
+	public void setFechaVigencia(LocalDate fechaVigencia) {
+		this.fechaVigencia = fechaVigencia;
+	}
+	public Boolean getEsCopia() {
+		return esCopia;
+	}
+	public void setEsCopia(Boolean esCopia) {
+		this.esCopia = esCopia;
+	}
+	public Boolean getEstaVigente() {
+		return estaVigente;
+	}
+	public void setEstaVigente(Boolean estaVigente) {
+		this.estaVigente = estaVigente;
+	}
+	public void setCosto(Integer costo) {
+		this.costo = costo;
+	}
 	
 
 }

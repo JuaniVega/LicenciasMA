@@ -2,26 +2,43 @@ package mvc.model;
 
 public class TipoDocumento {
 	
-	private Integer tipoDocumento;
+	private Integer id_doc;
+	private String 	tipo_doc;
+	private String 	descripcion;
+
+	public TipoDocumento(){
+		super();
+	}
 	
-	public TipoDocumento(String datos) {
-		String[] atributo = datos.split("\t");
-		this.tipoDocumento= Integer.parseInt(atributo[0]);
+	public TipoDocumento(Integer id_doc, String tipo_doc, String descripcion) {
+		super();
+		this.id_doc 	 = id_doc;
+		this.tipo_doc 	 = tipo_doc;
+		this.descripcion = descripcion;
 	}
 
-	public Integer getTipoDocumento() {
-		return tipoDocumento;
+	public Integer getId_doc() {
+		return id_doc;
+	}
+
+	public void setId_doc(Integer id_doc) {
+		this.id_doc = id_doc;
+	}
+
+	public String getTipo_doc() {
+		return tipo_doc;
+	}
+
+	public void setTipo_doc(String tipo_doc) {
+		this.tipo_doc = tipo_doc;
 	}
 	
-	public String getTipoDocumentoTexto() {
-		switch(this.tipoDocumento) {
-		case 1: return "DNI";
-		case 2: return "LC";
-		case 3: return "LE";
-		case 4: return "CUIL";
-		case 5: return "CUIT";
-		default: return null;
-		}
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 }
