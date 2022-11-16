@@ -2,6 +2,11 @@ package mvc.controller.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import mvc.controller.gestores.GestorPersona;
+import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
 
 public class EmitirLicenciaDTO {
 	
@@ -40,7 +45,19 @@ public class EmitirLicenciaDTO {
 	public void setApellidoCond(String apellidoCond) {
 		this.apellidoCond = apellidoCond;
 	}
-	public Integer getTipoDoc() {
+	public String getStringTipoDoc() throws Exception {
+		List<TipoDocumento> tDoc = GestorPersona.obtenerTiposDocumentos();
+		String tipoDocString=null;
+		
+		for(int i=0; i<tDoc.size(); i++) {
+			if(tipoDoc==tDoc.get(i).getId_doc()) {
+				tipoDocString=tDoc.get(i).getTipo_doc();
+			}
+		}
+		return tipoDocString;
+	}
+	
+	public Integer getTipoDoc() throws Exception {
 		return tipoDoc;
 	}
 	public void setTipoDoc(Integer tipoDoc) {
@@ -63,6 +80,17 @@ public class EmitirLicenciaDTO {
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+	public String getStringGrupoSang() throws Exception {
+		List<TipoGrupoSanguineo> tSang = GestorPersona.obtenerTipoGrupoSanguineo();
+		String tipoSangString=null;
+		
+		for(int i=0; i<tSang.size(); i++) {
+			if(grupoSang==tSang.get(i).getId_grupo_sanguineo()) {
+				tipoSangString=tSang.get(i).getTipo_grupo_sanguineo();
+			}
+		}
+		return tipoSangString;
 	}
 	public Integer getGrupoSang() {
 		return grupoSang;
@@ -106,7 +134,7 @@ public class EmitirLicenciaDTO {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
-	public ArrayList<Integer> getLicenciasSeleccionadas() {
+	public ArrayList<Integer> getIntLicenciasSeleccionadas() {
 		ArrayList<Integer> licenciasValNum= new ArrayList<Integer>();
 		
 		for(int i=0; i<licenciasSeleccionadas.size();i++) {
@@ -114,6 +142,10 @@ public class EmitirLicenciaDTO {
 		}
 		
 		return licenciasValNum;
+	}
+	
+	public ArrayList<String> getLicenciasSeleccionadas() {
+		return licenciasSeleccionadas;
 	}
 	public void setLicenciasSeleccionadas(ArrayList<String> licenciasSeleccionadas) {
 		this.licenciasSeleccionadas = licenciasSeleccionadas;
