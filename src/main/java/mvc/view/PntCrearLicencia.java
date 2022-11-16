@@ -69,6 +69,7 @@ public class PntCrearLicencia extends JPanel {
 	private JButton btnEmitirLicencia;
 	
 	private ArrayList<String> licenciasSelec = new ArrayList<String>();
+	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
@@ -334,8 +335,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaB = new JCheckBox("B");
 	chbxTipoLicenciaB.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaB);
 	chbxTipoLicenciaB.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaB, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaB,"2");
 			
 		}
@@ -345,8 +348,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaC = new JCheckBox("C");
 	chbxTipoLicenciaC.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaC);
 	chbxTipoLicenciaC.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaC, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaC,"3");
 			
 		}
@@ -356,8 +361,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaD = new JCheckBox("D");
 	chbxTipoLicenciaD.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaD);
 	chbxTipoLicenciaD.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaD, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaD,"4");
 			
 		}
@@ -367,8 +374,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaE = new JCheckBox("E");
 	chbxTipoLicenciaE.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaE);
 	chbxTipoLicenciaE.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaE, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaE,"5");
 			
 		}
@@ -378,8 +387,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaF = new JCheckBox("F");
 	chbxTipoLicenciaF.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaF);
 	chbxTipoLicenciaF.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaF, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaF,"6");
 			
 		}
@@ -389,8 +400,10 @@ public class PntCrearLicencia extends JPanel {
 	
 	chbxTipoLicenciaG = new JCheckBox("G");
 	chbxTipoLicenciaG.setEnabled(false);
+	licenciasCheckBox.add(chbxTipoLicenciaG);
 	chbxTipoLicenciaG.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			validarRelacionesDeLicencias(chbxTipoLicenciaG, licenciasConCDE);
 			agregarALista(chbxTipoLicenciaG,"7");
 			
 		}
@@ -602,6 +615,28 @@ public class PntCrearLicencia extends JPanel {
 			licenciasConCDE=true;
 		}
 		
+	}
+	
+	private void validarRelacionesDeLicencias(JCheckBox licencia, Boolean esLicenciaCDE) {
+		if(licencia.isSelected()) {
+			for(int i=0; i<licenciasCheckBox.size();i++) {
+				if(!licenciasCheckBox.get(i).equals(licencia)) {
+					licenciasCheckBox.get(i).setEnabled(false);
+				}
+			}
+		}else {
+			if(esLicenciaCDE) {
+				for(int i=0; i<licenciasCheckBox.size();i++) {
+						licenciasCheckBox.get(i).setEnabled(true);
+				}
+			}else {
+				for(int i=0; i<licenciasCheckBox.size();i++) {
+					if((!licenciasCheckBox.get(i).equals(chbxTipoLicenciaC)) && (!licenciasCheckBox.get(i).equals(chbxTipoLicenciaD)) && (!licenciasCheckBox.get(i).equals(chbxTipoLicenciaE))) {
+						licenciasCheckBox.get(i).setEnabled(true);
+					}
+				}
+			}
+		}
 	}
 
 
