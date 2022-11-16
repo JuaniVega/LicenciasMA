@@ -60,17 +60,13 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel tipoDocumentoLbl;
 	
 	private JButton btnImprimirLicencia;
-	
-	private EmitirLicenciaDTO emitirLicenciaDTO=new EmitirLicenciaDTO();
 
 	/**
 	 * Create the panel.
 	 */
-	public PntImprimirLicencia() {
+	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
-		
-		//cargarDatosenCampo(); 
 
 		JLabel lblTituloImpresion = new JLabel("Previsualizaci\u00F3n de Licencia", SwingConstants.CENTER);
 		lblTituloImpresion.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -317,7 +313,24 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		pagoPanel.add(separator_2);
 		
 		btnImprimirLicencia = new JButton("Imprimir licencia");
-		btnImprimirLicencia.addActionListener(imprimirLicenciaPDF);
+		btnImprimirLicencia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				PrinterJob job = PrinterJob.getPrinterJob();
+				PageFormat pf = job.defaultPage();
+				pf.setOrientation(PageFormat.LANDSCAPE);
+				job.setPrintable(new PntImprimirLicencia(datosLicencia), pf);
+				if(job.printDialog()) {
+					try {					
+						job.print();
+					} catch (PrinterException e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(carnetConductorPanel, "La impresion se cancelo", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnImprimirLicencia.setBounds(810, 602, 118, 37);
 		add(btnImprimirLicencia);
 		
@@ -330,43 +343,28 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		btnAtras.setBounds(41, 602, 118, 37);
 		add(btnAtras);
 		
-		
-
+		cargarDatosenCampo(datosLicencia);
 	}
-	
-	ActionListener imprimirLicenciaPDF = new ActionListener() { 
-		public void actionPerformed(ActionEvent evt) {		
-			PrinterJob job = PrinterJob.getPrinterJob();
-			PageFormat pf = job.defaultPage();
- 			pf.setOrientation(PageFormat.LANDSCAPE);
-			job.setPrintable(new PntImprimirLicencia(), pf);
-			if(job.printDialog()) {
-				try {					
-					job.print();
-				} catch (PrinterException e) {
-					e.printStackTrace();
-				}
-			}
-			else {
-				JOptionPane.showMessageDialog(carnetConductorPanel, "La impresion se cancelo", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+
+	private void cargarDatosenCampo(EmitirLicenciaDTO datosDTO) {
+		if(datosDTO != null) {
+
+			//Licencia Frente
+			this.apellidoLbl.setText(datosDTO.getApellidoCond());
+			this.nombreLbl.setText(datosDTO.getNombreCond());
+			this.domicilioLbl.setText(datosDTO.getCalle() + " " + datosDTO.getNumCalle() + " " + datosDTO.getPiso() + " " +  datosDTO.getDpto());
+			this.fechaNacLbl.setText(datosDTO.getFechaNacimiento().toString());
+			this.fechaVencimLbl.setText(datosDTO.getFechaVigencia().toString());
+
+			//Licencia Dorso
+			this.tipoLicLbl.setText(datosDTO.getLicenciasSeleccionadas().get(0).toString(ALLBITS));
+			this.donanteLbl.setText(datosDTO.getEsDonante().toString());
+			this.grupoSangreLbl.setText(datosDTO.getGrupoSang().toString());
+			this.tipoDocumentoLbl.setText(datosDTO.getTipoDoc().toString());
+			this.documentoLbl.setText(datosDTO.getNumDoc().toString());
+			this.ObservacionesLbl.setText(datosDTO.getObservaciones());
 		}
-	};
-
-	 private void cargarDatosenCampo() {
-	// 	List<Licencia> licencias;
-		
-	// 	try {
-	// 		licencias = GestorLicencia.obtenerAllLicencias();
-
-	// 		if(licencias.size() != 0) {
-	// 			System.out.println(licencias);
-	// 		}
-	// 	} catch (Exception e) {
-	// 		e.printStackTrace();
-	// 	}
-		
-	 }
+	}
 
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		if(pageIndex > 0) return NO_SUCH_PAGE;
@@ -379,9 +377,4 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		
 	}
 
-	public void setEmitirLicenciaDTO(EmitirLicenciaDTO emitirLicenciaDTO) {
-		this.emitirLicenciaDTO = emitirLicenciaDTO;
-	}
-	
-	
 }
