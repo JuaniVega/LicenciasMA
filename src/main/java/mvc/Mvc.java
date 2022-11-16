@@ -1,10 +1,8 @@
 package mvc;
 
 import java.awt.EventQueue;
-import java.sql.Connection;
 
 import mvc.view.VentanaAdmin;
-import util.ConexionP;
 
 public class Mvc {
 
@@ -24,7 +22,7 @@ public class Mvc {
 		
 		
 		//Prueba de conexion TODO: borrar
-		Connection con = null;
+		/*Connection con = null;
         try {
             con = ConexionP.conectarDB();
             System.out.println("PROBANDO CONEXION");
@@ -35,7 +33,7 @@ public class Mvc {
             if(con != null){
                 con.close();
             }
-        }
+        }*/
 
 }
 }
