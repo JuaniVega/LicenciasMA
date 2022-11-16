@@ -479,8 +479,8 @@ public class PntCrearLicencia extends JPanel {
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(validarSelecciones()) {
-				cargarEmitirLicenciaDTO();
 				try {
+					cargarEmitirLicenciaDTO();
 					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
 					GestorLicencia.crearLicencia(emitirLicenciaDTO);
 					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
@@ -704,7 +704,7 @@ public class PntCrearLicencia extends JPanel {
 		
 	}
 
-	protected void cargarEmitirLicenciaDTO() {
+	protected void cargarEmitirLicenciaDTO() throws Exception {
 		emitirLicenciaDTO.setNombreCond(tfNombreCliente.getText());
 		emitirLicenciaDTO.setApellidoCond(tfApellidoCliente.getText());
 		emitirLicenciaDTO.setTipoDoc(cbTipoDocumentoCliente.getSelectedIndex());
@@ -720,6 +720,7 @@ public class PntCrearLicencia extends JPanel {
 		emitirLicenciaDTO.setObservaciones(taObservaciones.getText());
 		emitirLicenciaDTO.setLicenciasSeleccionadas(licenciasSelec);
 		emitirLicenciaDTO.setFechaEmision(LocalDate.parse(tfFechaEmision.getText()));
+		emitirLicenciaDTO.setFechaVigencia(GestorLicencia.calculoVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc()));
 		emitirLicenciaDTO.setEsCopia(false);
 		emitirLicenciaDTO.setEstaVigente(true);
 	}

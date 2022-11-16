@@ -1,16 +1,24 @@
 package mvc.controller.gestores;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import mvc.controller.dao.LicenciaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.model.Licencia;import mvc.model.TipoLicencia;
+import mvc.model.Vigencia;
 
 public class GestorLicencia {
 	
 	public static List<TipoLicencia> obtenerTipoLicencia() throws Exception{
 		return LicenciaDao.getTiposLicencias();
+	}
+	
+	public static List<Vigencia> obtenerVigencias() throws Exception{
+		return LicenciaDao.getVigencias();
 	}
 	
 	public static List<Licencia> obtenerLicenciaxDni(int dni) throws Exception{
@@ -27,7 +35,7 @@ public class GestorLicencia {
 			Licencia licencia = new Licencia();
 			
 			licencia.setIdPersona(emitirLicenciaDTO.getNumDoc());
-			licencia.setIdTipoLicencia(emitirLicenciaDTO.getLicenciasSeleccionadas().get(i));
+			licencia.setIdTipoLicencia(emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(i));
 			licencia.setCosto(emitirLicenciaDTO.getCosto());
 			licencia.setFechaEmision(emitirLicenciaDTO.getFechaEmision());
 			licencia.setFechaVigencia(emitirLicenciaDTO.getFechaVigencia());
@@ -54,4 +62,61 @@ public class GestorLicencia {
 
 	public static List<Licencia> obtenerAllLicencias() throws Exception{
 		return LicenciaDao.getAllLicencia();
-	}}
+	}
+
+
+	public static LocalDate calculoVigencia(LocalDate fechaNacimiento, Integer dni) throws Exception{
+		List<Vigencia> listaVigencias = obtenerVigencias();
+		Integer vigencia=0;
+		LocalDate fechaVigencia= null;
+		LocalDate fechaActual= LocalDate.now();
+		Period periodEdad = Period.between(fechaNacimiento, fechaActual);
+		Integer edad= periodEdad.getYears();
+		
+		Integer difMeses= 12-periodEdad.getMonths();
+		
+		//Calcula cantidad de años por los que se va a emitir.
+		if(edad>=17 && edad<21) {
+			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
+			if(licencias.size()==0) {
+				vigencia=listaVigencias.get(0).getVigencia();
+			}else {
+				vigencia=listaVigencias.get(1).getVigencia();
+			}
+		}else if (edad<46) {
+			vigencia=listaVigencias.get(2).getVigencia();
+		}else if (edad<60) {
+			vigencia=listaVigencias.get(3).getVigencia();
+		}else if (edad<70) {
+			vigencia=listaVigencias.get(4).getVigencia();
+		}else if (edad>=70) {
+			vigencia=listaVigencias.get(5).getVigencia();
+		}
+		
+		
+		//Calcula diferencia de fecha actual con cumpleaños para definir tiempo en años y meses.
+		if(difMeses<6) {
+			//A la vigencia le sumo los meses de diferencia
+			Integer anio=fechaActual.getYear()+vigencia;
+			Integer mes=fechaActual.getMonth().getValue()+difMeses;
+			if(mes>12) {
+				mes=mes-12;
+			}
+			Integer dia=fechaNacimiento.getDayOfMonth();
+			fechaVigencia.of(anio, mes, dia);
+			
+		}else {
+			//A la vigencia le resto 1 y le sumo los meses de diferencia
+			Integer anio=fechaActual.getYear()+vigencia-1;
+			Integer mes=fechaActual.getMonth().getValue()+difMeses;
+			if(mes>12) {
+				mes=mes-12;
+			}
+			Integer dia=fechaNacimiento.getDayOfMonth();
+			fechaVigencia.of(anio, mes, dia);
+		}
+		
+		return fechaVigencia;
+	}
+	
+}

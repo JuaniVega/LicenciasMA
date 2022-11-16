@@ -8,6 +8,7 @@ import java.util.List;
 
 import mvc.model.Licencia;
 import mvc.model.TipoLicencia;
+import mvc.model.Vigencia;
 import util.ConexionP;
 
 public class LicenciaDao {
@@ -26,6 +27,22 @@ public class LicenciaDao {
 			throw ex;
 		}
 		return tipoLicencia;
+	}
+	
+	public static List<Vigencia> getVigencias() throws Exception {
+		ArrayList<Vigencia> vigencias = new ArrayList<Vigencia>();
+		try {
+			String query = "select v.id, v.vigencia, v.descripcion from public.vigencia v ;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Vigencia vig = new Vigencia(rs.getInt("id"),rs.getInt("vigencia"),rs.getString("descripcion"));
+				vigencias.add(vig);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return vigencias;
 	}
 
 	public static List<Licencia> getAllLicencia() throws Exception {

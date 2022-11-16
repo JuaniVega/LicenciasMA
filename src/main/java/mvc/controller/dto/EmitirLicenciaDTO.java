@@ -28,7 +28,7 @@ public class EmitirLicenciaDTO {
 	private Integer costo=50; //Calcular
 	
 	private LocalDate fechaEmision;
-	private LocalDate fechaVigencia=LocalDate.parse("2028-12-12"); //Calcular
+	private LocalDate fechaVigencia;
 	
 	private Boolean esCopia; //True solamente cuando se carga desde renovar por perdida
 	private Boolean estaVigente;
