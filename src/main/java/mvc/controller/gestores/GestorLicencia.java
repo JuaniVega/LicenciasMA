@@ -75,7 +75,7 @@ public class GestorLicencia {
 		
 		Integer difMeses= 12-periodEdad.getMonths();
 		
-		//Calcula cantidad de años por los que se va a emitir.
+		//Calcula cantidad de aï¿½os por los que se va a emitir.
 		if(edad>=17 && edad<21) {
 			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
 			if(licencias.size()==0) {
@@ -94,7 +94,7 @@ public class GestorLicencia {
 		}
 		
 		
-		//Calcula diferencia de fecha actual con cumpleaños para definir tiempo en años y meses.
+		//Calcula diferencia de fecha actual con cumpleaï¿½os para definir tiempo en aï¿½os y meses.
 		if(difMeses<6) {
 			//A la vigencia le sumo los meses de diferencia
 			Integer anio=fechaActual.getYear()+vigencia;
@@ -103,7 +103,7 @@ public class GestorLicencia {
 				mes=mes-12;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
-			fechaVigencia.of(anio, mes, dia);
+			fechaVigencia = LocalDate.of(anio, mes, dia);
 			
 		}else {
 			//A la vigencia le resto 1 y le sumo los meses de diferencia
@@ -113,7 +113,7 @@ public class GestorLicencia {
 				mes=mes-12;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
-			fechaVigencia.of(anio, mes, dia);
+			fechaVigencia = LocalDate.of(anio, mes, dia);
 		}
 		
 		return fechaVigencia;
