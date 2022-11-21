@@ -82,7 +82,7 @@ public class EmitirLicenciaDTO {
 		this.sexo = sexo;
 	}
 	public String getStringGrupoSang() throws Exception {
-		List<TipoGrupoSanguineo> tSang = GestorPersona.obtenerTipoGrupoSanguineo();
+		List<TipoGrupoSanguineo> tSang = GestorPersona.obtenerTiposGrupoSanguineos();
 		String tipoSangString=null;
 		
 		for(int i=0; i<tSang.size(); i++) {

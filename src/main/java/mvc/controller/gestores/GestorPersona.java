@@ -32,7 +32,7 @@ public class GestorPersona {
 		return PersonaDao.getTipoDocumento(tipoDoc);
 	}
 	
-	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{
+	public static List<TipoGrupoSanguineo> obtenerTiposGrupoSanguineos() throws Exception{
 		return PersonaDao.getTiposGrupoSanguineos();
 	}
 	

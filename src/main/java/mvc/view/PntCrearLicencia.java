@@ -760,7 +760,7 @@ public class PntCrearLicencia extends JPanel {
 		}
 		
 		//Llena el combo box del tipo de sangre
-		List<TipoGrupoSanguineo> tipoGrupoSang= GestorPersona.obtenerTipoGrupoSanguineo();
+		List<TipoGrupoSanguineo> tipoGrupoSang= GestorPersona.obtenerTiposGrupoSanguineos();
 		int tamList1 = tipoGrupoSang.size();
 		
 		cbGrupoSanguineoConductor.addItem("-Seleccione-");
