@@ -480,6 +480,7 @@ public class PntCrearLicencia extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if(validarSelecciones()) {
 				try {
+					cargarEmitirLicenciaDTO();
 					//GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
 					//GestorLicencia.crearLicencia(emitirLicenciaDTO);
 					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO);
