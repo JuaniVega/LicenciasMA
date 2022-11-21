@@ -108,6 +108,21 @@ public class PersonaDao {
 		}
 		return tipoGrupSang;
 	}
+
+	public static TipoGrupoSanguineo getTipoGrupoSanguineo(int idTipoGrupSang) throws Exception {
+		TipoGrupoSanguineo tipoGrupSang = new TipoGrupoSanguineo();
+		try {
+			String query = "select tgs.id, tgs.tipo_grupo_sanguineo from public.tipo_grupo_sanguineo tgs where tgs.id ="+idTipoGrupSang+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoGrupSang = new TipoGrupoSanguineo(rs.getInt("id"),rs.getString("tipo_grupo_sanguineo"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoGrupSang;
+	}
 	
 	public static void updateConductorDonante (Integer doc, boolean esDonante) {
 		

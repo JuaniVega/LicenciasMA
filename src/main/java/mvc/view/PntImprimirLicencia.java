@@ -28,6 +28,7 @@ import javax.swing.border.LineBorder;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
@@ -352,10 +353,18 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		if(datosDTO != null) {
 
 			TipoDocumento tipoDoc = null; 
+			TipoGrupoSanguineo tipoGS = null;
 			String esDonante;
+
 			//Preparo algunos datos
 			try {
 				tipoDoc = GestorPersona.obtenerTipoDocumento(datosDTO.getTipoDoc());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				tipoGS = GestorPersona.obtenerTipoGrupoSanguineo(datosDTO.getGrupoSang());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -378,7 +387,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 			//Licencia Dorso
 			// this.tipoLicLbl.setText(datosDTO.getLicenciasSeleccionadas().get(0).toString(ALLBITS));
 			this.donanteLbl.setText(esDonante);
-			this.grupoSangreLbl.setText(datosDTO.getGrupoSang().toString());
+			this.grupoSangreLbl.setText(tipoGS.getTipo_grupo_sanguineo());
 			this.tipoDocumentoLbl.setText(tipoDoc.getTipo_doc());
 			this.documentoLbl.setText(datosDTO.getNumDoc().toString());
 			this.ObservacionesLbl.setText(datosDTO.getObservaciones());

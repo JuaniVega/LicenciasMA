@@ -35,6 +35,10 @@ public class GestorPersona {
 	public static List<TipoGrupoSanguineo> obtenerTiposGrupoSanguineos() throws Exception{
 		return PersonaDao.getTiposGrupoSanguineos();
 	}
+
+	public static TipoGrupoSanguineo obtenerTipoGrupoSanguineo(int tipoGrupSang) throws Exception{
+		return PersonaDao.getTipoGrupoSanguineo(tipoGrupSang);
+	}
 	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
 		PersonaDao.updateConductorDonante(emitirLicenciaDTO.getNumDoc(), emitirLicenciaDTO.getEsDonante());
