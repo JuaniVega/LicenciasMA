@@ -352,12 +352,18 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		if(datosDTO != null) {
 
 			TipoDocumento tipoDoc = null; 
-
+			String esDonante;
 			//Preparo algunos datos
 			try {
 				tipoDoc = GestorPersona.obtenerTipoDocumento(datosDTO.getTipoDoc());
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			
+			if(datosDTO.getEsDonante() == true) {
+				esDonante = "Si";
+			}else {
+				esDonante = "No";
 			}
 
 			
@@ -371,7 +377,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 
 			//Licencia Dorso
 			// this.tipoLicLbl.setText(datosDTO.getLicenciasSeleccionadas().get(0).toString(ALLBITS));
-			this.donanteLbl.setText(datosDTO.getEsDonante().toString());
+			this.donanteLbl.setText(esDonante);
 			this.grupoSangreLbl.setText(datosDTO.getGrupoSang().toString());
 			this.tipoDocumentoLbl.setText(tipoDoc.getTipo_doc());
 			this.documentoLbl.setText(datosDTO.getNumDoc().toString());
