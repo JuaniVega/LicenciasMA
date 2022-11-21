@@ -27,6 +27,10 @@ public class GestorPersona {
 	public static List<TipoDocumento> obtenerTiposDocumentos() throws Exception{
 		return PersonaDao.getTiposDocumentos();
 	}
+
+	public static TipoDocumento obtenerTipoDocumento(int tipoDoc) throws Exception{
+		return PersonaDao.getTipoDocumento(tipoDoc);
+	}
 	
 	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{
 		return PersonaDao.getTiposGrupoSanguineos();

@@ -78,6 +78,21 @@ public class PersonaDao {
 		return tipoDoc;
 	}
 	
+	public static TipoDocumento getTipoDocumento(int idTipoDoc) throws Exception {
+		TipoDocumento tipoDocumento = new TipoDocumento();
+		try {
+			String query = "select td.id, td.tipo_doc, td.descripcion from public.tipo_documento td where td.id ="+idTipoDoc+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoDocumento = new TipoDocumento(rs.getInt("id"),rs.getString("tipo_doc"), rs.getString("descripcion"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoDocumento;
+	}
+	
 	public static List<TipoGrupoSanguineo> getTiposGrupoSanguineos() throws Exception {
 		List<TipoGrupoSanguineo> tipoGrupSang = new ArrayList<TipoGrupoSanguineo>();
 		try {
