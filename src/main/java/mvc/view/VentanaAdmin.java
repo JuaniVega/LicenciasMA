@@ -75,7 +75,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.revalidate(); // "limpiar el contenedor o VentanaAdmin"
 		contentPane.repaint(); // "repintar el contenedor"		
 	}
-	
+	//prueba
 	//Ventana de buscar por DNI
 	public static String mensajeBusqueda(String[] args, String mensaje) {
 		String val =JOptionPane.showInputDialog(
