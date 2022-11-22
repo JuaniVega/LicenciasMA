@@ -15,6 +15,10 @@ public class GestorLicencia {
 	public static List<TipoLicencia> obtenerTiposLicencias() throws Exception{
 		return LicenciaDao.getTiposLicencias();
 	}
+
+	public static TipoLicencia obtenerTipoLicencia(int idTipoLicencia) throws Exception{
+		return LicenciaDao.getTipoLicencia(idTipoLicencia);
+	}
 	
 	public static List<Vigencia> obtenerVigencias() throws Exception{
 		return LicenciaDao.getVigencias();
