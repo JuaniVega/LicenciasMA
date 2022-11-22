@@ -25,8 +25,7 @@ public class EmitirLicenciaDTO {
 	private String observaciones;
 	private ArrayList<String> licenciasSeleccionadas;
 	
-	private Integer costo=50; //Calcular
-	
+	private ArrayList<Integer> costo;
 	private LocalDate fechaEmision;
 	private LocalDate fechaVigencia;
 	
@@ -150,12 +149,6 @@ public class EmitirLicenciaDTO {
 	public void setLicenciasSeleccionadas(ArrayList<String> licenciasSeleccionadas) {
 		this.licenciasSeleccionadas = licenciasSeleccionadas;
 	}
-	public int getCosto() {
-		return costo;
-	}
-	public void setCosto(int costo) {
-		this.costo = costo;
-	}
 	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
@@ -180,9 +173,13 @@ public class EmitirLicenciaDTO {
 	public void setEstaVigente(Boolean estaVigente) {
 		this.estaVigente = estaVigente;
 	}
-	public void setCosto(Integer costo) {
+	public ArrayList<Integer> getCosto() {
+		return costo;
+	}
+	public void setCosto(ArrayList<Integer> costo) {
 		this.costo = costo;
 	}
+	
 	
 
 }

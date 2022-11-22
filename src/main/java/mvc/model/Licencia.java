@@ -1,6 +1,9 @@
 package mvc.model;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import mvc.controller.gestores.GestorLicencia;
 
 public class Licencia {
 	
@@ -102,6 +105,18 @@ public class Licencia {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+	
+	public String getStringClaseLicencia(int idClaseLicencia) throws Exception {
+		List<TipoLicencia> licencias = GestorLicencia.obtenerTipoLicencia();
+		String licencia=null;
+		
+		for(int i=0; i<licencias.size(); i++) {
+			if(licencias.get(i).getId_tipo_licencia()==idClaseLicencia) {
+				licencia=licencias.get(i).getClase();
+			}
+		}
+		return licencia;
 	}
 
 }
