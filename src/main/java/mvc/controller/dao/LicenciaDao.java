@@ -28,6 +28,21 @@ public class LicenciaDao {
 		}
 		return tipoLicencia;
 	}
+
+	public static TipoLicencia getTipoLicencia(int idTipoLicencia) throws Exception {
+		TipoLicencia tipoLicencia = new TipoLicencia();
+		try {
+			String query = "select tl.id, tl.clase, tl.descripcion from public.tipo_licencia tl where tl.id ="+idTipoLicencia+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoLicencia = new TipoLicencia(rs.getInt("id"),rs.getString("clase"),rs.getString("descripcion"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoLicencia;
+	}
 	
 	public static List<Vigencia> getVigencias() throws Exception {
 		ArrayList<Vigencia> vigencias = new ArrayList<Vigencia>();
