@@ -56,7 +56,9 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel fechaNacLbl;
 	private JLabel fechaVencimLbl;
 	private JLabel tipoLicLbl;
+	private JLabel tipoLicLbl2;
 	private JLabel descLicLbl;
+	private JLabel descLicLbl2;
 	private JTextArea descripLicLbl;
 	private JLabel donanteLbl;
 	private JLabel grupoSangreLbl;
@@ -64,10 +66,15 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel documentoLbl;
 	private JLabel gastoAdminLbl;
 	private JLabel costoLicenciaLbl;
+	private JLabel costoLicenciaLbl2;
 	private JLabel totalLbl;
 	private JLabel tipoDocumentoLbl;
+	private JLabel tipoLicenciaDescLbl;
+	private JLabel tipoLicenciaDescLbl2;
 	
 	private JButton btnImprimirLicencia;
+	
+	private Integer valorTotal=0;
 
 	/**
 	 * Create the panel.
@@ -189,7 +196,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	
 		JLabel lblTipoLic = new JLabel("Tipo de licencia / Type of license");
 		lblTipoLic.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTipoLic.setBounds(10, 60, 197, 14);
+		lblTipoLic.setBounds(10, 55, 197, 14);
 		licDorsoPanel.add(lblTipoLic);
 		
 		tipoLicLbl = new JLabel();
@@ -215,47 +222,47 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		
 		JLabel lbldonante = new JLabel("Donante / Donor");
 		lbldonante.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbldonante.setBounds(10, 120, 108, 14);
+		lbldonante.setBounds(10, 129, 108, 14);
 		licDorsoPanel.add(lbldonante);
 		
 		JLabel lblGrupoYFactor = new JLabel("Grupo y factor / Blood type");
 		lblGrupoYFactor.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblGrupoYFactor.setBounds(150, 120, 180, 14);
+		lblGrupoYFactor.setBounds(150, 129, 180, 14);
 		licDorsoPanel.add(lblGrupoYFactor);
 		
 		donanteLbl = new JLabel();
 		donanteLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		donanteLbl.setBounds(110, 120, 46, 14);
+		donanteLbl.setBounds(110, 129, 46, 14);
 		licDorsoPanel.add(donanteLbl);
 		
 		grupoSangreLbl = new JLabel();
 		grupoSangreLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		grupoSangreLbl.setBounds(308, 120, 82, 14);
+		grupoSangreLbl.setBounds(308, 129, 82, 14);
 		licDorsoPanel.add(grupoSangreLbl);
 		
 		JLabel lblDocumento = new JLabel("Documento / ID Card");
 		lblDocumento.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDocumento.setBounds(10, 140, 135, 14);
+		lblDocumento.setBounds(10, 149, 135, 14);
 		licDorsoPanel.add(lblDocumento);
 		
 		documentoLbl = new JLabel();
 		documentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		documentoLbl.setBounds(37, 160, 108, 14);
+		documentoLbl.setBounds(37, 169, 108, 14);
 		licDorsoPanel.add(documentoLbl);
 		
 		tipoDocumentoLbl = new JLabel();
 		tipoDocumentoLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		tipoDocumentoLbl.setBounds(10, 160, 46, 14);
+		tipoDocumentoLbl.setBounds(10, 169, 46, 14);
 		licDorsoPanel.add(tipoDocumentoLbl);
 
 		JLabel lblObservaciones = new JLabel("Observaciones / Observations");
 		lblObservaciones.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblObservaciones.setBounds(10, 180, 211, 14);
+		lblObservaciones.setBounds(10, 189, 211, 14);
 		licDorsoPanel.add(lblObservaciones);
 		
 		ObservacionesLbl = new JLabel();
 		ObservacionesLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		ObservacionesLbl.setBounds(10, 200, 380, 49);
+		ObservacionesLbl.setBounds(10, 209, 380, 40);
 		licDorsoPanel.add(ObservacionesLbl);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -283,6 +290,18 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		panelAzul.setBounds(0, 260, 400, 40);
 		licDorsoPanel.add(panelAzul);
 		
+		tipoLicLbl2 = new JLabel();
+		tipoLicLbl2.setHorizontalAlignment(SwingConstants.LEFT);
+		tipoLicLbl2.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tipoLicLbl2.setBounds(20, 105, 50, 14);
+		licDorsoPanel.add(tipoLicLbl2);
+		
+		descLicLbl2 = new JLabel();
+		descLicLbl2.setHorizontalAlignment(SwingConstants.LEFT);
+		descLicLbl2.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		descLicLbl2.setBounds(74, 105, 316, 14);
+		licDorsoPanel.add(descLicLbl2);
+		
 		JTextPane txtDetallePago = new JTextPane();
 		txtDetallePago.setText("Detalle de pago");
 		txtDetallePago.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -298,19 +317,19 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		pagoPanel.setLayout(null);
 		
 		JLabel lblGastoAdmin = new JLabel("Gastos administrativos");
-		lblGastoAdmin.setBounds(10, 25, 154, 14);
+		lblGastoAdmin.setBounds(10, 11, 154, 14);
 		pagoPanel.add(lblGastoAdmin);
 		
 		JLabel lblCostoLicencia = new JLabel("Costo licencia ");
-		lblCostoLicencia.setBounds(10, 50, 154, 14);
+		lblCostoLicencia.setBounds(10, 36, 154, 14);
 		pagoPanel.add(lblCostoLicencia);
 		
 		gastoAdminLbl = new JLabel("$8");
-		gastoAdminLbl.setBounds(185, 25, 52, 14);
+		gastoAdminLbl.setBounds(185, 11, 52, 14);
 		pagoPanel.add(gastoAdminLbl);
 		
 		costoLicenciaLbl = new JLabel();
-		costoLicenciaLbl.setBounds(185, 50, 52, 14);
+		costoLicenciaLbl.setBounds(185, 36, 52, 14);
 		pagoPanel.add(costoLicenciaLbl);
 		
 		JLabel lblTotal = new JLabel("TOTAL");
@@ -325,6 +344,18 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(10, 84, 380, 2);
 		pagoPanel.add(separator_2);
+		
+		costoLicenciaLbl2 = new JLabel();
+		costoLicenciaLbl2.setBounds(185, 59, 52, 14);
+		pagoPanel.add(costoLicenciaLbl2);
+		
+		tipoLicenciaDescLbl = new JLabel();
+		tipoLicenciaDescLbl.setBounds(247, 36, 143, 14);
+		pagoPanel.add(tipoLicenciaDescLbl);
+		
+		tipoLicenciaDescLbl2 = new JLabel();
+		tipoLicenciaDescLbl2.setBounds(247, 59, 143, 14);
+		pagoPanel.add(tipoLicenciaDescLbl2);
 		
 		btnImprimirLicencia = new JButton("Imprimir licencia");
 		btnImprimirLicencia.addActionListener(new ActionListener() {
@@ -412,8 +443,13 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 
 			//Licencia Dorso
 			for(int i=0; i<tipoLic.size(); i++) {
-				this.tipoLicLbl.setText(tipoLic.get(i).getClase());
-				this.descLicLbl.setText(tipoLic.get(i).getDescripcion());
+				if(this.tipoLicLbl.getText().equals("")) {
+					this.tipoLicLbl.setText(tipoLic.get(i).getClase());
+					this.descLicLbl.setText(tipoLic.get(i).getDescripcion());
+				}else {
+					this.tipoLicLbl2.setText(tipoLic.get(i).getClase());
+					this.descLicLbl2.setText(tipoLic.get(i).getDescripcion());
+				}
 			}
 			this.donanteLbl.setText(esDonante);
 			this.grupoSangreLbl.setText(tipoGS.getTipo_grupo_sanguineo());
@@ -422,9 +458,17 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 			this.ObservacionesLbl.setText(datosDTO.getObservaciones());
 
 			//Seccion costos
-			this.costoLicenciaLbl.setText("$" + Integer.toString(datosDTO.getCosto()));
-			Integer valorTotal = datosDTO.getCosto()+8;
-			this.totalLbl.setText("$" + Integer.toString(valorTotal));
+			for(int i=0; i<datosDTO.getCosto().size(); i++) {
+				if(this.costoLicenciaLbl.getText().equals("")) {
+					this.costoLicenciaLbl.setText("$" + (Integer.toString(datosDTO.getCosto().get(i))));
+					this.tipoLicenciaDescLbl.setText("Licencia "+tipoLic.get(i).getClase());
+				}else {
+					this.costoLicenciaLbl2.setText("$" + (Integer.toString(datosDTO.getCosto().get(i))));
+					this.tipoLicenciaDescLbl2.setText("Licencia "+tipoLic.get(i).getClase());
+				}
+				valorTotal = valorTotal+ (datosDTO.getCosto().get(i));
+			}
+			this.totalLbl.setText("$" + (Integer.toString(valorTotal+8)));
 		}
 	}
 

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import mvc.model.Costo;
 import mvc.model.Licencia;
 import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
@@ -106,6 +107,22 @@ public class LicenciaDao {
 			throw ex;
 		}
 		return licencia;
+	}
+	
+	public static List<Costo> getCostoxClasexAnio(String clase, int anios) throws Exception {
+		ArrayList<Costo> costos = new ArrayList<Costo>();
+		try {
+			String query = "select c.id, c.clase, c.anios, c.costo from public.costo c where clase='"+clase+"' and anios="+anios+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Costo costo = new Costo(rs.getInt("id"), rs.getString("clase"), rs.getInt("anios"), rs.getInt("costo"));
+				costos.add(costo);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return costos;
 	}
 
 	public static void newLicencia(Licencia licencia) {

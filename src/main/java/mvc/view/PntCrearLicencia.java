@@ -69,6 +69,7 @@ public class PntCrearLicencia extends JPanel {
 	private JButton btnEmitirLicencia;
 	
 	private ArrayList<String> licenciasSelec = new ArrayList<String>();
+	private ArrayList<Integer> costosLicencias = new ArrayList<Integer>();
 	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
@@ -722,6 +723,16 @@ public class PntCrearLicencia extends JPanel {
 		emitirLicenciaDTO.setFechaVigencia(GestorLicencia.calculoVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc()));
 		emitirLicenciaDTO.setEsCopia(false);
 		emitirLicenciaDTO.setEstaVigente(true);
+		
+		for(int i=0; i<licenciasSelec.size(); i++) {
+			Licencia licencia = new Licencia();
+			String stringLicenciaSelec = licencia.getStringClaseLicencia(Integer.parseInt(licenciasSelec.get(i)));
+			
+			Integer costoLicencia=GestorLicencia.obtenerCostoxClasexAnio(stringLicenciaSelec , GestorLicencia.calculoAniosVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc())).get(0).getCosto();
+			costosLicencias.add(costoLicencia);
+		}
+		
+		emitirLicenciaDTO.setCosto(costosLicencias);
 	}
 
 	private Boolean esDonante() {

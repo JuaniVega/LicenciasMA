@@ -7,6 +7,7 @@ import java.util.List;
 
 import mvc.controller.dao.LicenciaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.model.Costo;
 import mvc.model.Licencia;import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
 
@@ -32,6 +33,10 @@ public class GestorLicencia {
 		return LicenciaDao.getLicenciaxDnixTipo(dni, tipo);
 	}
 	
+	public static List<Costo> obtenerCostoxClasexAnio(String clase, int anios) throws Exception{
+		return LicenciaDao.getCostoxClasexAnio(clase, anios);
+	}
+	
 	public static void crearLicencia(EmitirLicenciaDTO emitirLicenciaDTO) throws Exception{
 		for(int i=0; i<emitirLicenciaDTO.getLicenciasSeleccionadas().size();i++) {
 			
@@ -39,7 +44,8 @@ public class GestorLicencia {
 			
 			licencia.setIdPersona(emitirLicenciaDTO.getNumDoc());
 			licencia.setIdTipoLicencia(emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(i));
-			licencia.setCosto(emitirLicenciaDTO.getCosto());
+			licencia.setCosto(emitirLicenciaDTO.getCosto().get(i));
+			licencia.setCosto(emitirLicenciaDTO.getCosto().get(i));
 			licencia.setFechaEmision(emitirLicenciaDTO.getFechaEmision());
 			licencia.setFechaVigencia(emitirLicenciaDTO.getFechaVigencia());
 			licencia.setEsCopia(emitirLicenciaDTO.getEsCopia());
@@ -78,7 +84,7 @@ public class GestorLicencia {
 		
 		Integer difMeses= 12-periodEdad.getMonths();
 		
-		//Calcula cantidad de aï¿½os por los que se va a emitir.
+		//Calcula cantidad de a?os por los que se va a emitir.
 		if(edad>=17 && edad<21) {
 			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
 			if(licencias.size()==0) {
@@ -97,7 +103,7 @@ public class GestorLicencia {
 		}
 		
 		
-		//Calcula diferencia de fecha actual con cumpleaï¿½os para definir tiempo en aï¿½os y meses.
+		//Calcula diferencia de fecha actual con cumplea?os para definir tiempo en a?os y meses.
 		if(difMeses<6) {
 			//A la vigencia le sumo los meses de diferencia
 			Integer anio=fechaActual.getYear()+vigencia;
@@ -107,7 +113,6 @@ public class GestorLicencia {
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
 			fechaVigencia = LocalDate.of(anio, mes, dia);
-			
 		}else {
 			//A la vigencia le resto 1 y le sumo los meses de diferencia
 			Integer anio=fechaActual.getYear()+vigencia-1;
@@ -116,10 +121,39 @@ public class GestorLicencia {
 				mes=mes-12;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
-			fechaVigencia = LocalDate.of(anio, mes, dia);
-		}
+			fechaVigencia = LocalDate.of(anio, mes, dia);		}
 		
 		return fechaVigencia;
+	}
+	
+	public static Integer calculoAniosVigencia(LocalDate fechaNacimiento, Integer dni) throws Exception {
+		List<Vigencia> listaVigencias = obtenerVigencias();
+		Integer vigencia=0;
+		LocalDate fechaActual= LocalDate.now();
+		Period periodEdad = Period.between(fechaNacimiento, fechaActual);
+		Integer edad= periodEdad.getYears();
+		
+		Integer difMeses= 12-periodEdad.getMonths();
+		
+		//Calcula cantidad de años por los que se va a emitir.
+		if(edad>=17 && edad<21) {
+			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
+			if(licencias.size()==0) {
+				vigencia=listaVigencias.get(0).getVigencia();
+			}else {
+				vigencia=listaVigencias.get(1).getVigencia();
+			}
+		}else if (edad<46) {
+			vigencia=listaVigencias.get(2).getVigencia();
+		}else if (edad<60) {
+			vigencia=listaVigencias.get(3).getVigencia();
+		}else if (edad<70) {
+			vigencia=listaVigencias.get(4).getVigencia();
+		}else if (edad>=70) {
+			vigencia=listaVigencias.get(5).getVigencia();
+		}
+		
+		return vigencia;
 	}
 	
 }
