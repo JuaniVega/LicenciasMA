@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import mvc.model.Costo;
 import mvc.model.Licencia;
 import mvc.model.TipoLicencia;
+import mvc.model.Vigencia;
 import util.ConexionP;
 
 public class LicenciaDao {
@@ -26,6 +28,37 @@ public class LicenciaDao {
 			throw ex;
 		}
 		return tipoLicencia;
+	}
+
+	public static TipoLicencia getTipoLicencia(int idTipoLicencia) throws Exception {
+		TipoLicencia tipoLicencia = new TipoLicencia();
+		try {
+			String query = "select tl.id, tl.clase, tl.descripcion from public.tipo_licencia tl where tl.id ="+idTipoLicencia+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoLicencia = new TipoLicencia(rs.getInt("id"),rs.getString("clase"),rs.getString("descripcion"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoLicencia;
+	}
+	
+	public static List<Vigencia> getVigencias() throws Exception {
+		ArrayList<Vigencia> vigencias = new ArrayList<Vigencia>();
+		try {
+			String query = "select v.id, v.vigencia, v.descripcion from public.vigencia v ;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Vigencia vig = new Vigencia(rs.getInt("id"),rs.getInt("vigencia"),rs.getString("descripcion"));
+				vigencias.add(vig);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return vigencias;
 	}
 
 	public static List<Licencia> getAllLicencia() throws Exception {
@@ -74,6 +107,22 @@ public class LicenciaDao {
 			throw ex;
 		}
 		return licencia;
+	}
+	
+	public static List<Costo> getCostoxClasexAnio(String clase, int anios) throws Exception {
+		ArrayList<Costo> costos = new ArrayList<Costo>();
+		try {
+			String query = "select c.id, c.clase, c.anios, c.costo from public.costo c where clase='"+clase+"' and anios="+anios+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Costo costo = new Costo(rs.getInt("id"), rs.getString("clase"), rs.getInt("anios"), rs.getInt("costo"));
+				costos.add(costo);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return costos;
 	}
 
 	public static void newLicencia(Licencia licencia) {

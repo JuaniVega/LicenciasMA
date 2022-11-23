@@ -27,9 +27,17 @@ public class GestorPersona {
 	public static List<TipoDocumento> obtenerTiposDocumentos() throws Exception{
 		return PersonaDao.getTiposDocumentos();
 	}
+
+	public static TipoDocumento obtenerTipoDocumento(int tipoDoc) throws Exception{
+		return PersonaDao.getTipoDocumento(tipoDoc);
+	}
 	
-	public static List<TipoGrupoSanguineo> obtenerTipoGrupoSanguineo() throws Exception{
+	public static List<TipoGrupoSanguineo> obtenerTiposGrupoSanguineos() throws Exception{
 		return PersonaDao.getTiposGrupoSanguineos();
+	}
+
+	public static TipoGrupoSanguineo obtenerTipoGrupoSanguineo(int tipoGrupSang) throws Exception{
+		return PersonaDao.getTipoGrupoSanguineo(tipoGrupSang);
 	}
 	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
