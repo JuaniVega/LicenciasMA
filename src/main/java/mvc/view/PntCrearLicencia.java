@@ -679,10 +679,27 @@ public class PntCrearLicencia extends JPanel {
 		tfDptoCliente.setText("");
 		cbGrupoSanguineoConductor.setSelectedIndex(0);
 		cbSexoCliente.setSelectedIndex(0);
+		cbDonanteDeOrganos.setSelectedIndex(0);
+		cbDonanteDeOrganos.setEnabled(false);
 		tfFechaNacimConductor.setText("");
 		taObservaciones.setText("");
+		taObservaciones.setEnabled(false);
 		lblErrorLicencias.setText("");
 		lblErrorDonantes.setText("");
+		chbxTipoLicenciaA.setEnabled(false);
+		chbxTipoLicenciaB.setEnabled(false);
+		chbxTipoLicenciaC.setEnabled(false);
+		chbxTipoLicenciaD.setEnabled(false);
+		chbxTipoLicenciaE.setEnabled(false);
+		chbxTipoLicenciaF.setEnabled(false);
+		chbxTipoLicenciaG.setEnabled(false);
+		chbxTipoLicenciaA.setSelected(false);
+		chbxTipoLicenciaB.setSelected(false);
+		chbxTipoLicenciaC.setSelected(false);
+		chbxTipoLicenciaD.setSelected(false);
+		chbxTipoLicenciaE.setSelected(false);
+		chbxTipoLicenciaF.setSelected(false);
+		chbxTipoLicenciaG.setSelected(false);
 	}
 
 	protected void habilitarChbxLicencias() {
