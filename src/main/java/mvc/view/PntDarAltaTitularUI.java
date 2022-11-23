@@ -194,7 +194,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		add(panelDireccion_1);
              		
              		dateChooserFechaNacTitular = new JDateChooser();
-             		dateChooserFechaNacTitular.setBounds(671, 195, 83, 20);
+             		dateChooserFechaNacTitular.setBounds(673, 195, 129, 20);
              		panelDireccion_1.add(dateChooserFechaNacTitular);
              		
              		JLabel txtNombre = new JLabel("Nombre Completo (*)");
