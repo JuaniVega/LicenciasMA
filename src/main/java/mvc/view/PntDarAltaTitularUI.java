@@ -59,7 +59,6 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JComboBox cBoxTipoDoc;
              	private JDateChooser dateChooserFechaNacTitular;
              	private JComboBox comboBoxGrupoSanguineo;
-             	private JComboBox comboBoxFactorRH;
                 //prueba                                                                                                                                                         
              	public PntDarAltaTitularUI() {
              		setBackground(UIManager.getColor("Button.background"));  
@@ -146,31 +145,22 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		JPanel panelGrupSanguineoFactorRH = new JPanel();
              		panelGrupSanguineoFactorRH.setBorder(new TitledBorder(null, "Grupo Sanguineo y Factor RH", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-             		panelGrupSanguineoFactorRH.setBounds(138, 379, 410, 147);
+             		panelGrupSanguineoFactorRH.setBounds(138, 379, 410, 107);
              		add(panelGrupSanguineoFactorRH);
              		panelGrupSanguineoFactorRH.setLayout(null);
              		
              		comboBoxGrupoSanguineo = new JComboBox();
-             		comboBoxGrupoSanguineo.setBounds(215, 42, 117, 20);
+             		comboBoxGrupoSanguineo.setBounds(198, 46, 117, 20);
              		panelGrupSanguineoFactorRH.add(comboBoxGrupoSanguineo);
-             		comboBoxGrupoSanguineo.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "A", "0", "AB", "B"}));
+             		comboBoxGrupoSanguineo.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "A +", "0 +", "AB +", "B + ", "A -", "0 -", "AB -", "B -"}));
              		
              		JLabel lblNewLabel_7 = new JLabel("Grupo Sanguineo (*)");
-             		lblNewLabel_7.setBounds(63, 45, 117, 14);
+             		lblNewLabel_7.setBounds(48, 49, 117, 14);
              		panelGrupSanguineoFactorRH.add(lblNewLabel_7);
-             		
-             		JLabel txtFactorRH = new JLabel("Factor RH (*)");
-             		txtFactorRH.setBounds(63, 90, 81, 14);
-             		panelGrupSanguineoFactorRH.add(txtFactorRH);
-             		
-             		comboBoxFactorRH = new JComboBox();
-             		comboBoxFactorRH.setBounds(215, 86, 117, 22);
-             		panelGrupSanguineoFactorRH.add(comboBoxFactorRH);
-             		comboBoxFactorRH.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "+", "-"}));
              		
              		labelErrorGrupSanguineo = new JLabel("");
              		labelErrorGrupSanguineo.setForeground(Color.RED);
-             		labelErrorGrupSanguineo.setBounds(30, 65, 345, 14);
+             		labelErrorGrupSanguineo.setBounds(48, 77, 345, 14);
              		panelGrupSanguineoFactorRH.add(labelErrorGrupSanguineo);
              		
              		labelErrorFactorRH = new JLabel("");
@@ -275,10 +265,10 @@ public class PntDarAltaTitularUI extends JPanel{
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Grupo Sanguineo del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
              				}
-             				else if (comboBoxFactorRH.getSelectedItem().equals("-Seleccione-") ) {
+             				/*else if (comboBoxFactorRH.getSelectedItem().equals("-Seleccione-") ) {
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Factor RH del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				labelErrorFactorRH.setText("Por favor, ingrese el Factor RH del titular");
-             				}
+             				}*/
              				/*else if (comboBoxClaseLicencia.getSelectedItem().equals("-Seleccione-")) {
              					JOptionPane.showMessageDialog(null, "Por favor, seleccione la Clase de la licencia del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				}*/
@@ -307,6 +297,6 @@ public class PntDarAltaTitularUI extends JPanel{
 					labelErrorDireccion.setText("");
 					labelErrorFechNac.setText("");
 					labelErrorGrupSanguineo.setText("");
-					labelErrorFactorRH.setText("");
+					//labelErrorFactorRH.setText("");
 				} 
 }
