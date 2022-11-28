@@ -9,6 +9,9 @@ import java.awt.Panel;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Formatter;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -29,26 +32,27 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.TextArea;
 import com.toedter.calendar.JDateChooser;
+
+import mvc.controller.dto.CrearTitularDTO;
+import mvc.controller.dto.EmitirLicenciaDTO;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JMonthChooser;
 
 	
 
 public class PntDarAltaTitularUI extends JPanel{
-             	                    
-				private JTextField insertarNombreConductortxt;                                                                                                             
-            	private JTextField textField;                                                                                                                              
-             	private JTextField textField_1;                                                                                                                            
-             	private JTextField textField_2;                                                                                                                            
-             	private JTextField textFieldNombreTitular;
-             	private JTextField textFieldApellidoTitular;
-             	private JTextField textFieldNumDocTitular;
-             	private JTextField textFieldCalleTitular;
-             	private JTextField textFieldNumCalleTitular;
-             	private JTextField textFieldPisoTitular;
-             	private JTextField textFieldDptoTitular;
+             	                                                                                                                                           
+             	private JTextField txtNombreTitular;
+             	private JTextField txtApellidoTitular;
+             	private JTextField txtNumDocTitular;
+             	private JTextField txtCalleTitular;
+             	private JTextField txtNumCalleTitular;
+             	private JTextField txtPisoTitular;
+             	private JTextField txtDptoTitular;
              	private JLabel labelErrorNom;
              	private JLabel labelErrorApellido;
              	private JLabel labelErrorDoc;
@@ -57,8 +61,14 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JLabel labelErrorFactorRH;
              	private JLabel labelErrorGrupSanguineo;
              	private JComboBox cBoxTipoDoc;
-             	private JDateChooser dateChooserFechaNacTitular;
-             	private JComboBox comboBoxGrupoSanguineo;
+             	private JDateChooser tfFechaNacTitular;
+             	private JComboBox cbGrupoSanguineo;
+				private TextArea txtAreaOBS;
+
+				private CrearTitularDTO crearTitularDTO = new CrearTitularDTO();
+
+				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+				
                 //prueba                                                                                                                                                         
              	public PntDarAltaTitularUI() {
              		setBackground(UIManager.getColor("Button.background"));  
@@ -86,10 +96,10 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_3.setBounds(360, 27, 67, 14);
              		PaneDocumento.add(lblNewLabel_3);
              		
-             		textFieldNumDocTitular = new JTextField();
-             		textFieldNumDocTitular.setBounds(472, 24, 117, 20);
-             		PaneDocumento.add(textFieldNumDocTitular);
-             		textFieldNumDocTitular.setColumns(10);
+             		txtNumDocTitular = new JTextField();
+             		txtNumDocTitular.setBounds(472, 24, 117, 20);
+             		PaneDocumento.add(txtNumDocTitular);
+             		txtNumDocTitular.setColumns(10);
              		
              		labelErrorDoc = new JLabel("");
              		labelErrorDoc.setForeground(Color.RED);
@@ -106,33 +116,33 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_10.setBounds(248, 21, 87, 14);
              		panelDireccion.add(lblNewLabel_10);
              		
-             		textFieldNumCalleTitular = new JTextField();
-             		textFieldNumCalleTitular.setBounds(319, 18, 87, 20);
-             		panelDireccion.add(textFieldNumCalleTitular);
-             		textFieldNumCalleTitular.setColumns(10);
+             		txtNumCalleTitular = new JTextField();
+             		txtNumCalleTitular.setBounds(319, 18, 87, 20);
+             		panelDireccion.add(txtNumCalleTitular);
+             		txtNumCalleTitular.setColumns(10);
              		
-             		textFieldCalleTitular = new JTextField();
-             		textFieldCalleTitular.setBounds(80, 18, 148, 20);
-             		panelDireccion.add(textFieldCalleTitular);
-             		textFieldCalleTitular.setColumns(10);
+             		txtCalleTitular = new JTextField();
+             		txtCalleTitular.setBounds(80, 18, 148, 20);
+             		panelDireccion.add(txtCalleTitular);
+             		txtCalleTitular.setColumns(10);
              		
              		JLabel lblNewLabel_9 = new JLabel("Calle (*)");
              		lblNewLabel_9.setBounds(22, 21, 46, 14);
              		panelDireccion.add(lblNewLabel_9);
              		
-             		textFieldDptoTitular = new JTextField();
-             		textFieldDptoTitular.setBounds(299, 61, 36, 20);
-             		panelDireccion.add(textFieldDptoTitular);
-             		textFieldDptoTitular.setColumns(10);
+             		txtDptoTitular = new JTextField();
+             		txtDptoTitular.setBounds(299, 61, 36, 20);
+             		panelDireccion.add(txtDptoTitular);
+             		txtDptoTitular.setColumns(10);
              		
              		JLabel lblNewLabel_12 = new JLabel("Departamento");
              		lblNewLabel_12.setBounds(203, 64, 86, 14);
              		panelDireccion.add(lblNewLabel_12);
              		
-             		textFieldPisoTitular = new JTextField();
-             		textFieldPisoTitular.setBounds(138, 61, 36, 20);
-             		panelDireccion.add(textFieldPisoTitular);
-             		textFieldPisoTitular.setColumns(10);
+             		txtPisoTitular = new JTextField();
+             		txtPisoTitular.setBounds(138, 61, 36, 20);
+             		panelDireccion.add(txtPisoTitular);
+             		txtPisoTitular.setColumns(10);
              		
              		JLabel lblNewLabel_11 = new JLabel("Piso");
              		lblNewLabel_11.setBounds(98, 64, 30, 14);
@@ -149,10 +159,10 @@ public class PntDarAltaTitularUI extends JPanel{
              		add(panelGrupSanguineoFactorRH);
              		panelGrupSanguineoFactorRH.setLayout(null);
              		
-             		comboBoxGrupoSanguineo = new JComboBox();
-             		comboBoxGrupoSanguineo.setBounds(198, 46, 117, 20);
-             		panelGrupSanguineoFactorRH.add(comboBoxGrupoSanguineo);
-             		comboBoxGrupoSanguineo.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "A +", "0 +", "AB +", "B + ", "A -", "0 -", "AB -", "B -"}));
+             		cbGrupoSanguineo = new JComboBox();
+             		cbGrupoSanguineo.setBounds(198, 46, 117, 20);
+             		panelGrupSanguineoFactorRH.add(cbGrupoSanguineo);
+             		cbGrupoSanguineo.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "A +", "0 +", "AB +", "B + ", "A -", "0 -", "AB -", "B -"}));
              		
              		JLabel lblNewLabel_7 = new JLabel("Grupo Sanguineo (*)");
              		lblNewLabel_7.setBounds(48, 49, 117, 14);
@@ -183,18 +193,19 @@ public class PntDarAltaTitularUI extends JPanel{
              		panelDireccion_1.setBounds(81, 69, 850, 481);
              		add(panelDireccion_1);
              		
-             		dateChooserFechaNacTitular = new JDateChooser();
-             		dateChooserFechaNacTitular.setBounds(673, 195, 129, 20);
-             		panelDireccion_1.add(dateChooserFechaNacTitular);
+             		tfFechaNacTitular = new JDateChooser();
+					tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
+             		tfFechaNacTitular.setBounds(673, 195, 129, 20);
+             		panelDireccion_1.add(tfFechaNacTitular);
              		
              		JLabel txtNombre = new JLabel("Nombre Completo (*)");
              		txtNombre.setBounds(93, 38, 142, 14);
              		panelDireccion_1.add(txtNombre);
              		
-             		textFieldNombreTitular = new JTextField();
-             		textFieldNombreTitular.setBounds(228, 35, 158, 20);
-             		panelDireccion_1.add(textFieldNombreTitular);
-             		textFieldNombreTitular.setColumns(10);
+             		txtNombreTitular = new JTextField();
+             		txtNombreTitular.setBounds(228, 35, 158, 20);
+             		panelDireccion_1.add(txtNombreTitular);
+             		txtNombreTitular.setColumns(10);
              		
              		JLabel lblNewLabel = new JLabel("Apellido(s) (*)");
              		lblNewLabel.setBounds(406, 38, 108, 14);
@@ -204,12 +215,12 @@ public class PntDarAltaTitularUI extends JPanel{
              		chckbxDonadorOrganos.setBounds(577, 237, 148, 23);
              		panelDireccion_1.add(chckbxDonadorOrganos);
              		
-             		textFieldApellidoTitular = new JTextField();
-             		textFieldApellidoTitular.setBounds(505, 35, 158, 20);
-             		panelDireccion_1.add(textFieldApellidoTitular);
-             		textFieldApellidoTitular.setColumns(10);
+             		txtApellidoTitular = new JTextField();
+             		txtApellidoTitular.setBounds(505, 35, 158, 20);
+             		panelDireccion_1.add(txtApellidoTitular);
+             		txtApellidoTitular.setColumns(10);
              		
-             		TextArea txtAreaOBS = new TextArea();
+             		txtAreaOBS = new TextArea();
              		txtAreaOBS.setBounds(577, 316, 207, 125);
              		panelDireccion_1.add(txtAreaOBS);
              		
@@ -241,25 +252,33 @@ public class PntDarAltaTitularUI extends JPanel{
              			public void actionPerformed(ActionEvent e) {
              				limpiarCamposErrores();
              				// SI LOS CAMPOS DEL TITULAR ESTAN VACIOS
-             				if (textFieldNombreTitular.getText().isEmpty()) { 
+             				if (txtNombreTitular.getText().isEmpty()) { 
              					labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
              				}
-             				else if (textFieldApellidoTitular.getText().isEmpty()){
+             				else if (txtApellidoTitular.getText().isEmpty()){
              					labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
              				}
-             				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || textFieldNumDocTitular.getText().isEmpty()) {
+             				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || txtNumDocTitular.getText().isEmpty()) {
              					labelErrorDoc.setText("Por favor, complete el Documento del titular");
              				}
-             				else if (textFieldCalleTitular.getText().isEmpty() || textFieldNumCalleTitular.getText().isEmpty()) {
+             				else if (txtCalleTitular.getText().isEmpty() || txtNumCalleTitular.getText().isEmpty()) {
              					labelErrorDireccion.setText("Por favor, complete la Direccion del titular");
              				}
-             				else if(dateChooserFechaNacTitular.getDate()==null) {
+             				else if(tfFechaNacTitular.getDate()==null) {
              					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
              				}
-             				else if (comboBoxGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
+             				else if (cbGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
              					labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
              				}
-             				
+							else {
+								try {
+									emitirAltaTitular();
+									System.out.println(crearTitularDTO);
+									System.out.println("Cargo todo");
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
              				
              			}
              		});
@@ -268,10 +287,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		JButton btnCancelar = new JButton("Cancelar");
              		btnCancelar.setBounds(700, 586, 117, 37);
-             		add(btnCancelar);
-             		
-             		                                                                                                 
-             		                                                                                                                                                        
+             		add(btnCancelar);                                                                                                                                                  
              		                                                                                                                                                       
              	}
 
@@ -285,4 +301,24 @@ public class PntDarAltaTitularUI extends JPanel{
 					labelErrorGrupSanguineo.setText("");
 					//labelErrorFactorRH.setText("");
 				} 
+				
+				protected void emitirAltaTitular() throws Exception {
+					crearTitularDTO.setNombreCond(txtNombreTitular.getText());
+					crearTitularDTO.setApellidoCond(txtApellidoTitular.getText());
+					crearTitularDTO.setTipoDoc(null); //mirar
+					crearTitularDTO.setNumDoc(Integer.parseInt(txtNumDocTitular.getText()));
+					crearTitularDTO.setCalle(txtCalleTitular.getText());
+					crearTitularDTO.setNumCalle(Integer.parseInt(txtNumCalleTitular.getText()));
+					if(!txtPisoTitular.getText().isEmpty()) {
+						crearTitularDTO.setPiso(Integer.parseInt(txtPisoTitular.getText()));
+					}
+					if(!txtDptoTitular.getText().isEmpty()) {
+						crearTitularDTO.setDpto(txtDptoTitular.getText());
+					}
+					crearTitularDTO.setFechaNacimiento(LocalDate.parse(tfFechaNacTitular.getDateFormatString()));
+					crearTitularDTO.setGrupoSang(null); //mirar
+					if(!txtAreaOBS.getText().isEmpty()) {
+						crearTitularDTO.setObservaciones(txtAreaOBS.getText());
+					}
+				}
 }
