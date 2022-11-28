@@ -48,7 +48,7 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JTextField textFieldNumDocTitular;
              	private JTextField textFieldCalleTitular;
              	private JTextField textFieldNumCalleTitular;
-             	private JTextField textFieldPisoTitular;
+             	private JTextField tfPisoTitular;
              	private JTextField textFieldDptoTitular;
              	private JLabel labelErrorNom;
              	private JLabel labelErrorApellido;
@@ -57,6 +57,7 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JLabel labelErrorDireccion;
              	private JLabel labelErrorFactorRH;
              	private JLabel labelErrorGrupSanguineo;
+             	private JLabel labelErrorPiso;
              	private JComboBox cBoxTipoDoc;
              	private JDateChooser dateChooserFechaNacTitular;
              	private JComboBox comboBoxGrupoSanguineo;
@@ -94,7 +95,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		labelErrorDoc = new JLabel("");
              		labelErrorDoc.setForeground(Color.RED);
-             		labelErrorDoc.setBounds(231, 47, 263, 14);
+             		labelErrorDoc.setBounds(189, 47, 362, 14);
              		PaneDocumento.add(labelErrorDoc);
              		
              		JPanel panelDireccion = new JPanel();
@@ -130,10 +131,10 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_12.setBounds(203, 64, 86, 14);
              		panelDireccion.add(lblNewLabel_12);
              		
-             		textFieldPisoTitular = new JTextField();
-             		textFieldPisoTitular.setBounds(138, 61, 36, 20);
-             		panelDireccion.add(textFieldPisoTitular);
-             		textFieldPisoTitular.setColumns(10);
+             		tfPisoTitular = new JTextField();
+             		tfPisoTitular.setBounds(138, 61, 36, 20);
+             		panelDireccion.add(tfPisoTitular);
+             		tfPisoTitular.setColumns(10);
              		
              		JLabel lblNewLabel_11 = new JLabel("Piso");
              		lblNewLabel_11.setBounds(98, 64, 30, 14);
@@ -143,6 +144,11 @@ public class PntDarAltaTitularUI extends JPanel{
              		labelErrorDireccion.setForeground(Color.RED);
              		labelErrorDireccion.setBounds(80, 39, 326, 14);
              		panelDireccion.add(labelErrorDireccion);
+             		
+             		labelErrorPiso = new JLabel("");
+             		labelErrorPiso.setForeground(Color.RED);
+             		labelErrorPiso.setBounds(69, 82, 326, 14);
+             		panelDireccion.add(labelErrorPiso);
              		
              		JPanel panelGrupSanguineoFactorRH = new JPanel();
              		panelGrupSanguineoFactorRH.setBorder(new TitledBorder(null, "Grupo Sanguineo y Factor RH", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -221,7 +227,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		labelErrorNom = new JLabel("");
              		labelErrorNom.setForeground(Color.RED);
-             		labelErrorNom.setBounds(139, 63, 247, 14);
+             		labelErrorNom.setBounds(139, 63, 327, 14);
              		panelDireccion_1.add(labelErrorNom);
              		
              		labelErrorApellido = new JLabel("");
@@ -241,23 +247,43 @@ public class PntDarAltaTitularUI extends JPanel{
              		JButton btnNewButton = new JButton("Guardar");
              		btnNewButton.addActionListener(new ActionListener() {
              			public void actionPerformed(ActionEvent e) {
+             				
              				limpiarCamposErrores();
              				// SI LOS CAMPOS DEL TITULAR ESTAN VACIOS
              				if (textFieldNombreTitular.getText().isEmpty()) { 
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Nombre del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
              				}
+             				/*else if(!validarNombre(textFieldNombreTitular.getText())) {
+             					labelErrorNom.setText("Por favor, ingrese correctamente el Nombre del titular");
+             				}*/
+             			
              				else if (textFieldApellidoTitular.getText().isEmpty()){
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Apellido del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
              				}
+             				/*else if(!validarNombre(textFieldApellidoTitular.getText())) {
+             					labelErrorApellido.setText("Por favor, ingrese correctamente el Apellido del titular" );
+             				}*/
              				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || textFieldNumDocTitular.getText().isEmpty()) {
              					//JOptionPane.showMessageDialog(null, "Por favor, complete el Documento del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorDoc.setText("Por favor, complete el Documento del titular");
              				}
+             				else if (!validarNumerosDoc(textFieldNumDocTitular.getText().trim())) {
+             					labelErrorDoc.setText("Ingrese correctamente el numero del Documento");
+             				}
              				else if (textFieldCalleTitular.getText().isEmpty() || textFieldNumCalleTitular.getText().isEmpty()) {
              					//JOptionPane.showMessageDialog(null, "Por favor, complete la Direccion del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorDireccion.setText("Por favor, complete la Direccion del titular");
+             				}
+             				else if (!validarNumerosCalle(textFieldNumCalleTitular.getText().trim())) {
+             					labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
+             				}
+             				else if (!(tfPisoTitular.getText().isEmpty())) {
+             					if (!validarNumerosCalle(tfPisoTitular.getText().trim())){
+             						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
+             					}
+             					
              				}
              				else if(dateChooserFechaNacTitular.getDate()==null) {
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese la Fecha de Nacimiento del titular","ERROR",JOptionPane.WARNING_MESSAGE);
@@ -267,6 +293,7 @@ public class PntDarAltaTitularUI extends JPanel{
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Grupo Sanguineo del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
              				}
+             				
              				/*else if (comboBoxFactorRH.getSelectedItem().equals("-Seleccione-") ) {
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Factor RH del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				labelErrorFactorRH.setText("Por favor, ingrese el Factor RH del titular");
@@ -290,7 +317,15 @@ public class PntDarAltaTitularUI extends JPanel{
              		                                                                                                                                                       
              	}
 
-
+				public static boolean validarNumerosDoc (String datos) {
+             		return datos.matches("[0-9]{8,10}");
+             	}
+				public static boolean validarNumerosCalle (String datos) {
+             		return datos.matches("[0-9]{1,4}");
+             	}
+				/*public static boolean validarNombre (String datos) {
+             		return (datos.matches("[]") || datos.matches("[a-z]") || datos.matches("[]"));
+             	}*/
 				protected void limpiarCamposErrores() {
 					//definir todos los label de los errores 
 					labelErrorNom.setText("");
@@ -299,6 +334,7 @@ public class PntDarAltaTitularUI extends JPanel{
 					labelErrorDireccion.setText("");
 					labelErrorFechNac.setText("");
 					labelErrorGrupSanguineo.setText("");
+					labelErrorPiso.setText("");
 					//labelErrorFactorRH.setText("");
 				} 
 }
