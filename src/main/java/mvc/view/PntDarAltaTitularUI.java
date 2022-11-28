@@ -33,6 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JMonthChooser;
 
 	
 
@@ -184,6 +185,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		add(panelDireccion_1);
              		
              		dateChooserFechaNacTitular = new JDateChooser();
+             		dateChooserFechaNacTitular.setDateFormatString("dd/mm/yyyy");
              		dateChooserFechaNacTitular.setBounds(673, 195, 129, 20);
              		panelDireccion_1.add(dateChooserFechaNacTitular);
              		
