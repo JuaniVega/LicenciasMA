@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,16 +15,27 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.TextArea;
 import com.toedter.calendar.JDateChooser;
+
+import mvc.controller.gestores.GestorPersona;
+import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 	
 
 public class PntDarAltaTitularUI extends JPanel{
                                                                                                                          
-             	private JTextField txtNombreTitular;
+             	/**
+				 * 
+				 */
+				private static final long serialVersionUID = -6048411653045236128L;
+				
+				private JTextField txtNombreTitular;
              	private JTextField txtApellidoTitular;
              	private JTextField txtNumDocTitular;
              	private JTextField txtCalleTitular;
@@ -40,9 +50,9 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JLabel labelErrorFactorRH;
              	private JLabel labelErrorGrupSanguineo;
              	private JLabel labelErrorPiso;
-             	private JComboBox cBoxTipoDoc;
+             	private JComboBox<String> cBoxTipoDoc;
              	private JDateChooser tfFechaNacTitular;
-             	private JComboBox cbGrupoSanguineo;
+             	private JComboBox<String> cbGrupoSanguineo;
                 //prueba                                                                                                                                                         
              	public PntDarAltaTitularUI() {
              		setBackground(UIManager.getColor("Button.background"));  
@@ -60,7 +70,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_2.setBounds(103, 27, 46, 14);
              		PaneDocumento.add(lblNewLabel_2);
              		
-             		cBoxTipoDoc = new JComboBox();
+             		cBoxTipoDoc = new JComboBox<String>();
              		cBoxTipoDoc.setBounds(189, 23, 117, 22);
              		PaneDocumento.add(cBoxTipoDoc);
              		cBoxTipoDoc.setBackground(UIManager.getColor("Button.disabledShadow"));
@@ -137,7 +147,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		add(panelGrupSanguineoFactorRH);
              		panelGrupSanguineoFactorRH.setLayout(null);
              		
-             		cbGrupoSanguineo = new JComboBox();
+             		cbGrupoSanguineo = new JComboBox<String>();
              		cbGrupoSanguineo.setBounds(198, 46, 117, 20);
              		panelGrupSanguineoFactorRH.add(cbGrupoSanguineo);
              		
@@ -270,7 +280,12 @@ public class PntDarAltaTitularUI extends JPanel{
              		JButton btnCancelar = new JButton("Cancelar");
              		btnCancelar.setBounds(700, 586, 117, 37);
              		add(btnCancelar);
-             		                                                                                                                                        
+
+					try {
+						llenarCB();
+					} catch (Exception eCB) {
+						eCB.printStackTrace();
+					}                                                                                                                              
              	}
 
 				public static boolean validarNumerosDoc (String datos) {
@@ -291,4 +306,22 @@ public class PntDarAltaTitularUI extends JPanel{
 					labelErrorPiso.setText("");
 					//labelErrorFactorRH.setText("");
 				} 
+
+				protected void llenarCB() throws Exception{
+
+					//Llena el combo box de tipo de documento
+					List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
+					cBoxTipoDoc.addItem("-Seleccione-");
+					for(int i=0; i<tipoDoc.size(); i++) {
+						cBoxTipoDoc.addItem(tipoDoc.get(i).getTipo_doc());
+					}
+
+					//Llena el combo box del tipo de sangre
+					List<TipoGrupoSanguineo> grupSanguineo = GestorPersona.obtenerTiposGrupoSanguineos();
+					cbGrupoSanguineo.addItem("-Seleccione-");
+					for(int i=0; i<grupSanguineo.size(); i++) {
+						cbGrupoSanguineo.addItem(grupSanguineo.get(i).getTipo_grupo_sanguineo());
+					}
+					
+				}
 }
