@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -35,6 +36,9 @@ import com.toedter.calendar.JDateChooser;
 
 import mvc.controller.dto.CrearTitularDTO;
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.gestores.GestorPersona;
+import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -90,7 +94,6 @@ public class PntDarAltaTitularUI extends JPanel{
              		cBoxTipoDoc.setBounds(189, 23, 117, 22);
              		PaneDocumento.add(cBoxTipoDoc);
              		cBoxTipoDoc.setBackground(UIManager.getColor("Button.disabledShadow"));
-             		cBoxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "DNI", "LE", "LC"}));
              		
              		JLabel lblNewLabel_3 = new JLabel("Numero (*)");
              		lblNewLabel_3.setBounds(360, 27, 67, 14);
@@ -162,7 +165,6 @@ public class PntDarAltaTitularUI extends JPanel{
              		cbGrupoSanguineo = new JComboBox();
              		cbGrupoSanguineo.setBounds(198, 46, 117, 20);
              		panelGrupSanguineoFactorRH.add(cbGrupoSanguineo);
-             		cbGrupoSanguineo.setModel(new DefaultComboBoxModel(new String[] {"-Seleccione-", "A +", "0 +", "AB +", "B + ", "A -", "0 -", "AB -", "B -"}));
              		
              		JLabel lblNewLabel_7 = new JLabel("Grupo Sanguineo (*)");
              		lblNewLabel_7.setBounds(48, 49, 117, 14);
@@ -287,8 +289,13 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		JButton btnCancelar = new JButton("Cancelar");
              		btnCancelar.setBounds(700, 586, 117, 37);
-             		add(btnCancelar);                                                                                                                                                  
-             		                                                                                                                                                       
+             		add(btnCancelar);  
+					
+					try {
+						llenarCB();
+					} catch (Exception eCB) {
+						eCB.printStackTrace();
+					}	                                                                                                                                                
              	}
 
 				protected void limpiarCamposErrores() {
@@ -320,5 +327,23 @@ public class PntDarAltaTitularUI extends JPanel{
 					if(!txtAreaOBS.getText().isEmpty()) {
 						crearTitularDTO.setObservaciones(txtAreaOBS.getText());
 					}
+				}
+
+				protected void llenarCB() throws Exception{
+
+					//Llena el combo box de tipo de documento
+					List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
+					cBoxTipoDoc.addItem("-Seleccione-");
+					for(int i=0; i<tipoDoc.size(); i++) {
+						cBoxTipoDoc.addItem(tipoDoc.get(i).getTipo_doc());
+					}
+
+					//Llena el combo box del tipo de sangre
+					List<TipoGrupoSanguineo> grupSanguineo = GestorPersona.obtenerTiposGrupoSanguineos();
+					cbGrupoSanguineo.addItem("-Seleccione-");
+					for(int i=0; i<grupSanguineo.size(); i++) {
+						cbGrupoSanguineo.addItem(grupSanguineo.get(i).getTipo_grupo_sanguineo());
+					}
+					
 				}
 }
