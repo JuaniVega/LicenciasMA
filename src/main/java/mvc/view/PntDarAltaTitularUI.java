@@ -1,35 +1,17 @@
 package mvc.view;
 
 import java.awt.Font;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Panel;
 import java.awt.SystemColor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
-import java.awt.Choice;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.TextArea;
 import com.toedter.calendar.JDateChooser;
@@ -43,14 +25,21 @@ import mvc.model.TipoGrupoSanguineo;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JMonthChooser;
 
 	
 
 public class PntDarAltaTitularUI extends JPanel{
-             	                                                                                                                                           
-             	private JTextField txtNombreTitular;
+                                                                                                                         
+             	/**
+				 * 
+				 */
+				private static final long serialVersionUID = -6048411653045236128L;
+				
+				private JTextField txtNombreTitular;
              	private JTextField txtApellidoTitular;
              	private JTextField txtNumDocTitular;
              	private JTextField txtCalleTitular;
@@ -64,14 +53,13 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JLabel labelErrorDireccion;
              	private JLabel labelErrorFactorRH;
              	private JLabel labelErrorGrupSanguineo;
-             	private JComboBox cBoxTipoDoc;
+             	private JLabel labelErrorPiso;
+             	private JComboBox<String> cBoxTipoDoc;
              	private JDateChooser tfFechaNacTitular;
-             	private JComboBox cbGrupoSanguineo;
+             	private JComboBox<String> cbGrupoSanguineo;
 				private TextArea txtAreaOBS;
 
 				private CrearTitularDTO crearTitularDTO = new CrearTitularDTO();
-
-				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 				
                 //prueba                                                                                                                                                         
              	public PntDarAltaTitularUI() {
@@ -90,7 +78,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_2.setBounds(103, 27, 46, 14);
              		PaneDocumento.add(lblNewLabel_2);
              		
-             		cBoxTipoDoc = new JComboBox();
+             		cBoxTipoDoc = new JComboBox<String>();
              		cBoxTipoDoc.setBounds(189, 23, 117, 22);
              		PaneDocumento.add(cBoxTipoDoc);
              		cBoxTipoDoc.setBackground(UIManager.getColor("Button.disabledShadow"));
@@ -106,7 +94,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		labelErrorDoc = new JLabel("");
              		labelErrorDoc.setForeground(Color.RED);
-             		labelErrorDoc.setBounds(231, 47, 263, 14);
+             		labelErrorDoc.setBounds(189, 47, 362, 14);
              		PaneDocumento.add(labelErrorDoc);
              		
              		JPanel panelDireccion = new JPanel();
@@ -156,13 +144,18 @@ public class PntDarAltaTitularUI extends JPanel{
              		labelErrorDireccion.setBounds(80, 39, 326, 14);
              		panelDireccion.add(labelErrorDireccion);
              		
+             		labelErrorPiso = new JLabel("");
+             		labelErrorPiso.setForeground(Color.RED);
+             		labelErrorPiso.setBounds(69, 82, 326, 14);
+             		panelDireccion.add(labelErrorPiso);
+             		
              		JPanel panelGrupSanguineoFactorRH = new JPanel();
              		panelGrupSanguineoFactorRH.setBorder(new TitledBorder(null, "Grupo Sanguineo y Factor RH", TitledBorder.LEADING, TitledBorder.TOP, null, null));
              		panelGrupSanguineoFactorRH.setBounds(138, 379, 410, 107);
              		add(panelGrupSanguineoFactorRH);
              		panelGrupSanguineoFactorRH.setLayout(null);
              		
-             		cbGrupoSanguineo = new JComboBox();
+             		cbGrupoSanguineo = new JComboBox<String>();
              		cbGrupoSanguineo.setBounds(198, 46, 117, 20);
              		panelGrupSanguineoFactorRH.add(cbGrupoSanguineo);
              		
@@ -196,7 +189,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		add(panelDireccion_1);
              		
              		tfFechaNacTitular = new JDateChooser();
-					tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
+             		tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
              		tfFechaNacTitular.setBounds(673, 195, 129, 20);
              		panelDireccion_1.add(tfFechaNacTitular);
              		
@@ -232,7 +225,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		labelErrorNom = new JLabel("");
              		labelErrorNom.setForeground(Color.RED);
-             		labelErrorNom.setBounds(139, 63, 247, 14);
+             		labelErrorNom.setBounds(139, 63, 327, 14);
              		panelDireccion_1.add(labelErrorNom);
              		
              		labelErrorApellido = new JLabel("");
@@ -252,6 +245,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		JButton btnNewButton = new JButton("Guardar");
              		btnNewButton.addActionListener(new ActionListener() {
              			public void actionPerformed(ActionEvent e) {
+             				
              				limpiarCamposErrores();
              				// SI LOS CAMPOS DEL TITULAR ESTAN VACIOS
              				if (txtNombreTitular.getText().isEmpty()) { 
@@ -263,8 +257,20 @@ public class PntDarAltaTitularUI extends JPanel{
              				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || txtNumDocTitular.getText().isEmpty()) {
              					labelErrorDoc.setText("Por favor, complete el Documento del titular");
              				}
+             				else if (!validarNumerosDoc(txtNumDocTitular.getText().trim())) {
+             					labelErrorDoc.setText("Ingrese correctamente el numero del Documento");
+             				}
              				else if (txtCalleTitular.getText().isEmpty() || txtNumCalleTitular.getText().isEmpty()) {
              					labelErrorDireccion.setText("Por favor, complete la Direccion del titular");
+             				}
+             				else if (!validarNumerosCalle(txtNumCalleTitular.getText().trim())) {
+             					labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
+             				}
+             				else if (!(txtPisoTitular.getText().isEmpty())) {
+             					if (!validarNumerosCalle(txtPisoTitular.getText().trim())){
+             						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
+             					}
+             					
              				}
              				else if(tfFechaNacTitular.getDate()==null) {
              					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
@@ -289,13 +295,20 @@ public class PntDarAltaTitularUI extends JPanel{
              		
              		JButton btnCancelar = new JButton("Cancelar");
              		btnCancelar.setBounds(700, 586, 117, 37);
-             		add(btnCancelar);  
-					
+             		add(btnCancelar);
+
 					try {
 						llenarCB();
 					} catch (Exception eCB) {
 						eCB.printStackTrace();
-					}	                                                                                                                                                
+					}                                                                                                                              
+             	}
+
+				public static boolean validarNumerosDoc (String datos) {
+             		return datos.matches("[0-9]{8,10}");
+             	}
+				public static boolean validarNumerosCalle (String datos) {
+             		return datos.matches("[0-9]{1,4}");
              	}
 
 				protected void limpiarCamposErrores() {
@@ -306,6 +319,7 @@ public class PntDarAltaTitularUI extends JPanel{
 					labelErrorDireccion.setText("");
 					labelErrorFechNac.setText("");
 					labelErrorGrupSanguineo.setText("");
+					labelErrorPiso.setText("");
 					//labelErrorFactorRH.setText("");
 				} 
 				
