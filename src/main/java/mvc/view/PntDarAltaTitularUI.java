@@ -49,7 +49,7 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JTextField textFieldCalleTitular;
              	private JTextField textFieldNumCalleTitular;
              	private JTextField tfPisoTitular;
-             	private JTextField textFieldDptoTitular;
+             	private JTextField tfDptoTitular;
              	private JLabel labelErrorNom;
              	private JLabel labelErrorApellido;
              	private JLabel labelErrorDoc;
@@ -122,10 +122,10 @@ public class PntDarAltaTitularUI extends JPanel{
              		lblNewLabel_9.setBounds(22, 21, 46, 14);
              		panelDireccion.add(lblNewLabel_9);
              		
-             		textFieldDptoTitular = new JTextField();
-             		textFieldDptoTitular.setBounds(299, 61, 36, 20);
-             		panelDireccion.add(textFieldDptoTitular);
-             		textFieldDptoTitular.setColumns(10);
+             		tfDptoTitular = new JTextField();
+             		tfDptoTitular.setBounds(299, 61, 36, 20);
+             		panelDireccion.add(tfDptoTitular);
+             		tfDptoTitular.setColumns(10);
              		
              		JLabel lblNewLabel_12 = new JLabel("Departamento");
              		lblNewLabel_12.setBounds(203, 64, 86, 14);
@@ -279,12 +279,17 @@ public class PntDarAltaTitularUI extends JPanel{
              				else if (!validarNumerosCalle(textFieldNumCalleTitular.getText().trim())) {
              					labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
              				}
-             				else if (!(tfPisoTitular.getText().isEmpty())) {
+             				/*else if (!(tfPisoTitular.getText().isEmpty())) {
              					if (!validarNumerosCalle(tfPisoTitular.getText().trim())){
              						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
              					}
-             					
-             				}
+             					 else if(tfDptoTitular.getText().isEmpty()) {
+             						labelErrorPiso.setText("Por favor, ingrese el Departamento");
+             					}else {if (!validarDpto(tfDptoTitular.getText().trim())){
+                 					labelErrorPiso.setText("Por favor, ingrese correctamente el Departamento");
+                 					}} 
+             				}*/
+             				
              				else if(dateChooserFechaNacTitular.getDate()==null) {
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese la Fecha de Nacimiento del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
@@ -321,7 +326,10 @@ public class PntDarAltaTitularUI extends JPanel{
              		return datos.matches("[0-9]{8,10}");
              	}
 				public static boolean validarNumerosCalle (String datos) {
-             		return datos.matches("[0-9]{1,4}");
+             		return datos.matches("[0-9]{1,5}");
+             	}
+				public static boolean validarDpto (String datos) {
+             		return datos.matches("[Aa-Zz]");
              	}
 				/*public static boolean validarNombre (String datos) {
              		return (datos.matches("[]") || datos.matches("[a-z]") || datos.matches("[]"));
