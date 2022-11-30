@@ -62,6 +62,7 @@ public class PntDarAltaTitularUI extends JPanel{
              	private JDateChooser dateChooserFechaNacTitular;
              	private JComboBox comboBoxGrupoSanguineo;
                 //prueba                                                                                                                                                         
+             	
              	public PntDarAltaTitularUI() {
              		setBackground(UIManager.getColor("Button.background"));  
              		setPreferredSize(new Dimension(980, 650));
