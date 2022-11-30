@@ -17,7 +17,6 @@ import java.awt.TextArea;
 import com.toedter.calendar.JDateChooser;
 
 import mvc.controller.dto.CrearTitularDTO;
-import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.TipoDocumento;
 import mvc.model.TipoGrupoSanguineo;
@@ -28,7 +27,6 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import com.toedter.calendar.JMonthChooser;
 
 	
 
@@ -266,13 +264,12 @@ public class PntDarAltaTitularUI extends JPanel{
              				else if (!validarNumerosCalle(txtNumCalleTitular.getText().trim())) {
              					labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
              				}
-             				else if (!(txtPisoTitular.getText().isEmpty())) {
-             					if (!validarNumerosCalle(txtPisoTitular.getText().trim())){
-             						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
-             					}
-             					
-             				}
-             				else if(tfFechaNacTitular.getDate()==null) {
+             				// else if (!(txtPisoTitular.getText().isEmpty())) {
+             				// 	if (!validarNumerosCalle(txtPisoTitular.getText().trim())){
+             				// 		labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
+             				// 	}
+             				// }
+             				else if(tfFechaNacTitular.getDate()==null) { 
              					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
              				}
              				else if (cbGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
