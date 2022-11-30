@@ -252,29 +252,25 @@ public class PntDarAltaTitularUI extends JPanel{
              				limpiarCamposErrores();
              				// SI LOS CAMPOS DEL TITULAR ESTAN VACIOS
              				if (textFieldNombreTitular.getText().isEmpty()) { 
-             					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Nombre del titular","ERROR",JOptionPane.WARNING_MESSAGE);
-             				labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
+             					labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
              				}
              				/*else if(!validarNombre(textFieldNombreTitular.getText())) {
              					labelErrorNom.setText("Por favor, ingrese correctamente el Nombre del titular");
              				}*/
              			
              				else if (textFieldApellidoTitular.getText().isEmpty()){
-             					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Apellido del titular","ERROR",JOptionPane.WARNING_MESSAGE);
-             				labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
+             					labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
              				}
              				/*else if(!validarNombre(textFieldApellidoTitular.getText())) {
              					labelErrorApellido.setText("Por favor, ingrese correctamente el Apellido del titular" );
              				}*/
              				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || textFieldNumDocTitular.getText().isEmpty()) {
-             					//JOptionPane.showMessageDialog(null, "Por favor, complete el Documento del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorDoc.setText("Por favor, complete el Documento del titular");
              				}
              				else if (!validarNumerosDoc(textFieldNumDocTitular.getText().trim())) {
              					labelErrorDoc.setText("Ingrese correctamente el numero del Documento");
              				}
              				else if (textFieldCalleTitular.getText().isEmpty() || textFieldNumCalleTitular.getText().isEmpty()) {
-             					//JOptionPane.showMessageDialog(null, "Por favor, complete la Direccion del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorDireccion.setText("Por favor, complete la Direccion del titular");
              				}
              				else if (!validarNumerosCalle(textFieldNumCalleTitular.getText().trim())) {
@@ -292,13 +288,12 @@ public class PntDarAltaTitularUI extends JPanel{
              				}*/
              				
              				else if(dateChooserFechaNacTitular.getDate()==null) {
-             					//JOptionPane.showMessageDialog(null, "Por favor, ingrese la Fecha de Nacimiento del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
              				}
              				else if (comboBoxGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
-             					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Grupo Sanguineo del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              					labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
              				}
+
              				
              				/*else if (comboBoxFactorRH.getSelectedItem().equals("-Seleccione-") ) {
              					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Factor RH del titular","ERROR",JOptionPane.WARNING_MESSAGE);
@@ -307,6 +302,7 @@ public class PntDarAltaTitularUI extends JPanel{
              				/*else if (comboBoxClaseLicencia.getSelectedItem().equals("-Seleccione-")) {
              					JOptionPane.showMessageDialog(null, "Por favor, seleccione la Clase de la licencia del titular","ERROR",JOptionPane.WARNING_MESSAGE);
              				}*/
+
              				
              				
              			}
@@ -323,6 +319,7 @@ public class PntDarAltaTitularUI extends JPanel{
              		                                                                                                                                                       
              	}
 
+
 				public static boolean validarNumerosDoc (String datos) {
              		return datos.matches("[0-9]{8,10}");
              	}
@@ -335,6 +332,7 @@ public class PntDarAltaTitularUI extends JPanel{
 				/*public static boolean validarNombre (String datos) {
              		return (datos.matches("[]") || datos.matches("[a-z]") || datos.matches("[]"));
              	}*/
+
 				protected void limpiarCamposErrores() {
 					//definir todos los label de los errores 
 					labelErrorNom.setText("");
