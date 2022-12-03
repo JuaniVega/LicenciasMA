@@ -64,10 +64,10 @@ public class LicenciaDao {
 	public static List<Licencia> getAllLicencia() throws Exception {
 		ArrayList<Licencia> licencias = new ArrayList<Licencia>();
 		try {
-			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, from public.licencia l;";
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l;";
 			ResultSet rs = ConexionP.consultarDatos(query);
 			while(rs.next()) {
-				Licencia licencia = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"));
+				Licencia licencia = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
 				licencias.add(licencia);
 			}
 		}
@@ -80,10 +80,10 @@ public class LicenciaDao {
 	public static List<Licencia> getLicenciaxDni(int dni) throws Exception {
 		ArrayList<Licencia> licencia = new ArrayList<Licencia>();
 		try {
-			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones from public.licencia l where id_persona ="+dni+";";                            
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where id_persona ="+dni+";";                            
 			ResultSet rs = ConexionP.consultarDatos(query);
 			while(rs.next()) {
-				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"));
+				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
 				licencia.add(lic);
 			}
 		}
@@ -96,10 +96,10 @@ public class LicenciaDao {
 	public static List<Licencia> getLicenciaxDnixTipo(int dni, int tipo) throws Exception {
 		ArrayList<Licencia> licencia = new ArrayList<Licencia>();
 		try {
-			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones from public.licencia l where l.id_persona ="+dni+" and l.id_tipo_licencia ="+tipo+" order by fecha_emision ASC;";                            
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where l.id_persona ="+dni+" and l.id_tipo_licencia ="+tipo+" order by fecha_emision ASC;";                            
 			ResultSet rs = ConexionP.consultarDatos(query);
 			while(rs.next()) {
-				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"));
+				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
 				licencia.add(lic);
 			}
 		}
@@ -127,7 +127,7 @@ public class LicenciaDao {
 
 	public static void newLicencia(Licencia licencia) {
 		
-		String query= "INSERT INTO public.licencia (id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia, usuario, observaciones) VALUES("+licencia.getIdPersona()+", "+licencia.getIdTipoLicencia()+", "+licencia.getCosto()+", '"+licencia.getFechaEmision()+"', '"+licencia.getFechaVigencia()+"', "+licencia.getEsCopia()+", "+licencia.getEstaVigente()+", 'aaa', "+licencia.getObservaciones()+"'.');";
+		String query= "INSERT INTO public.licencia (id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia, usuario, observaciones, num_copia) VALUES("+licencia.getIdPersona()+", "+licencia.getIdTipoLicencia()+", "+licencia.getCosto()+", '"+licencia.getFechaEmision()+"', '"+licencia.getFechaVigencia()+"', "+licencia.getEsCopia()+", "+licencia.getEstaVigente()+", 'aaa', '"+licencia.getObservaciones()+".', "+licencia.getNumCopia()+");";
 		
 		Connection con = ConexionP.conectarDB();
 		try {

@@ -16,13 +16,14 @@ public class Licencia {
 	private Boolean esCopia;
 	private Boolean estaVigente;
 	private String observaciones;
+	private Integer numCopia;
 	
 	public Licencia() {
 		super();
 	}
 
 	public Licencia(Integer idLicencia, Integer idPersona, Integer idTipoLicencia, Integer costo,
-			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente, String observaciones) {
+			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente, String observaciones, Integer numCopia) {
 		super();
 		this.idLicencia 	= idLicencia;
 		this.idPersona 		= idPersona;
@@ -33,6 +34,7 @@ public class Licencia {
 		this.esCopia 		= esCopia;
 		this.estaVigente 	= estaVigente;
 		this.observaciones	= observaciones;
+		this.numCopia 		= numCopia;
 	}
 	
 	public Integer getIdLicencia() {
@@ -117,6 +119,14 @@ public class Licencia {
 			}
 		}
 		return licencia;
+	}
+
+	public Integer getNumCopia() {
+		return numCopia;
+	}
+
+	public void setNumCopia(Integer numCopia) {
+		this.numCopia = numCopia;
 	}
 
 }

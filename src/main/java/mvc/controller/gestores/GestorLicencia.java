@@ -52,6 +52,7 @@ public class GestorLicencia {
 			actualizarVigencia(licencia.getIdPersona(), licencia.getIdTipoLicencia());
 			licencia.setEstaVigente(emitirLicenciaDTO.getEstaVigente());
 			licencia.setObservaciones(emitirLicenciaDTO.getObservaciones());
+			licencia.setNumCopia(emitirLicenciaDTO.getNumCopia());
 			
 			LicenciaDao.newLicencia(licencia);
 		}

@@ -740,6 +740,7 @@ public class PntCrearLicencia extends JPanel {
 		emitirLicenciaDTO.setFechaVigencia(GestorLicencia.calculoVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc()));
 		emitirLicenciaDTO.setEsCopia(false);
 		emitirLicenciaDTO.setEstaVigente(true);
+		emitirLicenciaDTO.setNumCopia(1);
 		
 		for(int i=0; i<licenciasSelec.size(); i++) {
 			Licencia licencia = new Licencia();
