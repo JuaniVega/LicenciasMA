@@ -23,6 +23,7 @@ public class EmitirLicenciaDTO {
 	private Integer piso;
 	private String dpto;
 	private String observaciones;
+	private Integer numCopia;
 	private ArrayList<String> licenciasSeleccionadas;
 	
 	private ArrayList<Integer> costo;
@@ -179,7 +180,11 @@ public class EmitirLicenciaDTO {
 	public void setCosto(ArrayList<Integer> costo) {
 		this.costo = costo;
 	}
-	
-	
+	public Integer getNumCopia() {
+		return numCopia;
+	}
+	public void setNumCopia(Integer numCopia) {
+		this.numCopia = numCopia;
+	}
 
 }
