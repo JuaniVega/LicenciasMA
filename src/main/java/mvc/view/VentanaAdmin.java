@@ -18,6 +18,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
 	//public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(null);
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
+	public static PntModificarDatosConductor pntModificarDatosConductor= new PntModificarDatosConductor();
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -26,6 +27,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntCrearLicencia = "n_pntCrearLicencia";
 	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	public static String n_pntDarAltaTitularUI = "n_pntDarAltaTitularUI";
+	public static String n_pntModificarDatosConductor = "n_pntModificarDatosConductor";
 	
 	/**
 	 * Launch the application.
@@ -60,9 +62,10 @@ public class VentanaAdmin extends JFrame {
 		
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
-		cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
+		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		cambiarPantalla(pntModificarDatosConductor, n_pntModificarDatosConductor);
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
