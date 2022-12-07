@@ -16,9 +16,13 @@ public class VentanaAdmin extends JFrame {
 	
 	/*DEFINIMOS TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
-	//public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(null);
+	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
+<<<<<<< HEAD
 	public static PntModificarDatosConductor pntModificarDatosConductor= new PntModificarDatosConductor();
+=======
+	public static PntEmitirCopia pntEmitirCopia= new PntEmitirCopia();
+>>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -27,7 +31,11 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntCrearLicencia = "n_pntCrearLicencia";
 	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	public static String n_pntDarAltaTitularUI = "n_pntDarAltaTitularUI";
+<<<<<<< HEAD
 	public static String n_pntModificarDatosConductor = "n_pntModificarDatosConductor";
+=======
+	public static String n_pntEmitirCopia = "n_pntEmitirCopia";
+>>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
 	
 	/**
 	 * Launch the application.
@@ -60,12 +68,19 @@ public class VentanaAdmin extends JFrame {
 	
 		sizePnt = contentPane.getSize() ;
 		
+<<<<<<< HEAD
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
 		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
 		cambiarPantalla(pntModificarDatosConductor, n_pntModificarDatosConductor);
+=======
+		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
+		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
+		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		cambiarPantalla(pntEmitirCopia, n_pntEmitirCopia);
+>>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
@@ -91,6 +106,11 @@ public class VentanaAdmin extends JFrame {
 			if (JOptionPane.showConfirmDialog(null, error, titulo, 
 				JOptionPane.PLAIN_MESSAGE, 
 				JOptionPane.ERROR_MESSAGE)==0);
+		}
+		
+		//Ventana emergente de confirmacion
+		public static void mensajeExito(String texto, String titulo) {
+			if (JOptionPane.showConfirmDialog(null, texto, titulo, JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE)==0);
 		}
 	
 }

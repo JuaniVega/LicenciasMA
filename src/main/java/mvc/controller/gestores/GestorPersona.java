@@ -4,6 +4,7 @@ import java.util.List;
 
 import mvc.controller.dao.PersonaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.dto.PersonaDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -42,5 +43,8 @@ public class GestorPersona {
 	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
 		PersonaDao.updateConductorDonante(emitirLicenciaDTO.getNumDoc(), emitirLicenciaDTO.getEsDonante());
+	}
+	public static void actualizarDatosConductor(PersonaDTO personaDTO, int dni) {
+		PersonaDao.updateDatosConductor(personaDTO, dni);
 	}
 }

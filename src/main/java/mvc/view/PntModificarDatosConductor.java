@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
+import mvc.controller.dao.PersonaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.dto.PersonaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
@@ -56,7 +58,7 @@ public class PntModificarDatosConductor extends JPanel {
 	private JComboBox<String> cbGrupoSanguineoConductor;
 	private JLabel lblErrorLicencias;
 	private JLabel lblErrorDonantes;
-	
+	private int dni;
 	private JButton btnCrearTitular = new JButton("Crear titular");
 	private JButton btnEmitirLicencia;
 	
@@ -151,12 +153,12 @@ public class PntModificarDatosConductor extends JPanel {
 	txtpnSexoCliente.setText("Sexo (*)");
 	txtpnSexoCliente.setEditable(false);
 	txtpnSexoCliente.setBackground(SystemColor.menu);
-	txtpnSexoCliente.setBounds(299, 231, 58, 20);
+	txtpnSexoCliente.setBounds(299, 231, 48, 20);
 	panelConductor.add(txtpnSexoCliente);
 	
 	cbSexoCliente = new JComboBox();
 	cbSexoCliente.setEditable(true);
-	cbSexoCliente.setBounds(367, 229, 91, 22);
+	cbSexoCliente.setBounds(355, 231, 91, 22);
 	panelConductor.add(cbSexoCliente);
 	
 	JPanel panelDocumento_2 = new JPanel();
@@ -295,55 +297,25 @@ public class PntModificarDatosConductor extends JPanel {
 	btnCancelar.setBounds(821, 588, 118, 37);
 	add(btnCancelar);
 	
-/*	btnEmitirLicencia = new JButton("Emitir licencia");
-	btnEmitirLicencia.setEnabled(false);
-	btnEmitirLicencia.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			if(validarSelecciones()) {
-				try {
-					cargarEmitirLicenciaDTO();
-					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
-					GestorLicencia.crearLicencia(emitirLicenciaDTO);
-					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO);
-					VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}		}
-	});
-	
-	btnEmitirLicencia.setBounds(810, 602, 118, 37);
-	add(btnEmitirLicencia);
-	btnCrearTitular.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntDarAltaTitularUI,VentanaAdmin.n_pntDarAltaTitularUI);
-		}
-	});
-	
-
-	btnCrearTitular.setEnabled(false);
-	btnCrearTitular.setBounds(513, 602, 232, 37);
-	add(btnCrearTitular);
-	*/
 	
 	JButton btnBuscarTitular = new JButton("Buscar titular");
 	btnBuscarTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			String val = VentanaAdmin.mensajeBusqueda(null, "Ingrese DNI del titular");
 			if(esDniValido(val)) {
-				int dni = Integer.parseInt(val);
-				List<Persona> persona;
+				dni = Integer.parseInt(val);
+				//List<Persona> persona;
 				List<Conductor> conductor;
 				try {
-					persona = GestorPersona.obtenerPersonaxDni(dni);
+					//persona = GestorPersona.obtenerPersonaxDni(dni);
 					conductor = GestorPersona.obtenerConductorxDni(dni);
 					
 					limpiarPantalla();
-					if(persona.size()==0) {
+					if( conductor.size()==0) {
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
 					}else {
-						cargarDatosenCampos(persona.get(0));
-						cargarDatosenCampos1(conductor.get(0));
+						cargarDatosenCampos(conductor.get(0));
+						
 					}
 					
 				} catch (Exception e) {
@@ -353,8 +325,39 @@ public class PntModificarDatosConductor extends JPanel {
 			
 		}
 	});
-	btnBuscarTitular.setBounds(556, 588, 232, 37);
+	btnBuscarTitular.setBounds(414, 588, 203, 37);
 	add(btnBuscarTitular);
+	
+	JButton btnGuardarCambios = new JButton("Guardar Cambios");
+	btnGuardarCambios.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			//agregar las modificaciones hechas 
+			if(validarCampos()) {
+				PersonaDTO personaDTO = new PersonaDTO();
+				try {
+					personaDTO.setNombre(tfNombreCliente.getText());
+					personaDTO.setApellido(tfApellidoCliente.getText());
+					personaDTO.setCalle(tfCalleCliente.getText());
+					String callenum = tfNumDirCliente.getText();
+					personaDTO.setNumcalle(Integer.parseInt(callenum));
+					personaDTO.setDepto(tfDptoCliente.getText());
+					String pisoPersona = tfPisoCliente.getText();
+					personaDTO.setPiso(Integer.parseInt(pisoPersona));
+					personaDTO.setSexo((String) cbSexoCliente.getSelectedItem());
+				   
+					GestorPersona.actualizarDatosConductor(personaDTO, dni);
+					
+					//VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
+				}catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		}
+	});
+	btnGuardarCambios.setBounds(639, 588, 154, 37);
+	add(btnGuardarCambios);
 	
 	try {
 		llenarCB();
@@ -363,8 +366,6 @@ public class PntModificarDatosConductor extends JPanel {
 	}
 	
 	}
-
-	
 	protected void limpiarPantalla() {
 		tfNombreCliente.setText("");
 		tfApellidoCliente.setText("");
@@ -381,22 +382,21 @@ public class PntModificarDatosConductor extends JPanel {
 		lblErrorDonantes.setText("");
 	}
 
-	private void cargarDatosenCampos(Persona persona) throws ParseException {
-		tfNombreCliente.setText(persona.getNombre());
-		tfApellidoCliente.setText(persona.getApellido());
-		cbTipoDocumentoCliente.setSelectedIndex(persona.getTipoDoc());
-		tfNroDocumentoCliente.setText(Integer.toString(persona.getDni()));
-		cbSexoCliente.setSelectedIndex(persona.getCodSexo());
+	private void cargarDatosenCampos(Conductor conductor) throws ParseException {
+		tfNombreCliente.setText(conductor.getNombre());
+		tfApellidoCliente.setText(conductor.getApellido());
+		cbTipoDocumentoCliente.setSelectedIndex(conductor.getTipoDoc());
+		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
+		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
 		tfFechaEmision.setText(LocalDate.now().toString());
-		tfFechaNacimConductor.setText(String.valueOf(persona.getFechaNacimiento().format(formatter)));
-	}
-	private void cargarDatosenCampos1(Conductor conductor) throws ParseException {
+		tfFechaNacimConductor.setText(String.valueOf(conductor.getFechaNacimiento().format(formatter)));
 		tfCalleCliente.setText(conductor.getDireccion());
 		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
 	}
+	
 	private void llenarCB() throws Exception {
 		
 		//Llena el combo box de tipo de documento
@@ -438,5 +438,29 @@ public class PntModificarDatosConductor extends JPanel {
 			return false;
 		}
 		
+	}
+	private boolean validarCampos() {
+		
+		if (tfNombreCliente.getText()== null || tfApellidoCliente.getText()== null) {
+			return false;
+		}
+		else if (tfCalleCliente.getText()== null || tfNumDirCliente.getText()==null) {
+			return false ;
+		}
+		else if (tfDptoCliente.getText()!= null) {
+			if (tfPisoCliente.getText()== null) {
+				return false;
+			}
+		}
+		else if (tfPisoCliente.getText()!=null) {
+			if (tfDptoCliente.getText()==null) {
+				return false;
+			}
+		}
+		else if (cbSexoCliente.getSelectedItem().equals("-Seleccione-")) {
+			return false;
+		}
+
+		return true;
 	}
 }
