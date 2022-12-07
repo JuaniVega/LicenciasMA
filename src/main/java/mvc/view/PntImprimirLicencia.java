@@ -81,6 +81,9 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	/**
 	 * Create the panel.
 	 */
+	public PntImprimirLicencia() {
+	}
+	
 	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);

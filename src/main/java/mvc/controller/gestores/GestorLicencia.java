@@ -29,12 +29,27 @@ public class GestorLicencia {
 		return LicenciaDao.getLicenciaxDni(dni);
 	}
 	
+	public static List<Licencia> obtenerLicenciaVigentexDni(int dni) throws Exception{
+		return LicenciaDao.getLicenciaVigentexDni(dni);
+	}
+	
 	public static List<Licencia> obtenerLicenciaxDnixTipo(int dni, int tipo) throws Exception{
 		return LicenciaDao.getLicenciaxDnixTipo(dni, tipo);
 	}
 	
 	public static List<Costo> obtenerCostoxClasexAnio(String clase, int anios) throws Exception{
 		return LicenciaDao.getCostoxClasexAnio(clase, anios);
+	}
+	
+	public static void actualizarNumCopia(EmitirLicenciaDTO emitirLicenciaDTO) {
+		int dni;
+		int tipoLicencia;
+		int valNuevaCopia;
+		
+		dni = emitirLicenciaDTO.getNumDoc();
+		tipoLicencia = emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(0);
+		valNuevaCopia = emitirLicenciaDTO.getNumCopia()+1;
+		LicenciaDao.updateNumCopia( dni, tipoLicencia, valNuevaCopia);
 	}
 	
 	public static void crearLicencia(EmitirLicenciaDTO emitirLicenciaDTO) throws Exception{
