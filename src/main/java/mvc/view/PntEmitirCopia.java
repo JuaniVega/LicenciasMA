@@ -76,6 +76,8 @@ public class PntEmitirCopia extends JPanel {
 	
 	private JTextField tfCopiaNum;
 	
+	int valCopiaNueva = 0;
+	
 	public PntEmitirCopia() {
 		setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
@@ -438,6 +440,7 @@ public class PntEmitirCopia extends JPanel {
 			if(validarSelecciones()) {
 					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO);
 					VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
+					limpiarPantalla();
 			}		}
 	});
 	btnImprimirLicencia.setBounds(810, 602, 118, 37);
@@ -449,7 +452,11 @@ public class PntEmitirCopia extends JPanel {
 				try {
 					cargarCopiaLicenciaDTO();
 					GestorLicencia.actualizarNumCopia(emitirLicenciaDTO);
+					tfCopiaNum.setText(String.valueOf(valCopiaNueva));
+					deshabilitarCheckBox();
+					VentanaAdmin.mensajeExito("Copia generada correctamente", "Éxito");
 					btnImprimirLicencia.setEnabled(true);
+					btnEmitirCopia.setEnabled(false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -477,12 +484,9 @@ public class PntEmitirCopia extends JPanel {
 					limpiarPantalla();
 					if(conductor.size()==0) {
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
-					}else {
-						btnEmitirCopia.setEnabled(true);
-						
+					}else {						
 						cargarDatosenCamposConductor(conductor.get(0));
 						cargarCheckBoxLicencia(licencia);
-						
 					}
 					
 				} catch (Exception e) {
@@ -533,11 +537,13 @@ public class PntEmitirCopia extends JPanel {
 				}
 			}
 			cargarDatosdeLicencia();
+			btnEmitirCopia.setEnabled(true);
 		}else {
 				for(int i=0; i<licenciasObtenidasChBx.size();i++) {
 					licenciasObtenidasChBx.get(i).setEnabled(true);
 				}
 			borrarDatosdeCampoLicencia();
+			btnEmitirCopia.setEnabled(false);
 			}
 		
 		}
@@ -554,6 +560,7 @@ public class PntEmitirCopia extends JPanel {
 			if(licenciasObtenidas.get(i).getIdTipoLicencia()==Integer.parseInt(licenciasSelec.get(0))) {
 				taObservaciones.setText(licenciasObtenidas.get(i).getObservaciones());
 				tfCopiaNum.setText(licenciasObtenidas.get(i).getNumCopia().toString());
+				valCopiaNueva = licenciasObtenidas.get(i).getNumCopia()+1;
 			}
 		}
 		
@@ -578,13 +585,7 @@ public class PntEmitirCopia extends JPanel {
 		taObservaciones.setEnabled(false);
 		lblErrorLicencias.setText("");
 		lblErrorDonantes.setText("");
-		chbxTipoLicenciaA.setEnabled(false);
-		chbxTipoLicenciaB.setEnabled(false);
-		chbxTipoLicenciaC.setEnabled(false);
-		chbxTipoLicenciaD.setEnabled(false);
-		chbxTipoLicenciaE.setEnabled(false);
-		chbxTipoLicenciaF.setEnabled(false);
-		chbxTipoLicenciaG.setEnabled(false);
+		deshabilitarCheckBox();
 		chbxTipoLicenciaA.setSelected(false);
 		chbxTipoLicenciaB.setSelected(false);
 		chbxTipoLicenciaC.setSelected(false);
@@ -593,6 +594,18 @@ public class PntEmitirCopia extends JPanel {
 		chbxTipoLicenciaF.setSelected(false);
 		chbxTipoLicenciaG.setSelected(false);
 	}
+
+	private void deshabilitarCheckBox() {
+		chbxTipoLicenciaA.setEnabled(false);
+		chbxTipoLicenciaB.setEnabled(false);
+		chbxTipoLicenciaC.setEnabled(false);
+		chbxTipoLicenciaD.setEnabled(false);
+		chbxTipoLicenciaE.setEnabled(false);
+		chbxTipoLicenciaF.setEnabled(false);
+		chbxTipoLicenciaG.setEnabled(false);
+		
+	}
+
 
 	protected void agregarALista(JCheckBox chbxTipoLicencia, String i) {
 		if(chbxTipoLicencia.isSelected()==true) {
@@ -622,7 +635,7 @@ public class PntEmitirCopia extends JPanel {
 		emitirLicenciaDTO.setFechaVigencia(GestorLicencia.calculoVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc()));
 		emitirLicenciaDTO.setEsCopia(false);
 		emitirLicenciaDTO.setEstaVigente(true);
-		emitirLicenciaDTO.setNumCopia(1);
+		emitirLicenciaDTO.setNumCopia(valCopiaNueva);
 		costosLicencias.add(50);
 		emitirLicenciaDTO.setCosto(costosLicencias);
 	}

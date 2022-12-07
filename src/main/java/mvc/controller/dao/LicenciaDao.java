@@ -198,7 +198,7 @@ public class LicenciaDao {
 			//Comienza transacci�n
 			con.setAutoCommit(false);
 			
-				String query = "update public.licencia set num_copia ="+valNuevaCopia+" where id_persona = "+dni+" and id_tipo_licencia = "+tipo+" and estado_licencia = true;";
+				String query = "update public.licencia set num_copia ="+valNuevaCopia+", es_copia = true where id_persona = "+dni+" and id_tipo_licencia = "+tipo+" and estado_licencia = true;";
 				
 				con.createStatement().executeUpdate(query);
 				

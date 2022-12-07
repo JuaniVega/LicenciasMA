@@ -48,7 +48,7 @@ public class GestorLicencia {
 		
 		dni = emitirLicenciaDTO.getNumDoc();
 		tipoLicencia = emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(0);
-		valNuevaCopia = emitirLicenciaDTO.getNumCopia()+1;
+		valNuevaCopia = emitirLicenciaDTO.getNumCopia();
 		LicenciaDao.updateNumCopia( dni, tipoLicencia, valNuevaCopia);
 	}
 	
