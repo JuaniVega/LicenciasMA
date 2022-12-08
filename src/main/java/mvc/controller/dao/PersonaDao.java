@@ -124,6 +124,25 @@ public class PersonaDao {
 		return tipoGrupSang;
 	}
 	
+	public static List<Persona> getPersonasxListaDni(List<Integer> listaDniLicencia) throws Exception {
+		List<Persona> listaPersonas = new ArrayList<Persona>();
+		Persona persona = new Persona();
+		try {
+			for(int i=0; i<listaDniLicencia.size();i++) {
+				String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.dni="+listaDniLicencia.get(i)+";";                            
+				ResultSet rs = ConexionP.consultarDatos(query);
+				while(rs.next()) {
+					persona = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				}
+				listaPersonas.add(persona);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return listaPersonas;
+	}
+	
 	public static void updateConductorDonante (Integer doc, boolean esDonante) {
 		
 		Connection con = ConexionP.conectarDB();

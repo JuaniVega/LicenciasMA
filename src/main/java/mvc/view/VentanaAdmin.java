@@ -19,6 +19,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
 	public static PntEmitirCopia pntEmitirCopia= new PntEmitirCopia();
+	public static PntLicenciaExpirada pntLicenciaExpirada= new PntLicenciaExpirada();
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -28,6 +29,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	public static String n_pntDarAltaTitularUI = "n_pntDarAltaTitularUI";
 	public static String n_pntEmitirCopia = "n_pntEmitirCopia";
+	public static String n_pntLicenciaExpirada = "n_pntLicenciaExpirada";
 	
 	/**
 	 * Launch the application.
@@ -63,7 +65,7 @@ public class VentanaAdmin extends JFrame {
 		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
-		cambiarPantalla(pntEmitirCopia, n_pntEmitirCopia);
+		cambiarPantalla(pntLicenciaExpirada, n_pntLicenciaExpirada);
 	}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {

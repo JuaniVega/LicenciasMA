@@ -33,6 +33,10 @@ public class GestorLicencia {
 		return LicenciaDao.getLicenciaVigentexDni(dni);
 	}
 	
+	public static List<Licencia> obtenerLicenciasExpiradas() throws Exception{
+		return LicenciaDao.getLicenciasLicenciasExpiradas();
+	}
+	
 	public static List<Licencia> obtenerLicenciaxDnixTipo(int dni, int tipo) throws Exception{
 		return LicenciaDao.getLicenciaxDnixTipo(dni, tipo);
 	}
@@ -50,6 +54,10 @@ public class GestorLicencia {
 		tipoLicencia = emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(0);
 		valNuevaCopia = emitirLicenciaDTO.getNumCopia();
 		LicenciaDao.updateNumCopia( dni, tipoLicencia, valNuevaCopia);
+	}
+	
+	public static void actualizarVigenciasDesactualizadas() {
+		LicenciaDao.updateVigenciasDesactualizadas();
 	}
 	
 	public static void crearLicencia(EmitirLicenciaDTO emitirLicenciaDTO) throws Exception{

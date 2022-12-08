@@ -3,6 +3,7 @@ package mvc.controller.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +126,23 @@ public class LicenciaDao {
 		return licencia;
 	}
 	
+	public static List<Licencia> getLicenciasLicenciasExpiradas() throws Exception {
+		ArrayList<Licencia> licencia = new ArrayList<Licencia>();
+		try {
+			//String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where l.estado_licencia = false and fecha_vigencia < '"+LocalDate.now().getYear()+"-"+LocalDate.now().getMonthValue()+"-"+LocalDate.now().getDayOfMonth()+"' order by fecha_vigencia ASC;";                          
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where l.estado_licencia = false order by fecha_vigencia ASC;"; 
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
+				licencia.add(lic);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return licencia;
+	}
+	
 	public static List<Costo> getCostoxClasexAnio(String clase, int anios) throws Exception {
 		ArrayList<Costo> costos = new ArrayList<Costo>();
 		try {
@@ -179,6 +197,31 @@ public class LicenciaDao {
 				
 				con.commit();
 			}
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
+		
+	}
+	
+	public static void updateVigenciasDesactualizadas () {
+		
+		Connection con = ConexionP.conectarDB();
+		try {
+			//Comienza transacci�n
+			con.setAutoCommit(false);
+			
+				String query = "update public.licencia set estado_licencia = false where fecha_vigencia < '"+LocalDate.now().getYear()+"-"+LocalDate.now().getMonthValue()+"-"+LocalDate.now().getDayOfMonth()+"';";
+				
+				con.createStatement().executeUpdate(query);
+				
+				con.commit();
 		}
 		catch (Exception e) {
 		System.err.println("ERROR: " + e.getMessage());

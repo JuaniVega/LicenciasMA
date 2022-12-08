@@ -40,6 +40,11 @@ public class GestorPersona {
 		return PersonaDao.getTipoGrupoSanguineo(tipoGrupSang);
 	}
 	
+	;
+	public static List<Persona> obtenerPersonasxListaDni(List<Integer> listaDniLicencia) throws Exception{
+		return PersonaDao.getPersonasxListaDni(listaDniLicencia);
+	}
+	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
 		PersonaDao.updateConductorDonante(emitirLicenciaDTO.getNumDoc(), emitirLicenciaDTO.getEsDonante());
 	}
