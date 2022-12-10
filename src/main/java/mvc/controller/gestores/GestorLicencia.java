@@ -8,7 +8,9 @@ import java.util.List;
 import mvc.controller.dao.LicenciaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.model.Costo;
-import mvc.model.Licencia;import mvc.model.TipoLicencia;
+import mvc.model.Licencia;
+import mvc.model.Persona;
+import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
 
 public class GestorLicencia {
@@ -56,6 +58,13 @@ public class GestorLicencia {
 			LicenciaDao.newLicencia(licencia);
 		}
 	}
+
+
+	public static void renovarLicencia(Persona per , Licencia lic) throws Exception{
+		
+		actualizarVigencia(per.getId(),lic.getIdLicencia());
+	}
+
 
 	private static void actualizarVigencia(Integer idPersona, Integer idTipoLicencia) throws Exception {
 		List<Licencia> licencias=LicenciaDao.getLicenciaxDni(idPersona);
@@ -135,7 +144,7 @@ public class GestorLicencia {
 		
 		Integer difMeses= 12-periodEdad.getMonths();
 		
-		//Calcula cantidad de años por los que se va a emitir.
+		//Calcula cantidad de aï¿½os por los que se va a emitir.
 		if(edad>=17 && edad<21) {
 			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
 			if(licencias.size()==0) {
