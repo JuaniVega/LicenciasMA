@@ -8,7 +8,9 @@ import java.util.List;
 import mvc.controller.dao.LicenciaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.model.Costo;
-import mvc.model.Licencia;import mvc.model.TipoLicencia;
+import mvc.model.Licencia;
+import mvc.model.Persona;
+import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
 
 public class GestorLicencia {
@@ -29,12 +31,39 @@ public class GestorLicencia {
 		return LicenciaDao.getLicenciaxDni(dni);
 	}
 	
+	public static List<Licencia> obtenerLicenciaVigentexDni(int dni) throws Exception{
+		return LicenciaDao.getLicenciaVigentexDni(dni);
+	}
+	
+	public static List<Licencia> obtenerLicenciaVigentexPersona(List<Persona> personas) throws Exception{
+		return LicenciaDao.getLicenciaVigentexPersona(personas);
+	}
+	
+	public static List<Licencia> obtenerLicenciasExpiradas() throws Exception{
+		return LicenciaDao.getLicenciasLicenciasExpiradas();
+	}
+	
 	public static List<Licencia> obtenerLicenciaxDnixTipo(int dni, int tipo) throws Exception{
 		return LicenciaDao.getLicenciaxDnixTipo(dni, tipo);
 	}
 	
 	public static List<Costo> obtenerCostoxClasexAnio(String clase, int anios) throws Exception{
 		return LicenciaDao.getCostoxClasexAnio(clase, anios);
+	}
+	
+	public static void actualizarNumCopia(EmitirLicenciaDTO emitirLicenciaDTO) {
+		int dni;
+		int tipoLicencia;
+		int valNuevaCopia;
+		
+		dni = emitirLicenciaDTO.getNumDoc();
+		tipoLicencia = emitirLicenciaDTO.getIntLicenciasSeleccionadas().get(0);
+		valNuevaCopia = emitirLicenciaDTO.getNumCopia();
+		LicenciaDao.updateNumCopia( dni, tipoLicencia, valNuevaCopia);
+	}
+	
+	public static void actualizarVigenciasDesactualizadas() {
+		LicenciaDao.updateVigenciasDesactualizadas();
 	}
 	
 	public static void crearLicencia(EmitirLicenciaDTO emitirLicenciaDTO) throws Exception{
@@ -52,10 +81,18 @@ public class GestorLicencia {
 			actualizarVigencia(licencia.getIdPersona(), licencia.getIdTipoLicencia());
 			licencia.setEstaVigente(emitirLicenciaDTO.getEstaVigente());
 			licencia.setObservaciones(emitirLicenciaDTO.getObservaciones());
+			licencia.setNumCopia(emitirLicenciaDTO.getNumCopia());
 			
 			LicenciaDao.newLicencia(licencia);
 		}
 	}
+
+
+	public static void renovarLicencia(Persona per , Licencia lic) throws Exception{
+		
+		actualizarVigencia(per.getId(),lic.getIdLicencia());
+	}
+
 
 	private static void actualizarVigencia(Integer idPersona, Integer idTipoLicencia) throws Exception {
 		List<Licencia> licencias=LicenciaDao.getLicenciaxDni(idPersona);
@@ -135,7 +172,7 @@ public class GestorLicencia {
 		
 		Integer difMeses= 12-periodEdad.getMonths();
 		
-		//Calcula cantidad de años por los que se va a emitir.
+		//Calcula cantidad de aï¿½os por los que se va a emitir.
 		if(edad>=17 && edad<21) {
 			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
 			if(licencias.size()==0) {

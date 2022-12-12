@@ -16,6 +16,22 @@ public class GestorPersona {
 		return PersonaDao.getPersonaxDni(dni);
 	}
 	
+	public static List<Persona> obtenerPersonaxNombre(String nombre) throws Exception{
+		return PersonaDao.getPersonaxNombre(nombre);
+	}
+	
+	public static List<Persona> obtenerPersonaxApellido(String apellido) throws Exception{
+		return PersonaDao.getPersonaxApellido(apellido);
+	}
+	
+	public static List<Persona> obtenerPersonaxGrupoSanguineo(int grupoS) throws Exception{
+		return PersonaDao.getPersonaxGrupoSanguineo(grupoS);
+	}
+	
+	public static List<Persona> obtenerPersonaxEsDonante(boolean esDonante) throws Exception{
+		return PersonaDao.getPersonaxEsDonante(esDonante);
+	}
+	
 	public static List<Conductor> obtenerConductorxDni(int dni) throws Exception{
 		return PersonaDao.getConductorxDni(dni);
 	}
@@ -38,6 +54,11 @@ public class GestorPersona {
 
 	public static TipoGrupoSanguineo obtenerTipoGrupoSanguineo(int tipoGrupSang) throws Exception{
 		return PersonaDao.getTipoGrupoSanguineo(tipoGrupSang);
+	}
+	
+	;
+	public static List<Persona> obtenerPersonasxListaDni(List<Integer> listaDniLicencia) throws Exception{
+		return PersonaDao.getPersonasxListaDni(listaDniLicencia);
 	}
 	
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {

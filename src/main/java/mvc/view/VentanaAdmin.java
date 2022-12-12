@@ -16,8 +16,13 @@ public class VentanaAdmin extends JFrame {
 	
 	/*DEFINIMOS TODAS LAS VISTAS QUE VAYAMOS A PONER EN EL PANEL*/
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
-	//public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(null);
+	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
+	public static PntEmitirCopia pntEmitirCopia= new PntEmitirCopia();
+	public static PntLicenciaExpirada pntLicenciaExpirada= new PntLicenciaExpirada();
+	public static PntLicenciaVigente pntLicenciaVigente= new PntLicenciaVigente();
+	public static PntRenovarLicencia pntRenovarLicenciaUI = new PntRenovarLicencia();	
+	
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -26,7 +31,10 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntCrearLicencia = "n_pntCrearLicencia";
 	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	public static String n_pntDarAltaTitularUI = "n_pntDarAltaTitularUI";
-	
+	public static String n_pntEmitirCopia = "n_pntEmitirCopia";
+	public static String n_pntLicenciaExpirada = "n_pntLicenciaExpirada";
+	public static String n_pntLicenciaVigente = "n_pntLicenciaVigente";
+	public static String n_pntRenovarLicencia = "n_pntRenovarLicencia";	
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +65,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
+
 		
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
 		
@@ -70,6 +79,15 @@ public class VentanaAdmin extends JFrame {
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 		cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
 	}
+
+		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);		
+		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
+		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		//cambiarPantalla(pntLicenciaExpirada, n_pntLicenciaExpirada);
+		//cambiarPantalla(pntLicenciaVigente, n_pntLicenciaVigente);		
+		//cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
+		
+
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
 		contentPane.add(nombrePnt, panel); //Agrego la pantalla a contentPane, previamente debe estar inicializada
@@ -94,6 +112,11 @@ public class VentanaAdmin extends JFrame {
 			if (JOptionPane.showConfirmDialog(null, error, titulo, 
 				JOptionPane.PLAIN_MESSAGE, 
 				JOptionPane.ERROR_MESSAGE)==0);
+		}
+		
+		//Ventana emergente de confirmacion
+		public static void mensajeExito(String texto, String titulo) {
+			if (JOptionPane.showConfirmDialog(null, texto, titulo, JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE)==0);
 		}
 	
 }

@@ -1,385 +1,377 @@
 package mvc.view;
 
-import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.UIManager;
-import java.awt.Color;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.TextArea;
-import com.toedter.calendar.JDateChooser;
 
-import mvc.controller.gestores.GestorPersona;
-import mvc.model.TipoDocumento;
-import mvc.model.TipoGrupoSanguineo;
-
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
+import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.gestores.GestorLicencia;
+import mvc.controller.gestores.GestorPersona;
+import mvc.model.Conductor;
+import mvc.model.Licencia;
+import mvc.model.TipoDocumento;
+import mvc.model.TipoGrupoSanguineo;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import java.awt.Color;
+
+public class PntDarAltaTitularUI extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2439382630198569769L;
+	
+	private JTextField tfNombreCliente;
+	private JTextField tfApellidoCliente;
+	private JTextField tfNroDocumentoCliente;
+	private JTextField tfCalleCliente;
+	private JTextField tfNombreAdmin;
+	private JTextField tfApellidoAdmin;
+	private JTextField tfNumDirCliente;
+	private JTextField tfDptoCliente;
+	private JTextField tfPisoCliente;
+	private JTextField tfFechaEmision;
+	private JTextField tfFechaNacimConductor;
+	private JComboBox<String> cbTipoDocumentoCliente;
+	private JComboBox cbSexoCliente;
+	private JComboBox<String> cbGrupoSanguineoConductor;
+	private JTextPane txtpnObservaciones;
+	private JTextArea taObservaciones;
+	private JLabel lblErrorLicencias;
+	private JLabel lblErrorDonantes;
+	
+	private JButton btnCrearTitular = new JButton("Crear titular");
+	private JButton btnEmitirLicencia;
+	
+	private ArrayList<String> licenciasSelec = new ArrayList<String>();
+	private ArrayList<Integer> costosLicencias = new ArrayList<Integer>();
+	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
+	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+	
+	private boolean licenciasConCDE=false;
+	
+	public PntDarAltaTitularUI() {
+		setLocation(-31, -63);
+	setPreferredSize(new Dimension(980, 650));
+	setLayout(null);
+	
+	JTextPane txtDatosAdmin = new JTextPane();
+	txtDatosAdmin.setBounds(41, 443, 142, 20);
+	add(txtDatosAdmin);
+	txtDatosAdmin.setText("Datos administrativo");
+	txtDatosAdmin.setFont(new Font("Tahoma", Font.BOLD, 13));
+	txtDatosAdmin.setEditable(false);
+	txtDatosAdmin.setBackground(SystemColor.menu);
+	
+	JTextPane txtDatosConductor = new JTextPane();
+	txtDatosConductor.setFont(new Font("Tahoma", Font.BOLD, 13));
+	txtDatosConductor.setBounds(44, 48, 115, 20);
+	add(txtDatosConductor);
+	txtDatosConductor.setBackground(SystemColor.menu);
+	txtDatosConductor.setEditable(false);
+	txtDatosConductor.setText("Datos conductor");
+	
+	JTextPane txtpnEmitirLicencia = new JTextPane();
+	txtpnEmitirLicencia.setText("EMITIR LICENCIA");
+	txtpnEmitirLicencia.setFont(new Font("Tahoma", Font.BOLD, 21));
+	txtpnEmitirLicencia.setEditable(false);
+	txtpnEmitirLicencia.setBackground(SystemColor.menu);
+	txtpnEmitirLicencia.setBounds(393, 11, 219, 37);
+	add(txtpnEmitirLicencia);
+	
+	JPanel panelConductor = new JPanel();
+	panelConductor.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panelConductor.setToolTipText("");
+	panelConductor.setBounds(31, 59, 908, 373);
+	add(panelConductor);
+	panelConductor.setLayout(null);
+	
+	JTextPane txtpnDireccion = new JTextPane();
+	txtpnDireccion.setText("Direcci\u00F3n");
+	txtpnDireccion.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	txtpnDireccion.setEditable(false);
+	txtpnDireccion.setBackground(SystemColor.menu);
+	txtpnDireccion.setBounds(481, 66, 59, 22);
+	panelConductor.add(txtpnDireccion);
+	
+	JTextPane txtDocumentoCliente = new JTextPane();
+	txtDocumentoCliente.setText("Documento");
+	txtDocumentoCliente.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	txtDocumentoCliente.setEditable(false);
+	txtDocumentoCliente.setBackground(SystemColor.menu);
+	txtDocumentoCliente.setBounds(41, 66, 71, 22);
+	panelConductor.add(txtDocumentoCliente);
+	
+	JTextPane txtNombreCliente = new JTextPane();
+	txtNombreCliente.setText("Nombre completo (*)");
+	txtNombreCliente.setEditable(false);
+	txtNombreCliente.setBackground(SystemColor.menu);
+	txtNombreCliente.setBounds(28, 25, 125, 20);
+	panelConductor.add(txtNombreCliente);
+	
+	tfNombreCliente = new JTextField();
+	tfNombreCliente.setEditable(false);
+	tfNombreCliente.setBounds(156, 25, 260, 20);
+	panelConductor.add(tfNombreCliente);
+	tfNombreCliente.setColumns(10);
+	
+	JTextPane txtApellidoCliente = new JTextPane();
+	txtApellidoCliente.setText("Apellido(s) (*)");
+	txtApellidoCliente.setEditable(false);
+	txtApellidoCliente.setBackground(SystemColor.menu);
+	txtApellidoCliente.setBounds(468, 25, 89, 20);
+	panelConductor.add(txtApellidoCliente);
+	
+	tfApellidoCliente = new JTextField();
+	tfApellidoCliente.setEditable(false);
+	tfApellidoCliente.setColumns(10);
+	tfApellidoCliente.setBounds(567, 25, 293, 20);
+	panelConductor.add(tfApellidoCliente);
+	
+	JPanel panelDocumento = new JPanel();
+	panelDocumento.setLayout(null);
+	panelDocumento.setToolTipText("");
+	panelDocumento.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panelDocumento.setBounds(28, 77, 388, 49);
+	panelConductor.add(panelDocumento);
+	
+	JTextPane txtTipoDocumentoCliente = new JTextPane();
+	txtTipoDocumentoCliente.setText("Tipo (*)");
+	txtTipoDocumentoCliente.setEditable(false);
+	txtTipoDocumentoCliente.setBackground(SystemColor.menu);
+	txtTipoDocumentoCliente.setBounds(10, 11, 58, 20);
+	panelDocumento.add(txtTipoDocumentoCliente);
+	
+	tfNroDocumentoCliente = new JTextField();
+	tfNroDocumentoCliente.setEditable(false);
+	tfNroDocumentoCliente.setColumns(10);
+	tfNroDocumentoCliente.setBounds(244, 11, 120, 20);
+	panelDocumento.add(tfNroDocumentoCliente);
+	
+	JTextPane txtNroDocumentoCliente = new JTextPane();
+	txtNroDocumentoCliente.setText("N\u00FAmero (*)");
+	txtNroDocumentoCliente.setEditable(false);
+	txtNroDocumentoCliente.setBackground(SystemColor.menu);
+	txtNroDocumentoCliente.setBounds(173, 11, 71, 20);
+	panelDocumento.add(txtNroDocumentoCliente);
+	
+	cbTipoDocumentoCliente = new JComboBox();
+	cbTipoDocumentoCliente.setEnabled(false);
+	cbTipoDocumentoCliente.setBounds(78, 11, 85, 22);
+	panelDocumento.add(cbTipoDocumentoCliente);
+	
+	JTextPane txtFechaNacCliente = new JTextPane();
+	txtFechaNacCliente.setText("Fecha de nacimiento (*)");
+	txtFechaNacCliente.setEditable(false);
+	txtFechaNacCliente.setBackground(SystemColor.menu);
+	txtFechaNacCliente.setBounds(30, 154, 133, 20);
+	panelConductor.add(txtFechaNacCliente);
+	
+	txtpnObservaciones = new JTextPane();
+	txtpnObservaciones.setText("Observaciones (*)");
+	txtpnObservaciones.setEditable(false);
+	txtpnObservaciones.setBackground(SystemColor.menu);
+	txtpnObservaciones.setBounds(468, 197, 107, 22);
+	panelConductor.add(txtpnObservaciones);
+	
+	taObservaciones = new JTextArea();
+	taObservaciones.setEnabled(false);
+	taObservaciones.setToolTipText("Observaciones");
+	taObservaciones.setBounds(585, 197, 275, 147);
+	panelConductor.add(taObservaciones);
+	
+	JTextPane txtpnSexoCliente = new JTextPane();
+	txtpnSexoCliente.setText("Sexo (*)");
+	txtpnSexoCliente.setEditable(false);
+	txtpnSexoCliente.setBackground(SystemColor.menu);
+	txtpnSexoCliente.setBounds(287, 154, 58, 20);
+	panelConductor.add(txtpnSexoCliente);
+	
+	cbSexoCliente = new JComboBox();
+	cbSexoCliente.setEnabled(false);
+	cbSexoCliente.setBounds(352, 154, 64, 22);
+	panelConductor.add(cbSexoCliente);
+	
+	JPanel panelDocumento_2 = new JPanel();
+	panelDocumento_2.setLayout(null);
+	panelDocumento_2.setToolTipText("");
+	panelDocumento_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panelDocumento_2.setBounds(468, 77, 392, 78);
+	panelConductor.add(panelDocumento_2);
+	
+	JTextPane txtCalle = new JTextPane();
+	txtCalle.setBounds(10, 11, 59, 20);
+	panelDocumento_2.add(txtCalle);
+	txtCalle.setText("Calle (*)");
+	txtCalle.setEditable(false);
+	txtCalle.setBackground(SystemColor.menu);
+	
+	tfCalleCliente = new JTextField();
+	tfCalleCliente.setEditable(false);
+	tfCalleCliente.setBounds(70, 11, 160, 20);
+	panelDocumento_2.add(tfCalleCliente);
+	tfCalleCliente.setColumns(10);
+	
+	JTextPane txtpnNumero = new JTextPane();
+	txtpnNumero.setText("N\u00FAmero (*)");
+	txtpnNumero.setEditable(false);
+	txtpnNumero.setBackground(SystemColor.menu);
+	txtpnNumero.setBounds(240, 11, 74, 20);
+	panelDocumento_2.add(txtpnNumero);
+	
+	tfNumDirCliente = new JTextField();
+	tfNumDirCliente.setEditable(false);
+	tfNumDirCliente.setColumns(10);
+	tfNumDirCliente.setBounds(314, 11, 64, 20);
+	panelDocumento_2.add(tfNumDirCliente);
+	
+	JTextPane txtpnDpto = new JTextPane();
+	txtpnDpto.setText("Dpto");
+	txtpnDpto.setEditable(false);
+	txtpnDpto.setBackground(SystemColor.menu);
+	txtpnDpto.setBounds(20, 42, 47, 20);
+	panelDocumento_2.add(txtpnDpto);
+	
+	tfDptoCliente = new JTextField();
+	tfDptoCliente.setEditable(false);
+	tfDptoCliente.setColumns(10);
+	tfDptoCliente.setBounds(70, 42, 59, 20);
+	panelDocumento_2.add(tfDptoCliente);
+	
+	JTextPane txtpnPiso = new JTextPane();
+	txtpnPiso.setText("Piso");
+	txtpnPiso.setEditable(false);
+	txtpnPiso.setBackground(SystemColor.menu);
+	txtpnPiso.setBounds(161, 42, 47, 20);
+	panelDocumento_2.add(txtpnPiso);
+	
+	tfPisoCliente = new JTextField();
+	tfPisoCliente.setEditable(false);
+	tfPisoCliente.setColumns(10);
+	tfPisoCliente.setBounds(209, 42, 64, 20);
+	panelDocumento_2.add(tfPisoCliente);
+	
+	tfFechaNacimConductor = new JTextField();
+	tfFechaNacimConductor.setEditable(false);
+	tfFechaNacimConductor.setColumns(10);
+	tfFechaNacimConductor.setBounds(169, 154, 107, 20);
+	panelConductor.add(tfFechaNacimConductor);
+	
+	JTextPane txtGrupoSanguineo = new JTextPane();
+	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
+	txtGrupoSanguineo.setEditable(false);
+	txtGrupoSanguineo.setBackground(SystemColor.menu);
+	txtGrupoSanguineo.setBounds(28, 209, 122, 33);
+	panelConductor.add(txtGrupoSanguineo);
+	
+	cbGrupoSanguineoConductor = new JComboBox();
+	cbGrupoSanguineoConductor.setEnabled(false);
+	cbGrupoSanguineoConductor.setBounds(156, 209, 88, 22);
+	panelConductor.add(cbGrupoSanguineoConductor);
+	
+	lblErrorLicencias = new JLabel("");
+	lblErrorLicencias.setForeground(Color.RED);
+	lblErrorLicencias.setBounds(28, 348, 388, 25);
+	panelConductor.add(lblErrorLicencias);
+	
+	lblErrorDonantes = new JLabel("");
+	lblErrorDonantes.setForeground(Color.RED);
+	lblErrorDonantes.setBounds(265, 242, 243, 14);
+	panelConductor.add(lblErrorDonantes);
+	
+	JPanel panelAdmin = new JPanel();
+	panelAdmin.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panelAdmin.setBounds(31, 454, 908, 121);
+	add(panelAdmin);
+	panelAdmin.setLayout(null);
+	
+	JTextPane txtNombreAdmin = new JTextPane();
+	txtNombreAdmin.setText("Nombre completo (*)");
+	txtNombreAdmin.setEditable(false);
+	txtNombreAdmin.setBackground(SystemColor.menu);
+	txtNombreAdmin.setBounds(10, 25, 131, 20);
+	panelAdmin.add(txtNombreAdmin);
+	
+	tfNombreAdmin = new JTextField();
+	tfNombreAdmin.setEditable(false);
+	tfNombreAdmin.setColumns(10);
+	tfNombreAdmin.setBounds(147, 25, 275, 20);
+	panelAdmin.add(tfNombreAdmin);
+	
+	JTextPane txtApellidoAdmin = new JTextPane();
+	txtApellidoAdmin.setText("Apellido(s) (*)");
+	txtApellidoAdmin.setEditable(false);
+	txtApellidoAdmin.setBackground(SystemColor.menu);
+	txtApellidoAdmin.setBounds(491, 25, 85, 20);
+	panelAdmin.add(txtApellidoAdmin);
+	
+	tfApellidoAdmin = new JTextField();
+	tfApellidoAdmin.setEditable(false);
+	tfApellidoAdmin.setColumns(10);
+	tfApellidoAdmin.setBounds(586, 25, 275, 20);
+	panelAdmin.add(tfApellidoAdmin);
+	
+	JTextPane txtFechaEmision = new JTextPane();
+	txtFechaEmision.setText("Fecha de emisi\u00F3n (*)");
+	txtFechaEmision.setEditable(false);
+	txtFechaEmision.setBackground(SystemColor.menu);
+	txtFechaEmision.setBounds(10, 76, 131, 20);
+	panelAdmin.add(txtFechaEmision);
+	
+	tfFechaEmision = new JTextField();
+	tfFechaEmision.setEditable(false);
+	tfFechaEmision.setColumns(10);
+	tfFechaEmision.setBounds(147, 76, 275, 20);
+	panelAdmin.add(tfFechaEmision);
+	
+	JButton btnAtras = new JButton("Atr\u00E1s");
+	btnAtras.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	});
+	btnAtras.setBounds(41, 602, 118, 37);
+	add(btnAtras);
+	
+	}
 	
 
-public class PntDarAltaTitularUI extends JPanel{
+	protected void limpiarPantalla() {
+		tfNombreCliente.setText("");
+		tfApellidoCliente.setText("");
+		cbTipoDocumentoCliente.setSelectedIndex(0);
+		tfNroDocumentoCliente.setText("");
+		tfCalleCliente.setText("");
+		tfNumDirCliente.setText("");
+		tfPisoCliente.setText("");
+		tfDptoCliente.setText("");
+		cbGrupoSanguineoConductor.setSelectedIndex(0);
+		cbSexoCliente.setSelectedIndex(0);
+		tfFechaNacimConductor.setText("");
+		taObservaciones.setText("");
+		taObservaciones.setEnabled(false);
+		lblErrorLicencias.setText("");
+		lblErrorDonantes.setText("");
+		
+	}
 
-             	                    
-				private JTextField insertarNombreConductortxt;                                                                                                             
-            	private JTextField textField;                                                                                                                              
-             	private JTextField textField_1;                                                                                                                            
-             	private JTextField textField_2;                                                                                                                            
-             	private JTextField textFieldNombreTitular;
-             	private JTextField textFieldApellidoTitular;
-             	private JTextField textFieldNumDocTitular;
-             	private JTextField textFieldCalleTitular;
-             	private JTextField textFieldNumCalleTitular;
-             	private JTextField tfPisoTitular;
-             	private JTextField tfDptoTitular;
-
-                                                                                                                         
-             	/**
-				 * 
-				 */
-				private static final long serialVersionUID = -6048411653045236128L;
-				
-				private JTextField txtNombreTitular;
-             	private JTextField txtApellidoTitular;
-             	private JTextField txtNumDocTitular;
-             	private JTextField txtCalleTitular;
-             	private JTextField txtNumCalleTitular;
-             	private JTextField txtPisoTitular;
-             	private JTextField txtDptoTitular;
-
-             	private JLabel labelErrorNom;
-             	private JLabel labelErrorApellido;
-             	private JLabel labelErrorDoc;
-             	private JLabel labelErrorFechNac;
-             	private JLabel labelErrorDireccion;
-             	private JLabel labelErrorFactorRH;
-             	private JLabel labelErrorGrupSanguineo;
-             	private JLabel labelErrorPiso;
-             	private JComboBox<String> cBoxTipoDoc;
-             	private JDateChooser tfFechaNacTitular;
-             	private JComboBox<String> cbGrupoSanguineo;
-             	//prueba                                                                                                                                                         
-             	
-             	public PntDarAltaTitularUI() {
-             		setBackground(UIManager.getColor("Button.background"));  
-             		setPreferredSize(new Dimension(980, 650));
-             		setLayout(null);
-             		
-             		JPanel PaneDocumento = new JPanel();
-             		PaneDocumento.setToolTipText("Documento ");
-             		PaneDocumento.setBorder(new TitledBorder(null, "Documento", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-             		PaneDocumento.setBounds(138, 144, 750, 72);
-             		add(PaneDocumento);
-             		PaneDocumento.setLayout(null);
-             		
-             		JLabel lblNewLabel_2 = new JLabel("Tipo (*)");
-             		lblNewLabel_2.setBounds(103, 27, 46, 14);
-             		PaneDocumento.add(lblNewLabel_2);
-             		
-             		cBoxTipoDoc = new JComboBox<String>();
-             		cBoxTipoDoc.setBounds(189, 23, 117, 22);
-             		PaneDocumento.add(cBoxTipoDoc);
-             		cBoxTipoDoc.setBackground(UIManager.getColor("Button.disabledShadow"));
-             		
-             		JLabel lblNewLabel_3 = new JLabel("Numero (*)");
-             		lblNewLabel_3.setBounds(360, 27, 67, 14);
-             		PaneDocumento.add(lblNewLabel_3);
-             		
-             		txtNumDocTitular = new JTextField();
-             		txtNumDocTitular.setBounds(472, 24, 117, 20);
-             		PaneDocumento.add(txtNumDocTitular);
-             		txtNumDocTitular.setColumns(10);
-             		
-             		labelErrorDoc = new JLabel("");
-             		labelErrorDoc.setForeground(Color.RED);
-             		labelErrorDoc.setBounds(189, 47, 362, 14);
-             		PaneDocumento.add(labelErrorDoc);
-             		
-             		JPanel panelDireccion = new JPanel();
-             		panelDireccion.setBorder(new TitledBorder(null, "Direccion", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-             		panelDireccion.setBounds(138, 242, 436, 107);
-             		add(panelDireccion);
-             		panelDireccion.setLayout(null);
-             		
-             		JLabel lblNewLabel_10 = new JLabel("Numero (*)");
-             		lblNewLabel_10.setBounds(248, 21, 87, 14);
-             		panelDireccion.add(lblNewLabel_10);
-             		
-             		txtNumCalleTitular = new JTextField();
-             		txtNumCalleTitular.setBounds(319, 18, 87, 20);
-             		panelDireccion.add(txtNumCalleTitular);
-             		txtNumCalleTitular.setColumns(10);
-             		
-             		txtCalleTitular = new JTextField();
-             		txtCalleTitular.setBounds(80, 18, 148, 20);
-             		panelDireccion.add(txtCalleTitular);
-             		txtCalleTitular.setColumns(10);
-             		
-             		JLabel lblNewLabel_9 = new JLabel("Calle (*)");
-             		lblNewLabel_9.setBounds(22, 21, 46, 14);
-             		panelDireccion.add(lblNewLabel_9);
-             		
-
-             		tfDptoTitular = new JTextField();
-             		tfDptoTitular.setBounds(299, 61, 36, 20);
-             		panelDireccion.add(tfDptoTitular);
-             		tfDptoTitular.setColumns(10);
-
-             		txtDptoTitular = new JTextField();
-             		txtDptoTitular.setBounds(299, 61, 36, 20);
-             		panelDireccion.add(txtDptoTitular);
-             		txtDptoTitular.setColumns(10);
-
-             		JLabel lblNewLabel_12 = new JLabel("Departamento");
-             		lblNewLabel_12.setBounds(203, 64, 86, 14);
-             		panelDireccion.add(lblNewLabel_12);
-             		
-             		txtPisoTitular = new JTextField();
-             		txtPisoTitular.setBounds(138, 61, 36, 20);
-             		panelDireccion.add(txtPisoTitular);
-             		txtPisoTitular.setColumns(10);
-             		
-             		JLabel lblNewLabel_11 = new JLabel("Piso");
-             		lblNewLabel_11.setBounds(98, 64, 30, 14);
-             		panelDireccion.add(lblNewLabel_11);
-             		
-             		labelErrorDireccion = new JLabel("");
-             		labelErrorDireccion.setForeground(Color.RED);
-             		labelErrorDireccion.setBounds(80, 39, 326, 14);
-             		panelDireccion.add(labelErrorDireccion);
-             		
-             		labelErrorPiso = new JLabel("");
-             		labelErrorPiso.setForeground(Color.RED);
-             		labelErrorPiso.setBounds(69, 82, 326, 14);
-             		panelDireccion.add(labelErrorPiso);
-             		
-             		JPanel panelGrupSanguineoFactorRH = new JPanel();
-             		panelGrupSanguineoFactorRH.setBorder(new TitledBorder(null, "Grupo Sanguineo y Factor RH", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-             		panelGrupSanguineoFactorRH.setBounds(138, 379, 410, 107);
-             		add(panelGrupSanguineoFactorRH);
-             		panelGrupSanguineoFactorRH.setLayout(null);
-             		
-             		cbGrupoSanguineo = new JComboBox<String>();
-             		cbGrupoSanguineo.setBounds(198, 46, 117, 20);
-             		panelGrupSanguineoFactorRH.add(cbGrupoSanguineo);
-             		
-             		JLabel lblNewLabel_7 = new JLabel("Grupo Sanguineo (*)");
-             		lblNewLabel_7.setBounds(48, 49, 117, 14);
-             		panelGrupSanguineoFactorRH.add(lblNewLabel_7);
-             		
-             		labelErrorGrupSanguineo = new JLabel("");
-             		labelErrorGrupSanguineo.setForeground(Color.RED);
-             		labelErrorGrupSanguineo.setBounds(48, 77, 345, 14);
-             		panelGrupSanguineoFactorRH.add(labelErrorGrupSanguineo);
-             		
-             		labelErrorFactorRH = new JLabel("");
-             		labelErrorFactorRH.setForeground(Color.RED);
-             		labelErrorFactorRH.setBounds(63, 122, 291, 14);
-             		panelGrupSanguineoFactorRH.add(labelErrorFactorRH);
-             		
-             		JTextPane txtpnAltaTitular = new JTextPane();
-             		txtpnAltaTitular.setText("     ALTA  TITULAR");
-             		txtpnAltaTitular.setBounds(451, 21, 165, 37);
-             		txtpnAltaTitular.setFont(new Font("Tahoma", Font.BOLD, 21));
-             		txtpnAltaTitular.setEditable(false);
-             		txtpnAltaTitular.setBackground(SystemColor.menu);
-             		txtpnAltaTitular.setBounds(393, 11, 219, 37);
-             		add(txtpnAltaTitular);
-             		
-             		JPanel panelDireccion_1 = new JPanel();
-             		panelDireccion_1.setLayout(null);
-             		panelDireccion_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Datos Titular", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-             		panelDireccion_1.setBounds(81, 69, 850, 481);
-             		add(panelDireccion_1);
-             		
-             		tfFechaNacTitular = new JDateChooser();
-             		tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
-             		tfFechaNacTitular.setBounds(673, 195, 129, 20);
-             		panelDireccion_1.add(tfFechaNacTitular);
-             		
-             		JLabel txtNombre = new JLabel("Nombre Completo (*)");
-             		txtNombre.setBounds(93, 38, 142, 14);
-             		panelDireccion_1.add(txtNombre);
-             		
-             		txtNombreTitular = new JTextField();
-             		txtNombreTitular.setBounds(228, 35, 158, 20);
-             		panelDireccion_1.add(txtNombreTitular);
-             		txtNombreTitular.setColumns(10);
-             		
-             		JLabel lblNewLabel = new JLabel("Apellido(s) (*)");
-             		lblNewLabel.setBounds(406, 38, 108, 14);
-             		panelDireccion_1.add(lblNewLabel);
-             		
-             		JCheckBox chckbxDonadorOrganos = new JCheckBox("Donador de Organos");
-             		chckbxDonadorOrganos.setBounds(577, 237, 148, 23);
-             		panelDireccion_1.add(chckbxDonadorOrganos);
-             		
-             		txtApellidoTitular = new JTextField();
-             		txtApellidoTitular.setBounds(505, 35, 158, 20);
-             		panelDireccion_1.add(txtApellidoTitular);
-             		txtApellidoTitular.setColumns(10);
-             		
-             		TextArea txtAreaOBS = new TextArea();
-             		txtAreaOBS.setBounds(577, 316, 207, 125);
-             		panelDireccion_1.add(txtAreaOBS);
-             		
-             		JLabel lblNewLabel_5 = new JLabel("Fecha de Nacimiento (*)");
-             		lblNewLabel_5.setBounds(523, 195, 136, 14);
-             		panelDireccion_1.add(lblNewLabel_5);
-             		
-             		labelErrorNom = new JLabel("");
-             		labelErrorNom.setForeground(Color.RED);
-             		labelErrorNom.setBounds(139, 63, 327, 14);
-             		panelDireccion_1.add(labelErrorNom);
-             		
-             		labelErrorApellido = new JLabel("");
-             		labelErrorApellido.setForeground(Color.RED);
-             		labelErrorApellido.setBounds(406, 63, 257, 14);
-             		panelDireccion_1.add(labelErrorApellido);
-             		
-             		labelErrorFechNac = new JLabel("");
-             		labelErrorFechNac.setForeground(Color.RED);
-             		labelErrorFechNac.setBounds(505, 220, 297, 14);
-             		panelDireccion_1.add(labelErrorFechNac);
-             		
-             		JLabel lblNewLabel_13 = new JLabel("Observaciones ");
-             		lblNewLabel_13.setBounds(478, 316, 101, 14);
-             		panelDireccion_1.add(lblNewLabel_13);
-             		
-             		JButton btnNewButton = new JButton("Guardar");
-             		btnNewButton.addActionListener(new ActionListener() {
-             			public void actionPerformed(ActionEvent e) {
-             				
-             				limpiarCamposErrores();
-             				// SI LOS CAMPOS DEL TITULAR ESTAN VACIOS
-             				if (txtNombreTitular.getText().isEmpty()) { 
-             					labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
-             				}
-             				else if (txtApellidoTitular.getText().isEmpty()){
-             					labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
-             				}
-             				else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || txtNumDocTitular.getText().isEmpty()) {
-             					labelErrorDoc.setText("Por favor, complete el Documento del titular");
-             				}
-             				else if (!validarNumerosDoc(txtNumDocTitular.getText().trim())) {
-             					labelErrorDoc.setText("Ingrese correctamente el numero del Documento");
-             				}
-             				else if (txtCalleTitular.getText().isEmpty() || txtNumCalleTitular.getText().isEmpty()) {
-             					labelErrorDireccion.setText("Por favor, complete la Direccion del titular");
-             				}
-             				else if (!validarNumerosCalle(txtNumCalleTitular.getText().trim())) {
-             					labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
-             				}
-
-             				/*else if (!(tfPisoTitular.getText().isEmpty())) {
-             					if (!validarNumerosCalle(tfPisoTitular.getText().trim())){
-             						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
-             					}
-             					 else if(tfDptoTitular.getText().isEmpty()) {
-             						labelErrorPiso.setText("Por favor, ingrese el Departamento");
-             					}else {if (!validarDpto(tfDptoTitular.getText().trim())){
-                 					labelErrorPiso.setText("Por favor, ingrese correctamente el Departamento");
-                 					}} 
-             				}*/
-             				
-             				else if(dateChooserFechaNacTitular.getDate()==null) {
-
-             				else if (!(txtPisoTitular.getText().isEmpty())) {
-             					if (!validarNumerosCalle(txtPisoTitular.getText().trim())){
-             						labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
-             					}
-             					
-             				}
-             				else if(tfFechaNacTitular.getDate()==null) {
-
-             					labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
-             				}
-             				else if (cbGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
-             					labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
-             				}
-
-
-             				
-             				/*else if (comboBoxFactorRH.getSelectedItem().equals("-Seleccione-") ) {
-             					//JOptionPane.showMessageDialog(null, "Por favor, ingrese el Factor RH del titular","ERROR",JOptionPane.WARNING_MESSAGE);
-             				labelErrorFactorRH.setText("Por favor, ingrese el Factor RH del titular");
-             				}*/
-             				/*else if (comboBoxClaseLicencia.getSelectedItem().equals("-Seleccione-")) {
-             					JOptionPane.showMessageDialog(null, "Por favor, seleccione la Clase de la licencia del titular","ERROR",JOptionPane.WARNING_MESSAGE);
-             				}*/
-
-
-             				
-             				
-             			}
-             		});
-             		btnNewButton.setBounds(838, 586, 117, 37);
-             		add(btnNewButton);
-             		
-             		JButton btnCancelar = new JButton("Cancelar");
-             		btnCancelar.setBounds(700, 586, 117, 37);
-             		add(btnCancelar);
-
-					try {
-						llenarCB();
-					} catch (Exception eCB) {
-						eCB.printStackTrace();
-					}                                                                                                                              
-             	}
-
-
-				public static boolean validarNumerosDoc (String datos) {
-             		return datos.matches("[0-9]{8,10}");
-             	}
-				public static boolean validarNumerosCalle (String datos) {
-             		return datos.matches("[0-9]{1,5}");
-             	}
-				public static boolean validarDpto (String datos) {
-             		return datos.matches("[Aa-Zz]");
-             	}
-
-				/*public static boolean validarNombre (String datos) {
-             		return (datos.matches("[]") || datos.matches("[a-z]") || datos.matches("[]"));
-             	}*/
-
-
-				protected void limpiarCamposErrores() {
-					//definir todos los label de los errores 
-					labelErrorNom.setText("");
-					labelErrorApellido.setText("");
-					labelErrorDoc.setText("");
-					labelErrorDireccion.setText("");
-					labelErrorFechNac.setText("");
-					labelErrorGrupSanguineo.setText("");
-					labelErrorPiso.setText("");
-					//labelErrorFactorRH.setText("");
-				} 
-
-				protected void llenarCB() throws Exception{
-
-					//Llena el combo box de tipo de documento
-					List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
-					cBoxTipoDoc.addItem("-Seleccione-");
-					for(int i=0; i<tipoDoc.size(); i++) {
-						cBoxTipoDoc.addItem(tipoDoc.get(i).getTipo_doc());
-					}
-
-					//Llena el combo box del tipo de sangre
-					List<TipoGrupoSanguineo> grupSanguineo = GestorPersona.obtenerTiposGrupoSanguineos();
-					cbGrupoSanguineo.addItem("-Seleccione-");
-					for(int i=0; i<grupSanguineo.size(); i++) {
-						cbGrupoSanguineo.addItem(grupSanguineo.get(i).getTipo_grupo_sanguineo());
-					}
-					
-				}
 }
+

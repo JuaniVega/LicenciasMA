@@ -71,6 +71,8 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	private JLabel tipoDocumentoLbl;
 	private JLabel tipoLicenciaDescLbl;
 	private JLabel tipoLicenciaDescLbl2;
+	private JLabel numEjemplarLbl;
+	private JLabel lblNumCopia;
 	
 	private JButton btnImprimirLicencia;
 	
@@ -79,6 +81,9 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	/**
 	 * Create the panel.
 	 */
+	public PntImprimirLicencia() {
+	}
+	
 	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
@@ -302,6 +307,16 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		descLicLbl2.setBounds(74, 105, 316, 14);
 		licDorsoPanel.add(descLicLbl2);
 		
+		lblNumCopia = new JLabel("Ejemplar  / Copy");
+		lblNumCopia.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNumCopia.setBounds(150, 149, 120, 14);
+		licDorsoPanel.add(lblNumCopia);
+		
+		numEjemplarLbl = new JLabel();
+		numEjemplarLbl.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		numEjemplarLbl.setBounds(161, 169, 46, 14);
+		licDorsoPanel.add(numEjemplarLbl);
+		
 		JTextPane txtDetallePago = new JTextPane();
 		txtDetallePago.setText("Detalle de pago");
 		txtDetallePago.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -456,6 +471,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 			this.tipoDocumentoLbl.setText(tipoDoc.getTipo_doc());
 			this.documentoLbl.setText(datosDTO.getNumDoc().toString());
 			this.ObservacionesLbl.setText(datosDTO.getObservaciones());
+			this.numEjemplarLbl.setText(datosDTO.getNumCopia().toString());
 
 			//Seccion costos
 			for(int i=0; i<datosDTO.getCosto().size(); i++) {
@@ -482,5 +498,4 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		return PAGE_EXISTS;
 		
 	}
-
 }
