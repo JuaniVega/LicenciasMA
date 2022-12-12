@@ -8,7 +8,9 @@ import java.util.List;
 import mvc.controller.dao.LicenciaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.model.Costo;
-import mvc.model.Licencia;import mvc.model.TipoLicencia;
+import mvc.model.Licencia;
+import mvc.model.Persona;
+import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
 
 public class GestorLicencia {
@@ -31,6 +33,10 @@ public class GestorLicencia {
 	
 	public static List<Licencia> obtenerLicenciaVigentexDni(int dni) throws Exception{
 		return LicenciaDao.getLicenciaVigentexDni(dni);
+	}
+	
+	public static List<Licencia> obtenerLicenciaVigentexPersona(List<Persona> personas) throws Exception{
+		return LicenciaDao.getLicenciaVigentexPersona(personas);
 	}
 	
 	public static List<Licencia> obtenerLicenciasExpiradas() throws Exception{

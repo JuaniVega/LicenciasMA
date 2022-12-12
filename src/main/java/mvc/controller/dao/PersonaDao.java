@@ -30,6 +30,70 @@ public class PersonaDao {
 		return persona;
 	}
 	
+	public static List<Persona> getPersonaxNombre(String nombre) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.nombre='"+nombre+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxApellido(String apellido) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.apellido='"+apellido+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxGrupoSanguineo(int grupoSang) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.conductor c on p.dni = c.dni where c.grupo_sanguineo ="+grupoSang+";";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxEsDonante(boolean esDonante) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.conductor c on p.dni = c.dni where c.dona_organos  ="+esDonante+";";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
 	public static List<Conductor> getConductorxDni(int dni) throws Exception {
 		ArrayList<Conductor> conductor = new ArrayList<Conductor>();
 		try {

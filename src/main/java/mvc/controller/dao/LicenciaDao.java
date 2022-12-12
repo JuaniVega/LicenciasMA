@@ -9,6 +9,7 @@ import java.util.List;
 
 import mvc.model.Costo;
 import mvc.model.Licencia;
+import mvc.model.Persona;
 import mvc.model.TipoLicencia;
 import mvc.model.Vigencia;
 import util.ConexionP;
@@ -107,6 +108,26 @@ public class LicenciaDao {
 		catch(Exception ex) {
 			throw ex;
 		}
+		return licencia;
+	}
+	
+	public static List<Licencia> getLicenciaVigentexPersona(List<Persona> personas) throws Exception {
+		ArrayList<Licencia> licencia = new ArrayList<Licencia>();
+		
+		for(int i=0; i<personas.size();i++) {
+		try {
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where id_persona ="+personas.get(i).getDni()+" and estado_licencia = true;";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
+				licencia.add(lic);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		}
+		
 		return licencia;
 	}
 	
