@@ -84,6 +84,7 @@ public class LicenciaDao {
 		try {
 			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where id_persona ="+dni+";";                            
 			ResultSet rs = ConexionP.consultarDatos(query);
+			System.out.println("llego a DAO" + rs);
 			while(rs.next()) {
 				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
 				licencia.add(lic);

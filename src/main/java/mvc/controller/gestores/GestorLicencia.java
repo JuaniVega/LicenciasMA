@@ -87,6 +87,13 @@ public class GestorLicencia {
 		}
 	}
 
+
+	public static void renovarLicencia(Persona per , Licencia lic) throws Exception{
+		
+		actualizarVigencia(per.getId(),lic.getIdLicencia());
+	}
+
+
 	private static void actualizarVigencia(Integer idPersona, Integer idTipoLicencia) throws Exception {
 		List<Licencia> licencias=LicenciaDao.getLicenciaxDni(idPersona);
 		ArrayList<Integer> idLicencias= new ArrayList<Integer>();
@@ -165,7 +172,7 @@ public class GestorLicencia {
 		
 		Integer difMeses= 12-periodEdad.getMonths();
 		
-		//Calcula cantidad de años por los que se va a emitir.
+		//Calcula cantidad de aï¿½os por los que se va a emitir.
 		if(edad>=17 && edad<21) {
 			List<Licencia> licencias= LicenciaDao.getLicenciaxDni(dni);
 			if(licencias.size()==0) {
