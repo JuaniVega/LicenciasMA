@@ -22,7 +22,14 @@ public class VentanaAdmin extends JFrame {
 	public static PntModificarDatosConductor pntModificarDatosConductor= new PntModificarDatosConductor();
 =======
 	public static PntEmitirCopia pntEmitirCopia= new PntEmitirCopia();
+<<<<<<< HEAD
 >>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
+=======
+	public static PntLicenciaExpirada pntLicenciaExpirada= new PntLicenciaExpirada();
+	public static PntLicenciaVigente pntLicenciaVigente= new PntLicenciaVigente();
+	public static PntRenovarLicencia pntRenovarLicenciaUI = new PntRenovarLicencia();	
+	
+>>>>>>> a788ada96e8e5e036ac24dae7602748cb970f54d
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -35,8 +42,14 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntModificarDatosConductor = "n_pntModificarDatosConductor";
 =======
 	public static String n_pntEmitirCopia = "n_pntEmitirCopia";
+<<<<<<< HEAD
 >>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
 	
+=======
+	public static String n_pntLicenciaExpirada = "n_pntLicenciaExpirada";
+	public static String n_pntLicenciaVigente = "n_pntLicenciaVigente";
+	public static String n_pntRenovarLicencia = "n_pntRenovarLicencia";	
+>>>>>>> a788ada96e8e5e036ac24dae7602748cb970f54d
 	/**
 	 * Launch the application.
 	 */
@@ -67,6 +80,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
+<<<<<<< HEAD
 		
 <<<<<<< HEAD
 		/*EN ADD AGREGAMOS TODOS LOS PANELES QUE DEFINIMOS ARRIBA, EN EL CAMBIAR PANTALLA PONEMOS EL QUE QUEREMOS QUE SE DEFINA*/
@@ -82,6 +96,16 @@ public class VentanaAdmin extends JFrame {
 		cambiarPantalla(pntEmitirCopia, n_pntEmitirCopia);
 >>>>>>> 8b220d15e38fb95de5f64e1e2b59566a0a94374e
 	}
+=======
+
+		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);		
+		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
+		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		//cambiarPantalla(pntLicenciaExpirada, n_pntLicenciaExpirada);
+		//cambiarPantalla(pntLicenciaVigente, n_pntLicenciaVigente);		
+		cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
+		}
+>>>>>>> a788ada96e8e5e036ac24dae7602748cb970f54d
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
 		contentPane.add(nombrePnt, panel); //Agrego la pantalla a contentPane, previamente debe estar inicializada
