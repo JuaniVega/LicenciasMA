@@ -24,6 +24,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntLicenciaVigente pntLicenciaVigente= new PntLicenciaVigente();
 	public static PntRenovarLicencia pntRenovarLicencia = new PntRenovarLicencia();	
 	public static MenuPrincipal pntmenuPrincipal = new MenuPrincipal();
+	public static LoginAdmin loginAdmin = new LoginAdmin();
 	
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
@@ -38,6 +39,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntLicenciaVigente = "n_pntLicenciaVigente";
 	public static String n_pntRenovarLicencia = "n_pntRenovarLicencia";	
 	public static String n_pntmenuPrincipal = "n_pntmenuPrincipal";
+	public static String n_loginAdmin = "n_loginAdmin";
 
 	/**
 	 * Launch the application.
@@ -76,7 +78,8 @@ public class VentanaAdmin extends JFrame {
 		//cambiarPantalla(pntLicenciaVigente, n_pntLicenciaVigente);		
 		//cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
 		//cambiarPantalla(pntModificarDatosConductor, n_pntModificarDatosConductor);
-		cambiarPantalla(pntmenuPrincipal, n_pntmenuPrincipal);
+		//cambiarPantalla(pntmenuPrincipal, n_pntmenuPrincipal);
+		cambiarPantalla(loginAdmin, n_loginAdmin);
 	}
 
 	

@@ -23,6 +23,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.dto.AdministradorDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
@@ -68,12 +69,15 @@ public class PntRenovarLicencia extends JPanel {
 	private boolean licenciasConCDE=false;
 	JPanel panelClasesDeLicencias = new JPanel();
 	boolean LicenciaRenovada = false;
+	private JTextField tfFechaEmision;
     //#endregion
 
-
+	public PntRenovarLicencia() {
+		
+	}
 
 	//#region constructor pantalla
-    public PntRenovarLicencia() {
+    public PntRenovarLicencia(final AdministradorDTO admin) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
 	
@@ -375,10 +379,12 @@ public class PntRenovarLicencia extends JPanel {
 	txtNombreAdmin.setBackground(SystemColor.menu);
 	txtNombreAdmin.setBounds(10, 25, 131, 20);
 	panelAdmin.add(txtNombreAdmin);
+	tfNombreAdmin.setEditable(false);
 	
 	
 	tfNombreAdmin.setColumns(10);
 	tfNombreAdmin.setBounds(147, 25, 275, 20);
+	tfNombreAdmin.setText(admin.getNombre());
 	panelAdmin.add(tfNombreAdmin);
 	
 	JTextPane txtApellidoAdmin = new JTextPane();
@@ -387,9 +393,11 @@ public class PntRenovarLicencia extends JPanel {
 	txtApellidoAdmin.setBackground(SystemColor.menu);
 	txtApellidoAdmin.setBounds(491, 25, 85, 20);
 	panelAdmin.add(txtApellidoAdmin);
+	tfApellidoAdmin.setEditable(false);
 	
 	tfApellidoAdmin.setColumns(10);
 	tfApellidoAdmin.setBounds(586, 25, 275, 20);
+	tfApellidoAdmin.setText(admin.getApellido());
 	panelAdmin.add(tfApellidoAdmin);
 	
 	JTextPane txtFechaEmision = new JTextPane();
@@ -398,6 +406,14 @@ public class PntRenovarLicencia extends JPanel {
 	txtFechaEmision.setBackground(SystemColor.menu);
 	txtFechaEmision.setBounds(10, 89, 131, 20);
 	panelAdmin.add(txtFechaEmision);
+	
+	tfFechaEmision = new JTextField();
+	tfFechaEmision.setText((String) null);
+	tfFechaEmision.setEditable(false);
+	tfFechaEmision.setColumns(10);
+	tfFechaEmision.setBounds(147, 89, 275, 20);
+	tfFechaEmision.setText(LocalDate.now().toString());
+	panelAdmin.add(tfFechaEmision);
 
 	//#endregion
 
@@ -453,7 +469,8 @@ public class PntRenovarLicencia extends JPanel {
 
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 		}
 	});
 	btnAtras.setBounds(41, 602, 142, 37);

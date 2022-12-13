@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mvc.controller.dto.PersonaDTO;
+import mvc.controller.dto.ConductorDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -126,6 +126,22 @@ public class PersonaDao {
 		}
 		return administrativo;
 	}
+
+	public static List<Persona> login(String usu, String cont) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.administrativo a on p.dni = a.dni where a.email='"+usu+"' and a.pass='"+cont+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
 	
 	public static List<TipoDocumento> getTiposDocumentos() throws Exception {
 		List<TipoDocumento> tipoDoc = new ArrayList<TipoDocumento>();
@@ -232,7 +248,7 @@ public class PersonaDao {
 		}
 		
 	}
-	public static void updateDatosConductor(PersonaDTO personaDTO, int dni) {
+	public static void updateDatosConductor(ConductorDTO personaDTO, int dni) {
 		Connection con = ConexionP.conectarDB();
 		try {
 			con.setAutoCommit(false);

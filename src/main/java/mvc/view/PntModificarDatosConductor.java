@@ -23,7 +23,8 @@ import java.awt.event.ActionEvent;
 
 import mvc.controller.dao.PersonaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
-import mvc.controller.dto.PersonaDTO;
+import mvc.controller.dto.AdministradorDTO;
+import mvc.controller.dto.ConductorDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
@@ -67,6 +68,10 @@ public class PntModificarDatosConductor extends JPanel {
 	private boolean licenciasConCDE=false;
 	
 	public PntModificarDatosConductor() {
+		
+	}
+	
+	public PntModificarDatosConductor(final AdministradorDTO admin) {
 		setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
@@ -261,6 +266,7 @@ public class PntModificarDatosConductor extends JPanel {
 	tfNombreAdmin.setEditable(false);
 	tfNombreAdmin.setColumns(10);
 	tfNombreAdmin.setBounds(173, 41, 275, 20);
+	tfNombreAdmin.setText(admin.getNombre());
 	panelAdmin.add(tfNombreAdmin);
 	
 	JTextPane txtApellidoAdmin = new JTextPane();
@@ -274,6 +280,7 @@ public class PntModificarDatosConductor extends JPanel {
 	tfApellidoAdmin.setEditable(false);
 	tfApellidoAdmin.setColumns(10);
 	tfApellidoAdmin.setBounds(586, 41, 275, 20);
+	tfApellidoAdmin.setText(admin.getApellido());
 	panelAdmin.add(tfApellidoAdmin);
 	
 	JTextPane txtFechaEmision = new JTextPane();
@@ -287,12 +294,14 @@ public class PntModificarDatosConductor extends JPanel {
 	tfFechaEmision.setEditable(false);
 	tfFechaEmision.setColumns(10);
 	tfFechaEmision.setBounds(173, 87, 275, 20);
+	tfFechaEmision.setText(LocalDate.now().toString());
 	panelAdmin.add(tfFechaEmision);
 	
 	JButton btnCancelar = new JButton("Atr\u00E1s");
 	btnCancelar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 		}
 	});
 	btnCancelar.setBounds(41, 602, 118, 37);
@@ -335,7 +344,7 @@ public class PntModificarDatosConductor extends JPanel {
 			
 			//agregar las modificaciones hechas 
 			if(validarCampos()) {
-				PersonaDTO personaDTO = new PersonaDTO();
+				ConductorDTO personaDTO = new ConductorDTO();
 				try {
 					personaDTO.setNombre(tfNombreCliente.getText());
 					personaDTO.setApellido(tfApellidoCliente.getText());

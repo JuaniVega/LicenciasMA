@@ -7,6 +7,9 @@ import java.awt.SystemColor;
 
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+
+import mvc.controller.dto.AdministradorDTO;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,8 +26,11 @@ public class MenuPrincipal extends JPanel{
 	private JButton btnRenovarLicencia;
 	private JButton btnSalir;
 	
-
 	public MenuPrincipal() {
+		
+	}
+
+	public MenuPrincipal(final AdministradorDTO admin) {
 	setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
@@ -40,7 +46,8 @@ public class MenuPrincipal extends JPanel{
 	btnEmitirLicencia = new JButton("Emitir licencia");
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntCrearLicencia, VentanaAdmin.n_pntCrearLicencia);
+			PntCrearLicencia pntCrearLicencia = new PntCrearLicencia(admin);
+			VentanaAdmin.cambiarPantalla(pntCrearLicencia, VentanaAdmin.n_pntCrearLicencia);
 		}
 	});
 	btnEmitirLicencia.setBounds(238, 93, 184, 60);
@@ -85,7 +92,8 @@ public class MenuPrincipal extends JPanel{
 	btnModificarTitular = new JButton("Modificar datos de titular");
 	btnModificarTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntModificarDatosConductor, VentanaAdmin.n_pntModificarDatosConductor);
+			PntModificarDatosConductor pntModificarDatosConductor = new PntModificarDatosConductor(admin);
+			VentanaAdmin.cambiarPantalla(pntModificarDatosConductor, VentanaAdmin.n_pntModificarDatosConductor);
 		}
 	});
 	btnModificarTitular.setBounds(519, 346, 184, 60);
@@ -94,7 +102,8 @@ public class MenuPrincipal extends JPanel{
 	btnRenovarLicencia = new JButton("Renovar licencia");
 	btnRenovarLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntRenovarLicencia, VentanaAdmin.n_pntRenovarLicencia);
+			PntRenovarLicencia pntRenovarLicencia = new PntRenovarLicencia(admin);
+			VentanaAdmin.cambiarPantalla(pntRenovarLicencia, VentanaAdmin.n_pntRenovarLicencia);
 		}
 	});
 	btnRenovarLicencia.setBounds(238, 346, 184, 60);

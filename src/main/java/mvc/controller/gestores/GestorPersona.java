@@ -4,7 +4,7 @@ import java.util.List;
 
 import mvc.controller.dao.PersonaDao;
 import mvc.controller.dto.EmitirLicenciaDTO;
-import mvc.controller.dto.PersonaDTO;
+import mvc.controller.dto.ConductorDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -65,7 +65,11 @@ public class GestorPersona {
 	public static void actualizarConductorDonante(EmitirLicenciaDTO emitirLicenciaDTO) {
 		PersonaDao.updateConductorDonante(emitirLicenciaDTO.getNumDoc(), emitirLicenciaDTO.getEsDonante());
 	}
-	public static void actualizarDatosConductor(PersonaDTO personaDTO, int dni) {
+	public static void actualizarDatosConductor(ConductorDTO personaDTO, int dni) {
 		PersonaDao.updateDatosConductor(personaDTO, dni);
+	}
+	
+	public static List<Persona> iniciarSesion(String usu, String cont) throws Exception {
+		return PersonaDao.login(usu, cont);
 	}
 }

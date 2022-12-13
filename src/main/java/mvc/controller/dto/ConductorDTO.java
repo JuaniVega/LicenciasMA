@@ -1,6 +1,6 @@
 package mvc.controller.dto;
 
-public class PersonaDTO {
+public class ConductorDTO {
 	private String nombre;
 	private String apellido;
 	private String calle;

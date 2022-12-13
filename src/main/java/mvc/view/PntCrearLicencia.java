@@ -22,6 +22,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.dto.AdministradorDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Conductor;
@@ -78,6 +79,10 @@ public class PntCrearLicencia extends JPanel {
 	private boolean licenciasConCDE=false;
 	
 	public PntCrearLicencia() {
+		
+	}
+	
+	public PntCrearLicencia(final AdministradorDTO admin) {
 		setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
@@ -439,6 +444,7 @@ public class PntCrearLicencia extends JPanel {
 	tfNombreAdmin.setEditable(false);
 	tfNombreAdmin.setColumns(10);
 	tfNombreAdmin.setBounds(147, 25, 275, 20);
+	tfNombreAdmin.setText(admin.getNombre());
 	panelAdmin.add(tfNombreAdmin);
 	
 	JTextPane txtApellidoAdmin = new JTextPane();
@@ -452,6 +458,7 @@ public class PntCrearLicencia extends JPanel {
 	tfApellidoAdmin.setEditable(false);
 	tfApellidoAdmin.setColumns(10);
 	tfApellidoAdmin.setBounds(586, 25, 275, 20);
+	tfApellidoAdmin.setText(admin.getApellido());
 	panelAdmin.add(tfApellidoAdmin);
 	
 	JTextPane txtFechaEmision = new JTextPane();
@@ -465,12 +472,14 @@ public class PntCrearLicencia extends JPanel {
 	tfFechaEmision.setEditable(false);
 	tfFechaEmision.setColumns(10);
 	tfFechaEmision.setBounds(147, 76, 275, 20);
+	tfFechaEmision.setText(LocalDate.now().toString());
 	panelAdmin.add(tfFechaEmision);
 	
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 			limpiarPantalla();
 		}
 	});
