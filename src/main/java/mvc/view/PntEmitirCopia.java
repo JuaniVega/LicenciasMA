@@ -428,6 +428,8 @@ public class PntEmitirCopia extends JPanel {
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			limpiarPantalla();
 		}
 	});
 	btnAtras.setBounds(41, 602, 118, 37);
@@ -438,7 +440,7 @@ public class PntEmitirCopia extends JPanel {
 	btnImprimirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(validarSelecciones()) {
-					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO);
+					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO, 2);
 					VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
 					limpiarPantalla();
 			}		}

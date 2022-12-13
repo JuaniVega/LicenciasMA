@@ -470,6 +470,8 @@ public class PntCrearLicencia extends JPanel {
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			limpiarPantalla();
 		}
 	});
 	btnAtras.setBounds(41, 602, 118, 37);
@@ -484,7 +486,7 @@ public class PntCrearLicencia extends JPanel {
 					cargarEmitirLicenciaDTO();
 					GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
 					GestorLicencia.crearLicencia(emitirLicenciaDTO);
-					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO);
+					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO, 1);
 					VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
 				} catch (Exception e1) {
 					e1.printStackTrace();

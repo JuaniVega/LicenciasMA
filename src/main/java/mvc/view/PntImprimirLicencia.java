@@ -84,7 +84,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	public PntImprimirLicencia() {
 	}
 	
-	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia) {
+	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia, final int pant) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
 
@@ -378,7 +378,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 				PrinterJob job = PrinterJob.getPrinterJob();
 				PageFormat pf = job.defaultPage();
 				pf.setOrientation(PageFormat.LANDSCAPE);
-				job.setPrintable(new PntImprimirLicencia(datosLicencia), pf);
+				job.setPrintable(new PntImprimirLicencia(datosLicencia, pant), pf);
 				if(job.printDialog()) {
 					try {					
 						job.print();
@@ -397,7 +397,11 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(pant==1) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntCrearLicencia,VentanaAdmin.n_pntCrearLicencia);
+				}else if(pant==2) {
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntEmitirCopia,VentanaAdmin.n_pntEmitirCopia);
+				}
 			}
 		});
 		btnAtras.setBounds(41, 602, 118, 37);

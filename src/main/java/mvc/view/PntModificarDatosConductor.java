@@ -289,12 +289,13 @@ public class PntModificarDatosConductor extends JPanel {
 	tfFechaEmision.setBounds(173, 87, 275, 20);
 	panelAdmin.add(tfFechaEmision);
 	
-	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnCancelar = new JButton("Atr\u00E1s");
 	btnCancelar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 		}
 	});
-	btnCancelar.setBounds(821, 588, 118, 37);
+	btnCancelar.setBounds(41, 602, 118, 37);
 	add(btnCancelar);
 	
 	
@@ -325,7 +326,7 @@ public class PntModificarDatosConductor extends JPanel {
 			
 		}
 	});
-	btnBuscarTitular.setBounds(414, 588, 203, 37);
+	btnBuscarTitular.setBounds(374, 602, 232, 37);
 	add(btnBuscarTitular);
 	
 	JButton btnGuardarCambios = new JButton("Guardar Cambios");
@@ -356,7 +357,7 @@ public class PntModificarDatosConductor extends JPanel {
 			}
 		}
 	});
-	btnGuardarCambios.setBounds(639, 588, 154, 37);
+	btnGuardarCambios.setBounds(810, 602, 118, 37);
 	add(btnGuardarCambios);
 	
 	try {

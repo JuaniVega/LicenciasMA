@@ -453,6 +453,7 @@ public class PntRenovarLicencia extends JPanel {
 
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 		}
 	});
 	btnAtras.setBounds(41, 602, 142, 37);

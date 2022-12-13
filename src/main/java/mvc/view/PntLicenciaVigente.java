@@ -81,6 +81,8 @@ public class PntLicenciaVigente extends JPanel{
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			restaurarTabla();
 		}
 	});
 	btnAtras.setBounds(41, 602, 118, 37);
