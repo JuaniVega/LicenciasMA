@@ -109,7 +109,7 @@ public class MenuPrincipal extends JPanel{
 	btnRenovarLicencia.setBounds(238, 346, 184, 60);
 	add(btnRenovarLicencia);
 	
-	btnSalir = new JButton("SALIR");
+	btnSalir = new JButton("Salir");
 	btnSalir.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(ABORT);
@@ -117,6 +117,15 @@ public class MenuPrincipal extends JPanel{
 	});
 	btnSalir.setBounds(881, 604, 89, 23);
 	add(btnSalir);
+	
+	JButton btnCerrarSesin = new JButton("Cerrar sesi\u00F3n");
+	btnCerrarSesin.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.loginAdmin, VentanaAdmin.n_loginAdmin);
+		}
+	});
+	btnCerrarSesin.setBounds(732, 604, 139, 23);
+	add(btnCerrarSesin);
 		
 	}
 }

@@ -65,6 +65,7 @@ public class LoginAdmin extends JPanel{
 					cargarDTO(admin.get(0));
 					MenuPrincipal menuPrincipal = new MenuPrincipal(administradorDTO);
 					VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+					limpiarCampos();
 				}else {
 					VentanaAdmin.mensajeError("Usuario / contraseña incorrectos", "ERROR");
 					limpiarCampos();
