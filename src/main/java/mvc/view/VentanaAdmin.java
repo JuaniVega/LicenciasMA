@@ -65,13 +65,13 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
-
-		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);		
+		
+		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
-		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
 		//cambiarPantalla(pntLicenciaExpirada, n_pntLicenciaExpirada);
 		//cambiarPantalla(pntLicenciaVigente, n_pntLicenciaVigente);		
-		cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
+		//cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
 		}
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
