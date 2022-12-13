@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import mvc.controller.dto.PersonaDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -229,6 +230,28 @@ public class PersonaDao {
 				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 				}
 		}
+		
+	}
+	public static void updateDatosConductor(PersonaDTO personaDTO, int dni) {
+		Connection con = ConexionP.conectarDB();
+		try {
+			con.setAutoCommit(false);
+			String query= "update public.licencia set apellido="+ personaDTO.getApellido()+", nombre = "+personaDTO.getNombre()+", "
+					+ "direccion = "+personaDTO.getCalle()+", num_dir ="+personaDTO.getNumcalle()+", piso = "+personaDTO.getPiso()+", "
+							+ " departamento = "+personaDTO.getDepto()+","
+							+ " sexo = "+personaDTO.getSexo()+" where id = "+dni+";";
+			con.createStatement().executeUpdate(query);
+				
+			con.commit();
+		}catch (Exception e) {
+			System.err.println("ERROR: " + e.getMessage());
+			try {
+				//deshace todos los cambios realizados en los datos
+				con.rollback();
+				} catch (SQLException ex1) {
+					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+					}
+			}
 		
 	}
 }

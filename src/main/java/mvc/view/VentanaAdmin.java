@@ -18,6 +18,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntCrearLicencia pntCrearLicencia= new PntCrearLicencia();
 	public static PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia();
 	public static PntDarAltaTitularUI pntDarAltaTitularUI= new PntDarAltaTitularUI();
+	public static PntModificarDatosConductor pntModificarDatosConductor= new PntModificarDatosConductor();
 	public static PntEmitirCopia pntEmitirCopia= new PntEmitirCopia();
 	public static PntLicenciaExpirada pntLicenciaExpirada= new PntLicenciaExpirada();
 	public static PntLicenciaVigente pntLicenciaVigente= new PntLicenciaVigente();
@@ -31,10 +32,12 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntCrearLicencia = "n_pntCrearLicencia";
 	public static String n_pntImprimirLicencia = "n_pntImprimirLicencia";
 	public static String n_pntDarAltaTitularUI = "n_pntDarAltaTitularUI";
+	public static String n_pntModificarDatosConductor = "n_pntModificarDatosConductor";
 	public static String n_pntEmitirCopia = "n_pntEmitirCopia";
 	public static String n_pntLicenciaExpirada = "n_pntLicenciaExpirada";
 	public static String n_pntLicenciaVigente = "n_pntLicenciaVigente";
 	public static String n_pntRenovarLicencia = "n_pntRenovarLicencia";	
+
 	/**
 	 * Launch the application.
 	 */
@@ -65,13 +68,15 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
-
 		//cambiarPantalla(pntCrearLicencia, n_pntCrearLicencia);		
 		//cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
-		cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
+		//cambiarPantalla(pntDarAltaTitularUI, n_pntDarAltaTitularUI);
 		//cambiarPantalla(pntLicenciaExpirada, n_pntLicenciaExpirada);
 		//cambiarPantalla(pntLicenciaVigente, n_pntLicenciaVigente);		
+		//cambiarPantalla(pntRenovarLicenciaUI, n_pntRenovarLicencia);	
+		cambiarPantalla(pntModificarDatosConductor, n_pntModificarDatosConductor);
 	}
+
 	
 	public static void cambiarPantalla(JPanel panel, String nombrePnt) {
 		contentPane.add(nombrePnt, panel); //Agrego la pantalla a contentPane, previamente debe estar inicializada
