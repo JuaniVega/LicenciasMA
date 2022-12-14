@@ -165,6 +165,7 @@ public class LicenciaDao {
 		return licencia;
 	}
 	
+	
 	public static List<Costo> getCostoxClasexAnio(String clase, int anios) throws Exception {
 		ArrayList<Costo> costos = new ArrayList<Costo>();
 		try {
