@@ -134,6 +134,7 @@ public class PntRenovarLicencia extends JPanel {
 	txtNombreCliente.setBackground(SystemColor.menu);
 	txtNombreCliente.setBounds(10, 11, 125, 20);
 	panelConductor.add(txtNombreCliente);
+	tfNombreCliente.setEnabled(false);
 	
 	
 	tfNombreCliente.setBounds(141, 11, 275, 20);
@@ -153,6 +154,7 @@ public class PntRenovarLicencia extends JPanel {
 	txtApellidoCliente.setBackground(SystemColor.menu);
 	txtApellidoCliente.setBounds(486, 11, 89, 20);
 	panelConductor.add(txtApellidoCliente);
+	tfApellidoCliente.setEnabled(false);
 	
 	
 	tfApellidoCliente.setColumns(10);
@@ -172,6 +174,7 @@ public class PntRenovarLicencia extends JPanel {
 	txtTipoDocumentoCliente.setBackground(SystemColor.menu);
 	txtTipoDocumentoCliente.setBounds(10, 11, 58, 20);
 	panelDocumento.add(txtTipoDocumentoCliente);
+	tfNroDocumentoCliente.setEnabled(false);
 	
 	
 	tfNroDocumentoCliente.setColumns(10);
@@ -184,6 +187,8 @@ public class PntRenovarLicencia extends JPanel {
 	txtNroDocumentoCliente.setBackground(SystemColor.menu);
 	txtNroDocumentoCliente.setBounds(173, 11, 71, 20);
 	panelDocumento.add(txtNroDocumentoCliente);
+	cbTipoDocumentoCliente.setEnabled(false);
+	cbTipoDocumentoCliente.setEditable(true);
 	
 	
 	cbTipoDocumentoCliente.setBounds(78, 11, 85, 22);
@@ -195,6 +200,7 @@ public class PntRenovarLicencia extends JPanel {
 	txtDireccionCliente.setBackground(SystemColor.menu);
 	txtDireccionCliente.setBounds(501, 82, 74, 20);
 	panelConductor.add(txtDireccionCliente);
+	tfDireccionCliente.setEnabled(false);
 	
 	
 	tfDireccionCliente.setColumns(10);
@@ -216,9 +222,12 @@ public class PntRenovarLicencia extends JPanel {
 	panelConductor.add(txtpnDonadorDeOrganos);
 	
 	cbSexoCliente = new JComboBox();
+	cbSexoCliente.setEditable(true);
 	cbSexoCliente.setEnabled(false);
 	cbSexoCliente.setBounds(340, 147, 64, 22);
 	panelConductor.add(cbSexoCliente);
+	cbDonanteDeOrganos.setEnabled(false);
+	cbDonanteDeOrganos.setEditable(true);
 
 	cbDonanteDeOrganos.setBounds(327, 190, 89, 22);
 	panelConductor.add(cbDonanteDeOrganos);
@@ -357,6 +366,8 @@ public class PntRenovarLicencia extends JPanel {
 	taObservaciones.setToolTipText("Observaciones");
 	taObservaciones.setBounds(585, 178, 275, 147);
 	panelConductor.add(taObservaciones);
+	cbGrupoSanguineoConductor.setEnabled(false);
+	cbGrupoSanguineoConductor.setEditable(true);
 	cbGrupoSanguineoConductor.setBounds(160, 190, 69, 22);
 	panelConductor.add(cbGrupoSanguineoConductor);
 	
@@ -475,6 +486,7 @@ public class PntRenovarLicencia extends JPanel {
 	});
 	btnAtras.setBounds(41, 602, 142, 37);
 	add(btnAtras);
+	btnRenovarLicencia.setEnabled(false);
 
 
 	btnRenovarLicencia.addActionListener(new ActionListener() {

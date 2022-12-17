@@ -26,6 +26,7 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.border.LineBorder;
 
+import mvc.controller.dto.AdministradorDTO;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
@@ -84,7 +85,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 	public PntImprimirLicencia() {
 	}
 	
-	public PntImprimirLicencia(final EmitirLicenciaDTO datosLicencia, final int pant) {
+	public PntImprimirLicencia(final AdministradorDTO admin, final EmitirLicenciaDTO datosLicencia) {
 		setPreferredSize(new Dimension(980, 650));
 		setLayout(null);
 
@@ -99,7 +100,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		add(carnetConductorPanel);
 		
 		licFrentePanel = new JPanel();
-		licFrentePanel.setBounds(10, 10, 400, 300);
+		licFrentePanel.setBounds(63, 11, 400, 300);
 		licFrentePanel.setBackground(new Color(230, 255, 255));
 		licFrentePanel.setBorder(new LineBorder(SystemColor.desktop));
 		licFrentePanel.setLayout(null);
@@ -126,7 +127,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		
 		JLabel lblFotoPersona = new JLabel();
 		lblFotoPersona.setHorizontalAlignment(SwingConstants.CENTER);
-		File imagenPersona = new File("img/oso.jpg"); 
+		File imagenPersona = new File("img/sinfoto.jpg"); 
 		lblFotoPersona.setIcon(new ImageIcon(imagenPersona.getPath()));
 		lblFotoPersona.setBounds(10,60,130,200);
 		licFrentePanel.add(lblFotoPersona);
@@ -193,7 +194,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		
 		
 		licDorsoPanel = new JPanel();
-		licDorsoPanel.setBounds(550, 10, 400, 300);
+		licDorsoPanel.setBounds(512, 10, 400, 300);
 		licDorsoPanel.setBackground(new Color(230, 255, 255));
 		licDorsoPanel.setBorder(new LineBorder(SystemColor.desktop));
 		licDorsoPanel.setLayout(null);
@@ -322,12 +323,12 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		txtDetallePago.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtDetallePago.setEditable(false);
 		txtDetallePago.setBackground(SystemColor.menu);
-		txtDetallePago.setBounds(20, 330, 96, 22);
+		txtDetallePago.setBounds(73, 331, 96, 22);
 		carnetConductorPanel.add(txtDetallePago);
 		
 		pagoPanel = new JPanel();
 		pagoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		pagoPanel.setBounds(10, 340, 400, 122);
+		pagoPanel.setBounds(63, 341, 400, 122);
 		carnetConductorPanel.add(pagoPanel);
 		pagoPanel.setLayout(null);
 		
@@ -378,7 +379,7 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 				PrinterJob job = PrinterJob.getPrinterJob();
 				PageFormat pf = job.defaultPage();
 				pf.setOrientation(PageFormat.LANDSCAPE);
-				job.setPrintable(new PntImprimirLicencia(datosLicencia, pant), pf);
+				job.setPrintable(new PntImprimirLicencia(admin, datosLicencia), pf);
 				if(job.printDialog()) {
 					try {					
 						job.print();
@@ -394,14 +395,11 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 		btnImprimirLicencia.setBounds(768, 602, 160, 37);
 		add(btnImprimirLicencia);
 		
-		JButton btnAtras = new JButton("Atras");
+		JButton btnAtras = new JButton("Finalizar");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(pant==1) {
-				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntCrearLicencia,VentanaAdmin.n_pntCrearLicencia);
-				}else if(pant==2) {
-					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntEmitirCopia,VentanaAdmin.n_pntEmitirCopia);
-				}
+				MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+				VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 			}
 		});
 		btnAtras.setBounds(41, 602, 118, 37);

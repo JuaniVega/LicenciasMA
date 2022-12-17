@@ -16,7 +16,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.TextArea;
 import com.toedter.calendar.JDateChooser;
 
-import mvc.controller.dto.CrearTitularDTO;
+import mvc.controller.dto.AdministradorDTO;
+import mvc.controller.dto.ConductorDTO;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.TipoDocumento;
 import mvc.model.TipoGrupoSanguineo;
@@ -52,15 +53,19 @@ private JLabel labelErrorDireccion;
 private JLabel labelErrorFactorRH;
 private JLabel labelErrorGrupSanguineo;
 private JLabel labelErrorPiso;
+private JLabel labelErrorSexo;
+private JLabel labelErrorDonante;
 private JComboBox<String> cBoxTipoDoc;
+private JComboBox<String> cbDonanteDeOrganos;
+private JComboBox<String> cbSexoCliente;
 private JDateChooser tfFechaNacTitular;
 private JComboBox<String> cbGrupoSanguineo;
-private TextArea txtAreaOBS;
 
-private CrearTitularDTO crearTitularDTO = new CrearTitularDTO();
+private ConductorDTO conductorDTO = new ConductorDTO();
 
-//prueba                                                                                                                                                         
-public PntDarAltaTitularUI() {
+public PntDarAltaTitularUI() {              
+}
+public PntDarAltaTitularUI(final AdministradorDTO admin) {
 	setLocation(-139, -379);
 	setBackground(UIManager.getColor("Button.background"));  
 	setPreferredSize(new Dimension(980, 650));
@@ -83,7 +88,7 @@ public PntDarAltaTitularUI() {
 	
 	tfFechaNacTitular = new JDateChooser();
 	tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
-	tfFechaNacTitular.setBounds(673, 195, 137, 20);
+	tfFechaNacTitular.setBounds(673, 214, 147, 20);
 	panelDireccion_1.add(tfFechaNacTitular);
 	
 	JLabel txtNombre = new JLabel("Nombre Completo (*)");
@@ -99,21 +104,13 @@ public PntDarAltaTitularUI() {
 	lblNewLabel.setBounds(406, 38, 108, 14);
 	panelDireccion_1.add(lblNewLabel);
 	
-	JCheckBox chckbxDonadorOrganos = new JCheckBox("Donador de Organos");
-	chckbxDonadorOrganos.setBounds(523, 257, 148, 23);
-	panelDireccion_1.add(chckbxDonadorOrganos);
-	
 	txtApellidoTitular = new JTextField();
 	txtApellidoTitular.setBounds(505, 35, 158, 20);
 	panelDireccion_1.add(txtApellidoTitular);
 	txtApellidoTitular.setColumns(10);
 	
-	txtAreaOBS = new TextArea();
-	txtAreaOBS.setBounds(577, 316, 233, 125);
-	panelDireccion_1.add(txtAreaOBS);
-	
 	JLabel lblNewLabel_5 = new JLabel("Fecha de Nacimiento (*)");
-	lblNewLabel_5.setBounds(523, 195, 136, 14);
+	lblNewLabel_5.setBounds(523, 214, 136, 14);
 	panelDireccion_1.add(lblNewLabel_5);
 	
 	labelErrorNom = new JLabel("");
@@ -128,15 +125,11 @@ public PntDarAltaTitularUI() {
 	
 	labelErrorFechNac = new JLabel("");
 	labelErrorFechNac.setForeground(Color.RED);
-	labelErrorFechNac.setBounds(505, 220, 297, 14);
+	labelErrorFechNac.setBounds(523, 245, 297, 14);
 	panelDireccion_1.add(labelErrorFechNac);
 	
-	JLabel lblNewLabel_13 = new JLabel("Observaciones ");
-	lblNewLabel_13.setBounds(478, 316, 101, 14);
-	panelDireccion_1.add(lblNewLabel_13);
-	
 	JPanel PaneDocumento = new JPanel();
-	PaneDocumento.setBounds(60, 80, 750, 72);
+	PaneDocumento.setBounds(60, 80, 760, 72);
 	panelDireccion_1.add(PaneDocumento);
 	PaneDocumento.setToolTipText("Documento ");
 	PaneDocumento.setBorder(new TitledBorder(null, "Documento", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -241,6 +234,38 @@ public PntDarAltaTitularUI() {
 	labelErrorFactorRH.setBounds(63, 122, 291, 14);
 	panelGrupSanguineoFactorRH.add(labelErrorFactorRH);
 	
+	JTextPane txtpnSexoCliente = new JTextPane();
+	txtpnSexoCliente.setText("Sexo (*)");
+	txtpnSexoCliente.setEditable(false);
+	txtpnSexoCliente.setBackground(SystemColor.menu);
+	txtpnSexoCliente.setBounds(523, 295, 58, 20);
+	panelDireccion_1.add(txtpnSexoCliente);
+	
+	cbSexoCliente = new JComboBox();
+	cbSexoCliente.setBounds(607, 295, 71, 22);
+	panelDireccion_1.add(cbSexoCliente);
+	
+	JTextPane txtpnDonadorDeOrganos = new JTextPane();
+	txtpnDonadorDeOrganos.setText("Donante de organos (*)");
+	txtpnDonadorDeOrganos.setEditable(false);
+	txtpnDonadorDeOrganos.setBackground(SystemColor.menu);
+	txtpnDonadorDeOrganos.setBounds(523, 366, 80, 34);
+	panelDireccion_1.add(txtpnDonadorDeOrganos);
+	
+	cbDonanteDeOrganos = new JComboBox();
+	cbDonanteDeOrganos.setBounds(607, 366, 71, 22);
+	panelDireccion_1.add(cbDonanteDeOrganos);
+	
+	labelErrorSexo = new JLabel("");
+	labelErrorSexo.setForeground(Color.RED);
+	labelErrorSexo.setBounds(523, 326, 297, 14);
+	panelDireccion_1.add(labelErrorSexo);
+	
+	labelErrorDonante = new JLabel("");
+	labelErrorDonante.setForeground(Color.RED);
+	labelErrorDonante.setBounds(523, 399, 297, 14);
+	panelDireccion_1.add(labelErrorDonante);
+	
 	JButton btnGuardar = new JButton("Guardar");
 	btnGuardar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -251,7 +276,7 @@ public PntDarAltaTitularUI() {
 				labelErrorNom.setText("Por favor, ingrese el nombre del titular" );
 			}
 			else if (txtApellidoTitular.getText().isEmpty()){
-				labelErrorApellido.setText("Por favor, ingrese el Apellido del titular");
+				labelErrorApellido.setText("Por favor, ingrese el apellido del titular");
 			}
 			else if (cBoxTipoDoc.getSelectedItem().equals("-Seleccione-") || txtNumDocTitular.getText().isEmpty()) {
 				labelErrorDoc.setText("Por favor, complete el Documento del titular");
@@ -265,22 +290,24 @@ public PntDarAltaTitularUI() {
 			else if (!validarNumerosCalle(txtNumCalleTitular.getText().trim())) {
 				labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
 			}
-			// else if (!(txtPisoTitular.getText().isEmpty())) {
-			// 	if (!validarNumerosCalle(txtPisoTitular.getText().trim())){
-			// 		labelErrorPiso.setText("Por favor, ingrese correctamente el piso");
-			// 	}
-			// }
 			else if(tfFechaNacTitular.getDate()==null) { 
 				labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
 			}
 			else if (cbGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
 				labelErrorGrupSanguineo.setText("Por favor, ingrese el Grupo Sanguineo del titular");
 			}
+			else if (cbSexoCliente.getSelectedItem().equals("-Seleccione-") ) {
+				labelErrorSexo.setText("Por favor, ingrese el sexo del titular");
+			}
+			else if (cbDonanteDeOrganos.getSelectedItem().equals("-Seleccione-") ) {
+				labelErrorDonante.setText("Por favor, ingrese si el titular es donante");
+			}
 			else {
 				try {
-					emitirAltaTitular();
-					System.out.println(crearTitularDTO);
-					System.out.println("Cargo todo");
+					cargarConductorDTO();
+					GestorPersona.crearConductor(conductorDTO);
+					VentanaAdmin.mensajeExito("Conductor creado correctamente", "ÉXITO");
+					limpiarPantalla();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -294,7 +321,8 @@ public PntDarAltaTitularUI() {
 	JButton btnCancelar = new JButton("Atr\u00E1s");
 	btnCancelar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 		}
 	});
 	btnCancelar.setBounds(41, 602, 118, 37);
@@ -307,61 +335,89 @@ public PntDarAltaTitularUI() {
 	}                                                                                                                              
 }
 
-public static boolean validarNumerosDoc (String datos) {
-	return datos.matches("[0-9]{8,10}");
-}
-public static boolean validarNumerosCalle (String datos) {
-	return datos.matches("[0-9]{1,4}");
-}
-
-protected void limpiarCamposErrores() {
-	//definir todos los label de los errores 
-	labelErrorNom.setText("");
-	labelErrorApellido.setText("");
-	labelErrorDoc.setText("");
-	labelErrorDireccion.setText("");
-	labelErrorFechNac.setText("");
-	labelErrorGrupSanguineo.setText("");
-	labelErrorPiso.setText("");
-	//labelErrorFactorRH.setText("");
-} 
-
-protected void emitirAltaTitular() throws Exception {
-	crearTitularDTO.setNombreCond(txtNombreTitular.getText());
-	crearTitularDTO.setApellidoCond(txtApellidoTitular.getText());
-	crearTitularDTO.setTipoDoc(null); //mirar
-	crearTitularDTO.setNumDoc(Integer.parseInt(txtNumDocTitular.getText()));
-	crearTitularDTO.setCalle(txtCalleTitular.getText());
-	crearTitularDTO.setNumCalle(Integer.parseInt(txtNumCalleTitular.getText()));
-	if(!txtPisoTitular.getText().isEmpty()) {
-		crearTitularDTO.setPiso(Integer.parseInt(txtPisoTitular.getText()));
+	public static boolean validarNumerosDoc (String datos) {
+		return datos.matches("[0-9]{8,10}");
 	}
-	if(!txtDptoTitular.getText().isEmpty()) {
-		crearTitularDTO.setDpto(txtDptoTitular.getText());
+	public static boolean validarNumerosCalle (String datos) {
+		return datos.matches("[0-9]{1,4}");
 	}
-	crearTitularDTO.setFechaNacimiento(LocalDate.parse(tfFechaNacTitular.getDateFormatString()));
-	crearTitularDTO.setGrupoSang(null); //mirar
-	if(!txtAreaOBS.getText().isEmpty()) {
-		crearTitularDTO.setObservaciones(txtAreaOBS.getText());
-	}
-}
+	
+	protected void limpiarCamposErrores() {
+		//definir todos los label de los errores 
+		labelErrorNom.setText("");
+		labelErrorApellido.setText("");
+		labelErrorDoc.setText("");
+		labelErrorDireccion.setText("");
+		labelErrorFechNac.setText("");
+		labelErrorGrupSanguineo.setText("");
+		labelErrorPiso.setText("");
+		labelErrorDonante.setText("");
+		labelErrorSexo.setText("");
+	} 
 
-protected void llenarCB() throws Exception{
-
-	//Llena el combo box de tipo de documento
-	List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
-	cBoxTipoDoc.addItem("-Seleccione-");
-	for(int i=0; i<tipoDoc.size(); i++) {
-		cBoxTipoDoc.addItem(tipoDoc.get(i).getTipo_doc());
+	protected void cargarConductorDTO() throws Exception {
+		conductorDTO.setNombre(txtNombreTitular.getText());
+		conductorDTO.setApellido(txtApellidoTitular.getText());
+		conductorDTO.setTipoDoc(cBoxTipoDoc.getSelectedIndex());
+		conductorDTO.setDni(Integer.parseInt(txtNumDocTitular.getText()));
+		conductorDTO.setCalle(txtCalleTitular.getText());
+		conductorDTO.setNumCalle(Integer.parseInt(txtNumCalleTitular.getText()));
+		conductorDTO.setPiso(Integer.parseInt(txtPisoTitular.getText()));
+		conductorDTO.setDpto(txtDptoTitular.getText());
+		conductorDTO.setFechaNacimiento(LocalDate.parse(tfFechaNacTitular.getDateFormatString()));
+		conductorDTO.setGrupoSang(cbGrupoSanguineo.getSelectedIndex());
+		conductorDTO.setEsDonante(esDonante());
+		conductorDTO.setSexo(cbSexoCliente.getSelectedIndex());
 	}
 
-	//Llena el combo box del tipo de sangre
-	List<TipoGrupoSanguineo> grupSanguineo = GestorPersona.obtenerTiposGrupoSanguineos();
-	cbGrupoSanguineo.addItem("-Seleccione-");
-		for(int i=0; i<grupSanguineo.size(); i++) {
-			cbGrupoSanguineo.addItem(grupSanguineo.get(i).getTipo_grupo_sanguineo());
-		}	
-}
+	private Boolean esDonante() {
+		if(cbDonanteDeOrganos.getSelectedIndex()==1) {
+			return true;
+		}else if(cbDonanteDeOrganos.getSelectedIndex()==2){
+		return false;
+		}
+		return false;
+	}
 
+	protected void llenarCB() throws Exception{
+	
+		//Llena el combo box de tipo de documento
+		List<TipoDocumento> tipoDoc= GestorPersona.obtenerTiposDocumentos();
+		cBoxTipoDoc.addItem("-Seleccione-");
+		for(int i=0; i<tipoDoc.size(); i++) {
+			cBoxTipoDoc.addItem(tipoDoc.get(i).getTipo_doc());
+		}
+	
+		//Llena el combo box del tipo de sangre
+		List<TipoGrupoSanguineo> grupSanguineo = GestorPersona.obtenerTiposGrupoSanguineos();
+		cbGrupoSanguineo.addItem("-Seleccione-");
+			for(int i=0; i<grupSanguineo.size(); i++) {
+				cbGrupoSanguineo.addItem(grupSanguineo.get(i).getTipo_grupo_sanguineo());
+			}	
+		
+		//Llena el combo box de donante
+				cbDonanteDeOrganos.addItem("-Seleccione-");
+				cbDonanteDeOrganos.addItem("SI");
+				cbDonanteDeOrganos.addItem("NO");
+
+				//Llena el combo box de sexo
+				cbSexoCliente.addItem("-Seleccione-");
+				cbSexoCliente.addItem("M");
+				cbSexoCliente.addItem("F");
+}
+	
+	private void limpiarPantalla() {
+		txtNombreTitular.setText("");
+		txtApellidoTitular.setText("");
+		txtCalleTitular.setText("");
+		txtDptoTitular.setText("");
+		txtNumCalleTitular.setText("");
+		txtNumDocTitular.setText("");
+		txtPisoTitular.setText("");
+		cbDonanteDeOrganos.setSelectedIndex(0);
+		cbGrupoSanguineo.setSelectedIndex(0);
+		cbSexoCliente.setSelectedIndex(0);
+		cBoxTipoDoc.setSelectedIndex(0);
+	}
 }
 

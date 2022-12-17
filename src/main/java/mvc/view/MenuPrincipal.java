@@ -37,13 +37,14 @@ public class MenuPrincipal extends JPanel{
 	
 	txtpnEmitirCopia = new JTextPane();
 	txtpnEmitirCopia.setText("MENÚ");
-	txtpnEmitirCopia.setFont(new Font("Tahoma", Font.BOLD, 21));
+	txtpnEmitirCopia.setFont(new Font("Montserrat Light", Font.BOLD, 21));
 	txtpnEmitirCopia.setEditable(false);
 	txtpnEmitirCopia.setBackground(SystemColor.menu);
 	txtpnEmitirCopia.setBounds(428, 30, 80, 37);
 	add(txtpnEmitirCopia);
 	
 	btnEmitirLicencia = new JButton("Emitir licencia");
+	btnEmitirLicencia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			PntCrearLicencia pntCrearLicencia = new PntCrearLicencia(admin);
@@ -54,42 +55,51 @@ public class MenuPrincipal extends JPanel{
 	add(btnEmitirLicencia);
 	
 	btnDarDeAltaTitular = new JButton("Dar de alta titular");
+	btnDarDeAltaTitular.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnDarDeAltaTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntDarAltaTitularUI, VentanaAdmin.n_pntDarAltaTitularUI);
+			PntDarAltaTitularUI pntDarAltaTitularUI = new PntDarAltaTitularUI(admin);
+			VentanaAdmin.cambiarPantalla(pntDarAltaTitularUI, VentanaAdmin.n_pntDarAltaTitularUI);
 		}
 	});
 	btnDarDeAltaTitular.setBounds(384, 461, 184, 60);
 	add(btnDarDeAltaTitular);
 	
 	btnEmitirCopia = new JButton("Emitir copia de licencia");
+	btnEmitirCopia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnEmitirCopia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntEmitirCopia, VentanaAdmin.n_pntEmitirCopia);
+			PntEmitirCopia pntEmitirCopia = new PntEmitirCopia(admin);
+			VentanaAdmin.cambiarPantalla(pntEmitirCopia, VentanaAdmin.n_pntEmitirCopia);
 		}
 	});
 	btnEmitirCopia.setBounds(238, 214, 184, 60);
 	add(btnEmitirCopia);
 	
 	btnLicenciasExpiradas = new JButton("Licencias expiradas");
+	btnLicenciasExpiradas.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnLicenciasExpiradas.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntLicenciaExpirada, VentanaAdmin.n_pntLicenciaExpirada);
+			PntLicenciaExpirada pntLicenciaExpirada = new PntLicenciaExpirada(admin);
+			VentanaAdmin.cambiarPantalla(pntLicenciaExpirada, VentanaAdmin.n_pntLicenciaExpirada);
 		}
 	});
 	btnLicenciasExpiradas.setBounds(519, 93, 184, 60);
 	add(btnLicenciasExpiradas);
 	
 	btnLicenciasVigentes = new JButton("Licencias vigentes");
+	btnLicenciasVigentes.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnLicenciasVigentes.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntLicenciaVigente, VentanaAdmin.n_pntLicenciaVigente);
+			PntLicenciaVigente pntLicenciaVigente = new PntLicenciaVigente(admin);
+			VentanaAdmin.cambiarPantalla(pntLicenciaVigente, VentanaAdmin.n_pntLicenciaVigente);
 		}
 	});
 	btnLicenciasVigentes.setBounds(519, 214, 184, 60);
 	add(btnLicenciasVigentes);
 	
 	btnModificarTitular = new JButton("Modificar datos de titular");
+	btnModificarTitular.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnModificarTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntModificarDatosConductor pntModificarDatosConductor = new PntModificarDatosConductor(admin);
@@ -100,6 +110,7 @@ public class MenuPrincipal extends JPanel{
 	add(btnModificarTitular);
 	
 	btnRenovarLicencia = new JButton("Renovar licencia");
+	btnRenovarLicencia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnRenovarLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntRenovarLicencia pntRenovarLicencia = new PntRenovarLicencia(admin);
@@ -110,6 +121,7 @@ public class MenuPrincipal extends JPanel{
 	add(btnRenovarLicencia);
 	
 	btnSalir = new JButton("Salir");
+	btnSalir.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnSalir.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(ABORT);
@@ -119,6 +131,7 @@ public class MenuPrincipal extends JPanel{
 	add(btnSalir);
 	
 	JButton btnCerrarSesin = new JButton("Cerrar sesi\u00F3n");
+	btnCerrarSesin.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnCerrarSesin.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			VentanaAdmin.cambiarPantalla(VentanaAdmin.loginAdmin, VentanaAdmin.n_loginAdmin);

@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
+import mvc.controller.dto.AdministradorDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
 import mvc.model.Licencia;
@@ -44,6 +45,9 @@ public class PntLicenciaVigente extends JPanel{
 	private static JLabel lblErrorSeleccion;
 	
 	public PntLicenciaVigente() {
+	}
+	
+	public PntLicenciaVigente(final AdministradorDTO admin) {
 	setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
@@ -81,8 +85,14 @@ public class PntLicenciaVigente extends JPanel{
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 			restaurarTabla();
+			dm = new DefaultTableModel(){
+				public boolean isCellEditable(int rowIndex, int columnIndex ) {
+					return false;
+				}
+			};
 		}
 	});
 	btnAtras.setBounds(41, 602, 118, 37);
@@ -137,7 +147,6 @@ public class PntLicenciaVigente extends JPanel{
 	});
 	cbFiltro.setBounds(132, 76, 177, 21);
 	add(cbFiltro);
-	
 	
 	dm.addColumn("Nombre");
 	dm.addColumn("Apellido");
@@ -221,7 +230,7 @@ public class PntLicenciaVigente extends JPanel{
 		String tipoLicencia = null;
 		
 		if(licenciasVigentes.size()==0) {
-			VentanaAdmin.mensajeError("No se encontraron licencias vigentes", "ERROR");
+			VentanaAdmin.mensajeError("No se encontraron licencias vigentes", "AVISO");
 		}else {
 			for(int i=0; i<licenciasVigentes.size(); i++) {
 				

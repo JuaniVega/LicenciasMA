@@ -158,7 +158,8 @@ public class GestorLicencia {
 				mes=mes-12;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
-			fechaVigencia = LocalDate.of(anio, mes, dia);		}
+			fechaVigencia = LocalDate.of(anio, mes, dia);		
+			}
 		
 		return fechaVigencia;
 	}

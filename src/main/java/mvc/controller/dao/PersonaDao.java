@@ -253,8 +253,8 @@ public class PersonaDao {
 		try {
 			con.setAutoCommit(false);
 			String query= "update public.licencia set apellido="+ personaDTO.getApellido()+", nombre = "+personaDTO.getNombre()+", "
-					+ "direccion = "+personaDTO.getCalle()+", num_dir ="+personaDTO.getNumcalle()+", piso = "+personaDTO.getPiso()+", "
-							+ " departamento = "+personaDTO.getDepto()+","
+					+ "direccion = "+personaDTO.getCalle()+", num_dir ="+personaDTO.getNumCalle()+", piso = "+personaDTO.getPiso()+", "
+							+ " departamento = "+personaDTO.getDpto()+","
 							+ " sexo = "+personaDTO.getSexo()+" where id = "+dni+";";
 			con.createStatement().executeUpdate(query);
 				
@@ -269,5 +269,31 @@ public class PersonaDao {
 					}
 			}
 		
+	}
+
+	public static void newConductor(Conductor conductor) {
+		
+		String query= "INSERT INTO public.persona (tipo_doc, dni, nombre, apellido, fecha_nacimiento, sexo) VALUES("+conductor.getTipoDoc()+", "+conductor.getDni()+", '"+conductor.getNombre()+"', '"+conductor.getApellido()+"', '"+conductor.getFechaNacimiento()+"', '"+conductor.getSexo()+"');";
+		String query2= "INSERT INTO public.conductor (dni, direccion, grupo_sanguineo, dona_organos, num_dir, departamento, piso) VALUES("+conductor.getDni()+", '"+conductor.getDireccion()+"', "+conductor.getTipoGrupoSanguineo()+", "+conductor.getDonaOrganos()+", "+conductor.getNumDir()+", '"+conductor.getDpto()+"', "+conductor.getPiso()+");";
+		
+		Connection con = ConexionP.conectarDB();
+		try {
+			//Comienza transacci�n
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			con.createStatement().executeUpdate(query2);
+			
+			con.commit();
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
 	}
 }

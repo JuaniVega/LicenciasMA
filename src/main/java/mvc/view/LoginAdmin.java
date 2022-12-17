@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -99,5 +101,9 @@ public class LoginAdmin extends JPanel{
 		tfCont.setText("");
 		tfUsuario.setText("");
 	}
+
+	
+	
+	
 
 }

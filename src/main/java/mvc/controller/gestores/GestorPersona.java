@@ -72,4 +72,23 @@ public class GestorPersona {
 	public static List<Persona> iniciarSesion(String usu, String cont) throws Exception {
 		return PersonaDao.login(usu, cont);
 	}
+	
+	public static void crearConductor(ConductorDTO conductorDTO) throws Exception{
+		Conductor conductor = new Conductor();
+		
+		conductor.setNombre(conductorDTO.getNombre());
+		conductor.setApellido(conductorDTO.getApellido());
+		conductor.setTipoDoc(conductorDTO.getTipoDoc());
+		conductor.setDni(conductorDTO.getDni());
+		conductor.setDireccion(conductorDTO.getCalle());
+		conductor.setNumDir(conductorDTO.getNumCalle());
+		conductor.setPiso(conductorDTO.getPiso());
+		conductor.setDpto(conductorDTO.getDpto());
+		conductor.setFechaNacimiento(conductorDTO.getFechaNacimiento());
+		conductor.setTipoGrupoSanguineo(conductorDTO.getGrupoSang());
+		conductor.setDonaOrganos(conductorDTO.getEsDonante());
+		conductor.setSexo(conductorDTO.getSexo());
+		
+		PersonaDao.newConductor(conductor);
+	}
 }

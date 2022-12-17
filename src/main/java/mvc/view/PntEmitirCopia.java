@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
+import mvc.controller.dto.AdministradorDTO;
 import mvc.controller.dto.EmitirLicenciaDTO;
 import mvc.controller.gestores.GestorLicencia;
 import mvc.controller.gestores.GestorPersona;
@@ -79,6 +80,9 @@ public class PntEmitirCopia extends JPanel {
 	int valCopiaNueva = 0;
 	
 	public PntEmitirCopia() {
+	}
+	
+	public PntEmitirCopia(final AdministradorDTO admin) {
 		setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
@@ -428,7 +432,8 @@ public class PntEmitirCopia extends JPanel {
 	JButton btnAtras = new JButton("Atr\u00E1s");
 	btnAtras.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntmenuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
+			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
 			limpiarPantalla();
 		}
 	});
@@ -440,7 +445,7 @@ public class PntEmitirCopia extends JPanel {
 	btnImprimirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(validarSelecciones()) {
-					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(emitirLicenciaDTO, 2);
+					PntImprimirLicencia pntImprimirLicencia= new PntImprimirLicencia(admin, emitirLicenciaDTO);
 					VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
 					limpiarPantalla();
 			}		}
@@ -713,7 +718,7 @@ public class PntEmitirCopia extends JPanel {
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor vï¿½lido.", "ERROR");
+			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 			return false;
 		}
 		

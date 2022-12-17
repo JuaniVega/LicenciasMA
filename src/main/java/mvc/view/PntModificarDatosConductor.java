@@ -99,6 +99,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelConductor.add(txtNombreCliente);
 	
 	tfNombreCliente = new JTextField();
+	tfNombreCliente.setEnabled(false);
 	tfNombreCliente.setBounds(171, 68, 260, 20);
 	panelConductor.add(tfNombreCliente);
 	tfNombreCliente.setColumns(10);
@@ -111,6 +112,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelConductor.add(txtApellidoCliente);
 	
 	tfApellidoCliente = new JTextField();
+	tfApellidoCliente.setEnabled(false);
 	tfApellidoCliente.setColumns(10);
 	tfApellidoCliente.setBounds(567, 68, 293, 20);
 	panelConductor.add(tfApellidoCliente);
@@ -130,7 +132,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelDocumento.add(txtTipoDocumentoCliente);
 	
 	tfNroDocumentoCliente = new JTextField();
-	tfNroDocumentoCliente.setEditable(false);
+	tfNroDocumentoCliente.setEnabled(false);
 	tfNroDocumentoCliente.setColumns(10);
 	tfNroDocumentoCliente.setBounds(282, 37, 120, 20);
 	panelDocumento.add(tfNroDocumentoCliente);
@@ -143,6 +145,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelDocumento.add(txtNroDocumentoCliente);
 	
 	cbTipoDocumentoCliente = new JComboBox();
+	cbTipoDocumentoCliente.setEditable(true);
 	cbTipoDocumentoCliente.setEnabled(false);
 	cbTipoDocumentoCliente.setBounds(89, 37, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
@@ -162,6 +165,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelConductor.add(txtpnSexoCliente);
 	
 	cbSexoCliente = new JComboBox();
+	cbSexoCliente.setEnabled(false);
 	cbSexoCliente.setEditable(true);
 	cbSexoCliente.setBounds(355, 231, 91, 22);
 	panelConductor.add(cbSexoCliente);
@@ -181,6 +185,7 @@ public class PntModificarDatosConductor extends JPanel {
 	txtCalle.setBackground(SystemColor.menu);
 	
 	tfCalleCliente = new JTextField();
+	tfCalleCliente.setEnabled(false);
 	tfCalleCliente.setBounds(70, 30, 160, 20);
 	panelDocumento_2.add(tfCalleCliente);
 	tfCalleCliente.setColumns(10);
@@ -193,6 +198,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelDocumento_2.add(txtpnNumero);
 	
 	tfNumDirCliente = new JTextField();
+	tfNumDirCliente.setEnabled(false);
 	tfNumDirCliente.setColumns(10);
 	tfNumDirCliente.setBounds(318, 30, 64, 20);
 	panelDocumento_2.add(tfNumDirCliente);
@@ -205,6 +211,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelDocumento_2.add(txtpnDpto);
 	
 	tfDptoCliente = new JTextField();
+	tfDptoCliente.setEnabled(false);
 	tfDptoCliente.setColumns(10);
 	tfDptoCliente.setBounds(105, 86, 59, 20);
 	panelDocumento_2.add(tfDptoCliente);
@@ -217,6 +224,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelDocumento_2.add(txtpnPiso);
 	
 	tfPisoCliente = new JTextField();
+	tfPisoCliente.setEnabled(false);
 	tfPisoCliente.setColumns(10);
 	tfPisoCliente.setBounds(250, 86, 64, 20);
 	panelDocumento_2.add(tfPisoCliente);
@@ -235,6 +243,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelConductor.add(txtGrupoSanguineo);
 	
 	cbGrupoSanguineoConductor = new JComboBox();
+	cbGrupoSanguineoConductor.setEditable(true);
 	cbGrupoSanguineoConductor.setEnabled(false);
 	cbGrupoSanguineoConductor.setBounds(182, 286, 88, 22);
 	panelConductor.add(cbGrupoSanguineoConductor);
@@ -314,10 +323,8 @@ public class PntModificarDatosConductor extends JPanel {
 			String val = VentanaAdmin.mensajeBusqueda(null, "Ingrese DNI del titular");
 			if(esDniValido(val)) {
 				dni = Integer.parseInt(val);
-				//List<Persona> persona;
 				List<Conductor> conductor;
 				try {
-					//persona = GestorPersona.obtenerPersonaxDni(dni);
 					conductor = GestorPersona.obtenerConductorxDni(dni);
 					
 					limpiarPantalla();
@@ -350,15 +357,14 @@ public class PntModificarDatosConductor extends JPanel {
 					personaDTO.setApellido(tfApellidoCliente.getText());
 					personaDTO.setCalle(tfCalleCliente.getText());
 					String callenum = tfNumDirCliente.getText();
-					personaDTO.setNumcalle(Integer.parseInt(callenum));
-					personaDTO.setDepto(tfDptoCliente.getText());
+					personaDTO.setNumCalle(Integer.parseInt(callenum));
+					personaDTO.setDpto(tfDptoCliente.getText());
 					String pisoPersona = tfPisoCliente.getText();
 					personaDTO.setPiso(Integer.parseInt(pisoPersona));
-					personaDTO.setSexo((String) cbSexoCliente.getSelectedItem());
+					personaDTO.setSexo(cbSexoCliente.getSelectedIndex());
 				   
 					GestorPersona.actualizarDatosConductor(personaDTO, dni);
 					
-					//VentanaAdmin.cambiarPantalla(pntImprimirLicencia,VentanaAdmin.n_pntImprimirLicencia);
 				}catch (Exception e1) {
 					e1.printStackTrace();
 				}

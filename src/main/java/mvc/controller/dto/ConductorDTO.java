@@ -1,15 +1,20 @@
 package mvc.controller.dto;
 
+import java.time.LocalDate;
+
 public class ConductorDTO {
 	private String nombre;
 	private String apellido;
 	private String calle;
-	private int numcalle;
+	private Integer numcalle;
 	private String depto;
-	private int piso;
-	private String sexo;
-	private int dni;
-	
+	private Integer piso;
+	private Integer sexo;
+	private Integer dni;
+	private Integer tipoDoc;
+	private LocalDate fechaNacimiento;
+	private Integer grupoSang;
+	private Boolean esDonante;
 	
 	
 	public String getNombre() {
@@ -30,16 +35,16 @@ public class ConductorDTO {
 	public void setCalle(String calle) {
 		this.calle = calle;
 	}
-	public int getNumcalle() {
+	public int getNumCalle() {
 		return numcalle;
 	}
-	public void setNumcalle(int numcalle) {
+	public void setNumCalle(int numcalle) {
 		this.numcalle = numcalle;
 	}
-	public String getDepto() {
+	public String getDpto() {
 		return depto;
 	}
-	public void setDepto(String depto) {
+	public void setDpto(String depto) {
 		this.depto = depto;
 	}
 	public int getPiso() {
@@ -48,11 +53,41 @@ public class ConductorDTO {
 	public void setPiso(int piso) {
 		this.piso = piso;
 	}
-	public String getSexo() {
+	public Integer getSexo() {
 		return sexo;
 	}
-	public void setSexo(String sexo) {
+	public void setSexo(Integer sexo) {
 		this.sexo = sexo;
+	}
+	public int getDni() {
+		return dni;
+	}
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+	public Integer getTipoDoc() {
+		return tipoDoc;
+	}
+	public void setTipoDoc(Integer tipoDoc) {
+		this.tipoDoc = tipoDoc;
+	}
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	public Integer getGrupoSang() {
+		return grupoSang;
+	}
+	public void setGrupoSang(Integer grupoSang) {
+		this.grupoSang = grupoSang;
+	}
+	public Boolean getEsDonante() {
+		return esDonante;
+	}
+	public void setEsDonante(Boolean esDonante) {
+		this.esDonante = esDonante;
 	}
 	
 
