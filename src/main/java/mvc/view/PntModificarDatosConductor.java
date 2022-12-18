@@ -41,9 +41,7 @@ import javax.swing.border.TitledBorder;
 import com.toedter.calendar.JDateChooser;
 
 public class PntModificarDatosConductor extends JPanel {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 2439382630198569769L;
 	
 	private JTextField tfNombreCliente;
@@ -60,17 +58,16 @@ public class PntModificarDatosConductor extends JPanel {
 	private JComboBox cbSexoCliente;
 	private JComboBox cbDonanteDeOrganos;
 	private JComboBox<String> cbGrupoSanguineoConductor;
-	private JLabel lblErrorLicencias;
-	private JLabel lblErrorDonantes;
-	private int dni;
-	private JButton btnCrearTitular = new JButton("Crear titular");
-	private JButton btnEmitirLicencia;
+	private JLabel lblTipoDoc;
+	private JLabel lblCalle;
+	private JLabel lblSexo;
+	private JLabel lblGrupoSang;
+	private JLabel lblDonante;
+	private JLabel lblNombre;
+	private JLabel lblApellido;
 	private JButton btnGuardarCambios;
 	private JDateChooser dcFechaNacim;
-	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
-	
-	private boolean licenciasConCDE=false;
+	private int dni;
 	
 	public PntModificarDatosConductor() {
 		
@@ -154,9 +151,9 @@ public class PntModificarDatosConductor extends JPanel {
 	cbTipoDocumentoCliente.setBounds(89, 24, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
 	
-	JLabel lblTipoDoc = new JLabel("");
+	lblTipoDoc = new JLabel("");
 	lblTipoDoc.setForeground(Color.RED);
-	lblTipoDoc.setBounds(88, 53, 184, 14);
+	lblTipoDoc.setBounds(21, 53, 381, 14);
 	panelDocumento.add(lblTipoDoc);
 	
 	JTextPane txtFechaNacCliente = new JTextPane();
@@ -237,6 +234,11 @@ public class PntModificarDatosConductor extends JPanel {
 	tfPisoCliente.setBounds(250, 86, 64, 20);
 	panelDocumento_2.add(tfPisoCliente);
 	
+	lblCalle = new JLabel("");
+	lblCalle.setForeground(Color.RED);
+	lblCalle.setBounds(10, 61, 372, 14);
+	panelDocumento_2.add(lblCalle);
+	
 	JTextPane txtGrupoSanguineo = new JTextPane();
 	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
 	txtGrupoSanguineo.setEditable(false);
@@ -248,16 +250,6 @@ public class PntModificarDatosConductor extends JPanel {
 	cbGrupoSanguineoConductor.setEnabled(false);
 	cbGrupoSanguineoConductor.setBounds(166, 287, 107, 22);
 	panelConductor.add(cbGrupoSanguineoConductor);
-	
-	lblErrorLicencias = new JLabel("");
-	lblErrorLicencias.setForeground(Color.RED);
-	lblErrorLicencias.setBounds(28, 348, 388, 25);
-	panelConductor.add(lblErrorLicencias);
-	
-	lblErrorDonantes = new JLabel("");
-	lblErrorDonantes.setForeground(Color.RED);
-	lblErrorDonantes.setBounds(265, 242, 243, 14);
-	panelConductor.add(lblErrorDonantes);
 	
 	JTextPane txtpnDonanteDeOrganos = new JTextPane();
 	txtpnDonanteDeOrganos.setText("Donante de organos (*)");
@@ -277,20 +269,30 @@ public class PntModificarDatosConductor extends JPanel {
 	dcFechaNacim.setEnabled(false);
 	panelConductor.add(dcFechaNacim);
 	
-	JLabel lblSexo = new JLabel("");
+	lblSexo = new JLabel("");
 	lblSexo.setForeground(Color.RED);
-	lblSexo.setBounds(299, 262, 184, 14);
+	lblSexo.setBounds(299, 262, 258, 14);
 	panelConductor.add(lblSexo);
 	
-	JLabel lblGrupoSang = new JLabel("");
+	lblGrupoSang = new JLabel("");
 	lblGrupoSang.setForeground(Color.RED);
-	lblGrupoSang.setBounds(89, 320, 184, 14);
+	lblGrupoSang.setBounds(28, 320, 245, 14);
 	panelConductor.add(lblGrupoSang);
 	
-	JLabel lblDonante = new JLabel("");
+	lblDonante = new JLabel("");
 	lblDonante.setForeground(Color.RED);
-	lblDonante.setBounds(299, 321, 184, 14);
+	lblDonante.setBounds(299, 321, 258, 14);
 	panelConductor.add(lblDonante);
+	
+	lblNombre = new JLabel("");
+	lblNombre.setForeground(Color.RED);
+	lblNombre.setBounds(163, 99, 268, 14);
+	panelConductor.add(lblNombre);
+	
+	lblApellido = new JLabel("");
+	lblApellido.setForeground(Color.RED);
+	lblApellido.setBounds(551, 99, 268, 14);
+	panelConductor.add(lblApellido);
 	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new TitledBorder(null, "Datos Administrador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -403,6 +405,7 @@ public class PntModificarDatosConductor extends JPanel {
 					GestorPersona.actualizarDatosConductor(personaDTO, dni);
 					VentanaAdmin.mensajeExito("Datos actualizados correctamente", "ÉXITO");
 					limpiarPantalla();
+					deshabilitarCampos();
 					
 				}catch (Exception e1) {
 					e1.printStackTrace();
@@ -423,6 +426,22 @@ public class PntModificarDatosConductor extends JPanel {
 	
 	}
 	
+	protected void deshabilitarCampos() {
+		tfNombreCliente.setEnabled(false);
+		tfApellidoCliente.setEnabled(false);
+		cbTipoDocumentoCliente.setEnabled(false);
+		tfNroDocumentoCliente.setText("");
+		tfCalleCliente.setEnabled(false);
+		tfNumDirCliente.setEnabled(false);
+		tfPisoCliente.setEnabled(false);
+		tfDptoCliente.setEnabled(false);
+		cbGrupoSanguineoConductor.setEnabled(false);
+		cbSexoCliente.setEnabled(false);
+		dcFechaNacim.setEnabled(false);
+		cbDonanteDeOrganos.setEnabled(false);
+		btnGuardarCambios.setEnabled(false);
+	}
+
 	private Boolean esDonante() {
 		if(cbDonanteDeOrganos.getSelectedIndex()==1) {
 			return true;
@@ -458,8 +477,14 @@ public class PntModificarDatosConductor extends JPanel {
 		cbGrupoSanguineoConductor.setSelectedIndex(0);
 		cbSexoCliente.setSelectedIndex(0);
 		dcFechaNacim.setDate(Date.valueOf(LocalDate.now()));
-		lblErrorLicencias.setText("");
-		lblErrorDonantes.setText("");
+		cbDonanteDeOrganos.setSelectedIndex(0);
+		lblTipoDoc.setText("");
+		lblCalle.setText("");
+		lblSexo.setText("");
+		lblGrupoSang.setText("");
+		lblDonante.setText("");
+		lblNombre.setText("");
+		lblApellido.setText("");
 	}
 
 	private void cargarDatosenCampos(Conductor conductor) throws ParseException {
@@ -521,33 +546,57 @@ public class PntModificarDatosConductor extends JPanel {
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor vï¿½lido.", "ERROR");
+			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 			return false;
 		}
 		
 	}
 	private boolean validarCampos() {
 		
-		if (tfNombreCliente.getText()== null || tfApellidoCliente.getText()== null) {
-			return false;
+		limpiarErrores();
+		
+		if (tfNombreCliente.getText().isEmpty()) { 
+			lblNombre.setText("Por favor, ingrese el nombre del titular" );
 		}
-		else if (tfCalleCliente.getText()== null || tfNumDirCliente.getText()==null) {
-			return false ;
+		else if (tfApellidoCliente.getText().isEmpty()){
+			lblApellido.setText("Por favor, ingrese el apellido del titular");
 		}
-		else if (tfDptoCliente.getText()!= null) {
-			if (tfPisoCliente.getText()== null) {
-				return false;
-			}
+		else if (cbTipoDocumentoCliente.getSelectedIndex() == 0 || tfNroDocumentoCliente.getText().isEmpty()) {
+			lblTipoDoc.setText("Por favor, complete todos los datos del documento del titular");
 		}
-		else if (tfPisoCliente.getText()!=null) {
-			if (tfDptoCliente.getText()==null) {
-				return false;
-			}
+		else if (tfCalleCliente.getText().isEmpty() || tfNumDirCliente.getText().isEmpty()) {
+			lblCalle.setText("Por favor, complete todos los datos de la direccion del titular");
 		}
-		else if (cbSexoCliente.getSelectedItem().equals("-Seleccione-")) {
-			return false;
+		else if (!validarNumerosCalle(tfNumDirCliente.getText().trim())) {
+			lblCalle.setText("Por favor, Ingrese correctamente el número");
 		}
+		else if (cbGrupoSanguineoConductor.getSelectedIndex() == 0 ) {
+			lblGrupoSang.setText("Por favor, ingrese el Grupo Sanguineo del titular");
+		}
+		else if (cbSexoCliente.getSelectedIndex() == 0) {
+			lblSexo.setText("Por favor, ingrese el sexo del titular");
+		}
+		else if (cbDonanteDeOrganos.getSelectedIndex() == 0 ) {
+			lblDonante.setText("Por favor, ingrese si el titular es donante");
+		}else {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private void limpiarErrores() {
+		lblTipoDoc.setText("");
+		lblCalle.setText("");
+		lblSexo.setText("");
+		lblGrupoSang.setText("");
+		lblDonante.setText("");
+		lblNombre.setText("");
+		lblApellido.setText("");
+		
+	}
 
-		return true;
+	public static boolean validarNumerosCalle (String datos) {
+		return datos.matches("[0-9]{1,4}");
 	}
 }

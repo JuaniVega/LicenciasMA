@@ -32,10 +32,7 @@ import java.awt.event.ActionEvent;
 	
 
 public class PntDarAltaTitularUI extends JPanel{
-                                                                                                                         
-/**
- * 
- */
+	
 private static final long serialVersionUID = -6048411653045236128L;
 
 private JTextField txtNombreTitular;
