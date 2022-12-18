@@ -249,25 +249,28 @@ public class PersonaDao {
 		
 	}
 	public static void updateDatosConductor(ConductorDTO personaDTO, int dni) {
+		String query= "update public.persona set tipo_doc="+personaDTO.getTipoDoc()+", nombre='"+personaDTO.getNombre()+"', apellido='"+personaDTO.getApellido()+"', fecha_nacimiento='"+personaDTO.getFechaNacimiento()+"', sexo='"+personaDTO.getCodSexo()+"' where dni ="+dni+";";
+		String query2= "update public.conductor set direccion='"+personaDTO.getCalle()+"', grupo_sanguineo="+personaDTO.getGrupoSang()+", dona_organos="+personaDTO.getEsDonante()+", num_dir="+personaDTO.getNumCalle()+", departamento='"+personaDTO.getDpto()+"', piso="+personaDTO.getPiso()+" where dni ="+dni+";";
+		
 		Connection con = ConexionP.conectarDB();
 		try {
+			//Comienza transacci�n
 			con.setAutoCommit(false);
-			String query= "update public.licencia set apellido="+ personaDTO.getApellido()+", nombre = "+personaDTO.getNombre()+", "
-					+ "direccion = "+personaDTO.getCalle()+", num_dir ="+personaDTO.getNumCalle()+", piso = "+personaDTO.getPiso()+", "
-							+ " departamento = "+personaDTO.getDpto()+","
-							+ " sexo = "+personaDTO.getSexo()+" where id = "+dni+";";
+			
 			con.createStatement().executeUpdate(query);
-				
+			con.createStatement().executeUpdate(query2);
+			
 			con.commit();
-		}catch (Exception e) {
-			System.err.println("ERROR: " + e.getMessage());
-			try {
-				//deshace todos los cambios realizados en los datos
-				con.rollback();
-				} catch (SQLException ex1) {
-					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
-					}
-			}
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
 		
 	}
 

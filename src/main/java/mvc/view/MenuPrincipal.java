@@ -25,7 +25,7 @@ public class MenuPrincipal extends JPanel{
 	private JButton btnModificarTitular;
 	private JButton btnRenovarLicencia;
 	private JButton btnSalir;
-	
+
 	public MenuPrincipal() {
 		
 	}
@@ -62,7 +62,7 @@ public class MenuPrincipal extends JPanel{
 			VentanaAdmin.cambiarPantalla(pntDarAltaTitularUI, VentanaAdmin.n_pntDarAltaTitularUI);
 		}
 	});
-	btnDarDeAltaTitular.setBounds(384, 461, 184, 60);
+	btnDarDeAltaTitular.setBounds(519, 346, 184, 60);
 	add(btnDarDeAltaTitular);
 	
 	btnEmitirCopia = new JButton("Emitir copia de licencia");
@@ -106,7 +106,7 @@ public class MenuPrincipal extends JPanel{
 			VentanaAdmin.cambiarPantalla(pntModificarDatosConductor, VentanaAdmin.n_pntModificarDatosConductor);
 		}
 	});
-	btnModificarTitular.setBounds(519, 346, 184, 60);
+	btnModificarTitular.setBounds(359, 461, 229, 60);
 	add(btnModificarTitular);
 	
 	btnRenovarLicencia = new JButton("Renovar licencia");

@@ -56,6 +56,13 @@ public class ConductorDTO {
 	public Integer getSexo() {
 		return sexo;
 	}
+	public String getCodSexo() {
+		if(sexo.equals(1)) {
+			return "M";
+		}else{
+			return "F";
+		}
+	}
 	public void setSexo(Integer sexo) {
 		this.sexo = sexo;
 	}

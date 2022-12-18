@@ -13,9 +13,11 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import com.toedter.calendar.JDateChooser;
 
 public class PntModificarDatosConductor extends JPanel {
 	/**
@@ -53,17 +56,19 @@ public class PntModificarDatosConductor extends JPanel {
 	private JTextField tfDptoCliente;
 	private JTextField tfPisoCliente;
 	private JTextField tfFechaEmision;
-	private JTextField tfFechaNacimConductor;
 	private JComboBox<String> cbTipoDocumentoCliente;
 	private JComboBox cbSexoCliente;
+	private JComboBox cbDonanteDeOrganos;
 	private JComboBox<String> cbGrupoSanguineoConductor;
 	private JLabel lblErrorLicencias;
 	private JLabel lblErrorDonantes;
 	private int dni;
 	private JButton btnCrearTitular = new JButton("Crear titular");
 	private JButton btnEmitirLicencia;
+	private JButton btnGuardarCambios;
+	private JDateChooser dcFechaNacim;
 	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
 	
 	private boolean licenciasConCDE=false;
 	
@@ -95,12 +100,12 @@ public class PntModificarDatosConductor extends JPanel {
 	txtNombreCliente.setText("Nombre completo (*)");
 	txtNombreCliente.setEditable(false);
 	txtNombreCliente.setBackground(SystemColor.menu);
-	txtNombreCliente.setBounds(44, 68, 125, 20);
+	txtNombreCliente.setBounds(28, 68, 125, 20);
 	panelConductor.add(txtNombreCliente);
 	
 	tfNombreCliente = new JTextField();
 	tfNombreCliente.setEnabled(false);
-	tfNombreCliente.setBounds(171, 68, 260, 20);
+	tfNombreCliente.setBounds(163, 68, 268, 20);
 	panelConductor.add(tfNombreCliente);
 	tfNombreCliente.setColumns(10);
 	
@@ -114,7 +119,7 @@ public class PntModificarDatosConductor extends JPanel {
 	tfApellidoCliente = new JTextField();
 	tfApellidoCliente.setEnabled(false);
 	tfApellidoCliente.setColumns(10);
-	tfApellidoCliente.setBounds(567, 68, 293, 20);
+	tfApellidoCliente.setBounds(551, 69, 307, 20);
 	panelConductor.add(tfApellidoCliente);
 	
 	JPanel panelDocumento = new JPanel();
@@ -128,33 +133,37 @@ public class PntModificarDatosConductor extends JPanel {
 	txtTipoDocumentoCliente.setText("Tipo (*)");
 	txtTipoDocumentoCliente.setEditable(false);
 	txtTipoDocumentoCliente.setBackground(SystemColor.menu);
-	txtTipoDocumentoCliente.setBounds(21, 37, 58, 20);
+	txtTipoDocumentoCliente.setBounds(21, 24, 58, 20);
 	panelDocumento.add(txtTipoDocumentoCliente);
 	
 	tfNroDocumentoCliente = new JTextField();
 	tfNroDocumentoCliente.setEnabled(false);
 	tfNroDocumentoCliente.setColumns(10);
-	tfNroDocumentoCliente.setBounds(282, 37, 120, 20);
+	tfNroDocumentoCliente.setBounds(282, 24, 120, 20);
 	panelDocumento.add(tfNroDocumentoCliente);
 	
 	JTextPane txtNroDocumentoCliente = new JTextPane();
 	txtNroDocumentoCliente.setText("N\u00FAmero (*)");
 	txtNroDocumentoCliente.setEditable(false);
 	txtNroDocumentoCliente.setBackground(SystemColor.menu);
-	txtNroDocumentoCliente.setBounds(201, 37, 71, 20);
+	txtNroDocumentoCliente.setBounds(201, 24, 71, 20);
 	panelDocumento.add(txtNroDocumentoCliente);
 	
 	cbTipoDocumentoCliente = new JComboBox();
-	cbTipoDocumentoCliente.setEditable(true);
 	cbTipoDocumentoCliente.setEnabled(false);
-	cbTipoDocumentoCliente.setBounds(89, 37, 85, 22);
+	cbTipoDocumentoCliente.setBounds(89, 24, 85, 22);
 	panelDocumento.add(cbTipoDocumentoCliente);
+	
+	JLabel lblTipoDoc = new JLabel("");
+	lblTipoDoc.setForeground(Color.RED);
+	lblTipoDoc.setBounds(88, 53, 184, 14);
+	panelDocumento.add(lblTipoDoc);
 	
 	JTextPane txtFechaNacCliente = new JTextPane();
 	txtFechaNacCliente.setText("Fecha de nacimiento (*)");
 	txtFechaNacCliente.setEditable(false);
 	txtFechaNacCliente.setBackground(SystemColor.menu);
-	txtFechaNacCliente.setBounds(44, 231, 133, 20);
+	txtFechaNacCliente.setBounds(28, 232, 133, 20);
 	panelConductor.add(txtFechaNacCliente);
 	
 	JTextPane txtpnSexoCliente = new JTextPane();
@@ -166,7 +175,6 @@ public class PntModificarDatosConductor extends JPanel {
 	
 	cbSexoCliente = new JComboBox();
 	cbSexoCliente.setEnabled(false);
-	cbSexoCliente.setEditable(true);
 	cbSexoCliente.setBounds(355, 231, 91, 22);
 	panelConductor.add(cbSexoCliente);
 	
@@ -229,23 +237,16 @@ public class PntModificarDatosConductor extends JPanel {
 	tfPisoCliente.setBounds(250, 86, 64, 20);
 	panelDocumento_2.add(tfPisoCliente);
 	
-	tfFechaNacimConductor = new JTextField();
-	tfFechaNacimConductor.setEditable(false);
-	tfFechaNacimConductor.setColumns(10);
-	tfFechaNacimConductor.setBounds(182, 231, 107, 20);
-	panelConductor.add(tfFechaNacimConductor);
-	
 	JTextPane txtGrupoSanguineo = new JTextPane();
 	txtGrupoSanguineo.setText("Grupo sangu\u00EDneo (*)");
 	txtGrupoSanguineo.setEditable(false);
 	txtGrupoSanguineo.setBackground(SystemColor.menu);
-	txtGrupoSanguineo.setBounds(60, 286, 122, 33);
+	txtGrupoSanguineo.setBounds(28, 288, 122, 33);
 	panelConductor.add(txtGrupoSanguineo);
 	
 	cbGrupoSanguineoConductor = new JComboBox();
-	cbGrupoSanguineoConductor.setEditable(true);
 	cbGrupoSanguineoConductor.setEnabled(false);
-	cbGrupoSanguineoConductor.setBounds(182, 286, 88, 22);
+	cbGrupoSanguineoConductor.setBounds(166, 287, 107, 22);
 	panelConductor.add(cbGrupoSanguineoConductor);
 	
 	lblErrorLicencias = new JLabel("");
@@ -257,6 +258,39 @@ public class PntModificarDatosConductor extends JPanel {
 	lblErrorDonantes.setForeground(Color.RED);
 	lblErrorDonantes.setBounds(265, 242, 243, 14);
 	panelConductor.add(lblErrorDonantes);
+	
+	JTextPane txtpnDonanteDeOrganos = new JTextPane();
+	txtpnDonanteDeOrganos.setText("Donante de organos (*)");
+	txtpnDonanteDeOrganos.setEditable(false);
+	txtpnDonanteDeOrganos.setBackground(SystemColor.menu);
+	txtpnDonanteDeOrganos.setBounds(299, 288, 78, 33);
+	panelConductor.add(txtpnDonanteDeOrganos);
+	
+	cbDonanteDeOrganos = new JComboBox();
+	cbDonanteDeOrganos.setEnabled(false);
+	cbDonanteDeOrganos.setBounds(379, 288, 67, 22);
+	panelConductor.add(cbDonanteDeOrganos);
+	
+	dcFechaNacim = new JDateChooser();
+	dcFechaNacim.setDateFormatString("dd MM yyyy");
+	dcFechaNacim.setBounds(163, 232, 110, 20);
+	dcFechaNacim.setEnabled(false);
+	panelConductor.add(dcFechaNacim);
+	
+	JLabel lblSexo = new JLabel("");
+	lblSexo.setForeground(Color.RED);
+	lblSexo.setBounds(299, 262, 184, 14);
+	panelConductor.add(lblSexo);
+	
+	JLabel lblGrupoSang = new JLabel("");
+	lblGrupoSang.setForeground(Color.RED);
+	lblGrupoSang.setBounds(89, 320, 184, 14);
+	panelConductor.add(lblGrupoSang);
+	
+	JLabel lblDonante = new JLabel("");
+	lblDonante.setForeground(Color.RED);
+	lblDonante.setBounds(299, 321, 184, 14);
+	panelConductor.add(lblDonante);
 	
 	JPanel panelAdmin = new JPanel();
 	panelAdmin.setBorder(new TitledBorder(null, "Datos Administrador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -311,6 +345,7 @@ public class PntModificarDatosConductor extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			MenuPrincipal menuPrincipal = new MenuPrincipal(admin);
 			VentanaAdmin.cambiarPantalla(menuPrincipal, VentanaAdmin.n_pntmenuPrincipal);
+			limpiarPantalla();
 		}
 	});
 	btnCancelar.setBounds(41, 602, 118, 37);
@@ -331,8 +366,9 @@ public class PntModificarDatosConductor extends JPanel {
 					if( conductor.size()==0) {
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
 					}else {
+						habilitarCampos();
+						btnGuardarCambios.setEnabled(true);
 						cargarDatosenCampos(conductor.get(0));
-						
 					}
 					
 				} catch (Exception e) {
@@ -345,25 +381,28 @@ public class PntModificarDatosConductor extends JPanel {
 	btnBuscarTitular.setBounds(374, 602, 232, 37);
 	add(btnBuscarTitular);
 	
-	JButton btnGuardarCambios = new JButton("Guardar Cambios");
+	btnGuardarCambios = new JButton("Guardar cambios");
 	btnGuardarCambios.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			//agregar las modificaciones hechas 
 			if(validarCampos()) {
 				ConductorDTO personaDTO = new ConductorDTO();
 				try {
 					personaDTO.setNombre(tfNombreCliente.getText());
 					personaDTO.setApellido(tfApellidoCliente.getText());
 					personaDTO.setCalle(tfCalleCliente.getText());
-					String callenum = tfNumDirCliente.getText();
-					personaDTO.setNumCalle(Integer.parseInt(callenum));
+					personaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
 					personaDTO.setDpto(tfDptoCliente.getText());
-					String pisoPersona = tfPisoCliente.getText();
-					personaDTO.setPiso(Integer.parseInt(pisoPersona));
+					personaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
 					personaDTO.setSexo(cbSexoCliente.getSelectedIndex());
+					personaDTO.setTipoDoc(cbTipoDocumentoCliente.getSelectedIndex());
+					personaDTO.setGrupoSang(cbGrupoSanguineoConductor.getSelectedIndex());
+					personaDTO.setEsDonante(esDonante());
+					personaDTO.setFechaNacimiento(dcFechaNacim.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 				   
 					GestorPersona.actualizarDatosConductor(personaDTO, dni);
+					VentanaAdmin.mensajeExito("Datos actualizados correctamente", "ÉXITO");
+					limpiarPantalla();
 					
 				}catch (Exception e1) {
 					e1.printStackTrace();
@@ -372,7 +411,8 @@ public class PntModificarDatosConductor extends JPanel {
 			}
 		}
 	});
-	btnGuardarCambios.setBounds(810, 602, 118, 37);
+	btnGuardarCambios.setBounds(801, 602, 138, 37);
+	btnGuardarCambios.setEnabled(false);
 	add(btnGuardarCambios);
 	
 	try {
@@ -382,6 +422,30 @@ public class PntModificarDatosConductor extends JPanel {
 	}
 	
 	}
+	
+	private Boolean esDonante() {
+		if(cbDonanteDeOrganos.getSelectedIndex()==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	protected void habilitarCampos() {
+		tfNombreCliente.setEnabled(true);
+		tfApellidoCliente.setEnabled(true);
+		cbTipoDocumentoCliente.setEnabled(true);
+		tfNroDocumentoCliente.setText("");
+		tfCalleCliente.setEnabled(true);
+		tfNumDirCliente.setEnabled(true);
+		tfPisoCliente.setEnabled(true);
+		tfDptoCliente.setEnabled(true);
+		cbGrupoSanguineoConductor.setEnabled(true);
+		cbSexoCliente.setEnabled(true);
+		dcFechaNacim.setEnabled(true);
+		cbDonanteDeOrganos.setEnabled(true);
+	}
+
 	protected void limpiarPantalla() {
 		tfNombreCliente.setText("");
 		tfApellidoCliente.setText("");
@@ -393,7 +457,7 @@ public class PntModificarDatosConductor extends JPanel {
 		tfDptoCliente.setText("");
 		cbGrupoSanguineoConductor.setSelectedIndex(0);
 		cbSexoCliente.setSelectedIndex(0);
-		tfFechaNacimConductor.setText("");
+		dcFechaNacim.setDate(Date.valueOf(LocalDate.now()));
 		lblErrorLicencias.setText("");
 		lblErrorDonantes.setText("");
 	}
@@ -405,12 +469,14 @@ public class PntModificarDatosConductor extends JPanel {
 		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
 		tfFechaEmision.setText(LocalDate.now().toString());
-		tfFechaNacimConductor.setText(String.valueOf(conductor.getFechaNacimiento().format(formatter)));
+		LocalDate fechaNac = conductor.getFechaNacimiento();
+		dcFechaNacim.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		tfCalleCliente.setText(conductor.getDireccion());
 		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		cbDonanteDeOrganos.setSelectedIndex(conductor.getCodDonaOrganos());
 	}
 	
 	private void llenarCB() throws Exception {
@@ -437,6 +503,11 @@ public class PntModificarDatosConductor extends JPanel {
 		cbSexoCliente.addItem("-Seleccione-");
 		cbSexoCliente.addItem("M");
 		cbSexoCliente.addItem("F");
+		
+		//Llena el combo box de donante
+		cbDonanteDeOrganos.addItem("-Seleccione-");
+		cbDonanteDeOrganos.addItem("SI");
+		cbDonanteDeOrganos.addItem("NO");
 	}
 
 	private boolean esDniValido(String val) {
