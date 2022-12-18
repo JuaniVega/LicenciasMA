@@ -274,10 +274,10 @@ public class PersonaDao {
 		
 	}
 
-	public static void newConductor(Conductor conductor) {
+	public static void newConductor(Conductor conductor, String usuAdmin) {
 		
-		String query= "INSERT INTO public.persona (tipo_doc, dni, nombre, apellido, fecha_nacimiento, sexo) VALUES("+conductor.getTipoDoc()+", "+conductor.getDni()+", '"+conductor.getNombre()+"', '"+conductor.getApellido()+"', '"+conductor.getFechaNacimiento()+"', '"+conductor.getSexo()+"');";
-		String query2= "INSERT INTO public.conductor (dni, direccion, grupo_sanguineo, dona_organos, num_dir, departamento, piso) VALUES("+conductor.getDni()+", '"+conductor.getDireccion()+"', "+conductor.getTipoGrupoSanguineo()+", "+conductor.getDonaOrganos()+", "+conductor.getNumDir()+", '"+conductor.getDpto()+"', "+conductor.getPiso()+");";
+		String query= "INSERT INTO public.persona (tipo_doc, dni, nombre, apellido, fecha_nacimiento, usuario, sexo) VALUES("+conductor.getTipoDoc()+", "+conductor.getDni()+", '"+conductor.getNombre()+"', '"+conductor.getApellido()+"', '"+conductor.getFechaNacimiento()+"', '"+usuAdmin+"', '"+conductor.getSexo()+"');";
+		String query2= "INSERT INTO public.conductor (dni, direccion, grupo_sanguineo, dona_organos, num_dir, departamento, piso, usuario) VALUES("+conductor.getDni()+", '"+conductor.getDireccion()+"', "+conductor.getTipoGrupoSanguineo()+", "+conductor.getDonaOrganos()+", "+conductor.getNumDir()+", '"+conductor.getDpto()+"', "+conductor.getPiso()+", '"+usuAdmin+"');";
 		
 		Connection con = ConexionP.conectarDB();
 		try {

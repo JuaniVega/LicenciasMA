@@ -394,13 +394,23 @@ public class PntModificarDatosConductor extends JPanel {
 					personaDTO.setApellido(tfApellidoCliente.getText());
 					personaDTO.setCalle(tfCalleCliente.getText());
 					personaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
-					personaDTO.setDpto(tfDptoCliente.getText());
-					personaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+					if(tfPisoCliente.getText().isEmpty() || tfPisoCliente.getText().equals("")) {
+						personaDTO.setPiso(-1);
+					}else {
+						personaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+					}
+					if(tfDptoCliente.getText().isEmpty()) {
+						personaDTO.setDpto("");
+					}else{
+						personaDTO.setDpto(tfDptoCliente.getText());
+					}
 					personaDTO.setSexo(cbSexoCliente.getSelectedIndex());
 					personaDTO.setTipoDoc(cbTipoDocumentoCliente.getSelectedIndex());
 					personaDTO.setGrupoSang(cbGrupoSanguineoConductor.getSelectedIndex());
 					personaDTO.setEsDonante(esDonante());
 					personaDTO.setFechaNacimiento(dcFechaNacim.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+					personaDTO.setNombreUsuAdmin(admin.getNombre());
+					personaDTO.setApellidoUsuAdmin(admin.getApellido());
 				   
 					GestorPersona.actualizarDatosConductor(personaDTO, dni);
 					VentanaAdmin.mensajeExito("Datos actualizados correctamente", "ÉXITO");
@@ -500,8 +510,12 @@ public class PntModificarDatosConductor extends JPanel {
 		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
-		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
 		cbDonanteDeOrganos.setSelectedIndex(conductor.getCodDonaOrganos());
+		if(conductor.getPiso()!=-1) {
+			tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		}else {
+			tfPisoCliente.setText("");
+		}
 	}
 	
 	private void llenarCB() throws Exception {

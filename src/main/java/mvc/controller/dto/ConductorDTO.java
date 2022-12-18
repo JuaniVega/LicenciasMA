@@ -16,6 +16,10 @@ public class ConductorDTO {
 	private Integer grupoSang;
 	private Boolean esDonante;
 	
+	private String nombreUsuAdmin;
+	private String apellidoUsuAdmin;
+	private String usuAdmin;
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -95,6 +99,21 @@ public class ConductorDTO {
 	}
 	public void setEsDonante(Boolean esDonante) {
 		this.esDonante = esDonante;
+	}
+	public String getNombreUsuAdmin() {
+		return nombreUsuAdmin;
+	}
+	public void setNombreUsuAdmin(String nombreUsuAdmin) {
+		this.nombreUsuAdmin = nombreUsuAdmin;
+	}
+	public String getApellidoUsuAdmin() {
+		return apellidoUsuAdmin;
+	}
+	public void setApellidoUsuAdmin(String apellidoUsuAdmin) {
+		this.apellidoUsuAdmin = apellidoUsuAdmin;
+	}
+	public String getUsuAdmin() {
+		return nombreUsuAdmin+" "+apellidoUsuAdmin;
 	}
 	
 

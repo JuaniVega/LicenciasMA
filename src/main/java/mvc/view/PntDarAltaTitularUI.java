@@ -25,7 +25,9 @@ import mvc.model.TipoGrupoSanguineo;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -55,7 +57,7 @@ private JLabel labelErrorDonante;
 private JComboBox<String> cBoxTipoDoc;
 private JComboBox<String> cbDonanteDeOrganos;
 private JComboBox<String> cbSexoCliente;
-private JDateChooser tfFechaNacTitular;
+private JDateChooser dcFechaNacTitular;
 private JComboBox<String> cbGrupoSanguineo;
 
 private ConductorDTO conductorDTO = new ConductorDTO();
@@ -83,10 +85,9 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 	panelDireccion_1.setBounds(41, 69, 887, 481);
 	add(panelDireccion_1);
 	
-	tfFechaNacTitular = new JDateChooser();
-	tfFechaNacTitular.setDateFormatString("dd/mm/yyyy");
-	tfFechaNacTitular.setBounds(673, 214, 147, 20);
-	panelDireccion_1.add(tfFechaNacTitular);
+	dcFechaNacTitular = new JDateChooser();
+	dcFechaNacTitular.setBounds(673, 214, 147, 20);
+	panelDireccion_1.add(dcFechaNacTitular);
 	
 	JLabel txtNombre = new JLabel("Nombre Completo (*)");
 	txtNombre.setBounds(60, 41, 142, 14);
@@ -287,7 +288,7 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 			else if (!validarNumerosCalle(txtNumCalleTitular.getText().trim())) {
 				labelErrorDireccion.setText("Por favor, Ingrese correctamente el Numero");
 			}
-			else if(tfFechaNacTitular.getDate()==null) { 
+			else if(dcFechaNacTitular.getDate()==null) { 
 				labelErrorFechNac.setText("Por favor, ingrese la Fecha de Nacimiento del titular");
 			}
 			else if (cbGrupoSanguineo.getSelectedItem().equals("-Seleccione-") ) {
@@ -301,7 +302,7 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 			}
 			else {
 				try {
-					cargarConductorDTO();
+					cargarConductorDTO(admin);
 					GestorPersona.crearConductor(conductorDTO);
 					VentanaAdmin.mensajeExito("Conductor creado correctamente", "ÉXITO");
 					limpiarPantalla();
@@ -352,19 +353,30 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 		labelErrorSexo.setText("");
 	} 
 
-	protected void cargarConductorDTO() throws Exception {
+	protected void cargarConductorDTO(AdministradorDTO admin) throws Exception {
 		conductorDTO.setNombre(txtNombreTitular.getText());
 		conductorDTO.setApellido(txtApellidoTitular.getText());
 		conductorDTO.setTipoDoc(cBoxTipoDoc.getSelectedIndex());
 		conductorDTO.setDni(Integer.parseInt(txtNumDocTitular.getText()));
 		conductorDTO.setCalle(txtCalleTitular.getText());
 		conductorDTO.setNumCalle(Integer.parseInt(txtNumCalleTitular.getText()));
-		conductorDTO.setPiso(Integer.parseInt(txtPisoTitular.getText()));
+		if(txtPisoTitular.getText().isEmpty() || txtPisoTitular.getText().equals("")) {
+			conductorDTO.setPiso(-1);
+		}else {
+			conductorDTO.setPiso(Integer.parseInt(txtPisoTitular.getText()));
+		}
+		if(txtDptoTitular.getText().isEmpty()) {
+			conductorDTO.setDpto("");
+		}else{
+			conductorDTO.setDpto(txtDptoTitular.getText());
+		}
 		conductorDTO.setDpto(txtDptoTitular.getText());
-		conductorDTO.setFechaNacimiento(LocalDate.parse(tfFechaNacTitular.getDateFormatString()));
+		conductorDTO.setFechaNacimiento(dcFechaNacTitular.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		conductorDTO.setGrupoSang(cbGrupoSanguineo.getSelectedIndex());
 		conductorDTO.setEsDonante(esDonante());
 		conductorDTO.setSexo(cbSexoCliente.getSelectedIndex());
+		conductorDTO.setNombreUsuAdmin(admin.getNombre());
+		conductorDTO.setApellidoUsuAdmin(admin.getApellido());
 	}
 
 	private Boolean esDonante() {
@@ -415,6 +427,7 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 		cbGrupoSanguineo.setSelectedIndex(0);
 		cbSexoCliente.setSelectedIndex(0);
 		cBoxTipoDoc.setSelectedIndex(0);
+		dcFechaNacTitular.setDate(Date.valueOf(LocalDate.now()));
 	}
 }
 

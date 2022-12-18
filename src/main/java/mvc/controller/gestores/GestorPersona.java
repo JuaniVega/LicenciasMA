@@ -75,6 +75,7 @@ public class GestorPersona {
 	
 	public static void crearConductor(ConductorDTO conductorDTO) throws Exception{
 		Conductor conductor = new Conductor();
+		String usuAdmin;
 		
 		conductor.setNombre(conductorDTO.getNombre());
 		conductor.setApellido(conductorDTO.getApellido());
@@ -89,6 +90,8 @@ public class GestorPersona {
 		conductor.setDonaOrganos(conductorDTO.getEsDonante());
 		conductor.setSexo(conductorDTO.getSexo());
 		
-		PersonaDao.newConductor(conductor);
+		usuAdmin = conductorDTO.getUsuAdmin();
+		
+		PersonaDao.newConductor(conductor, usuAdmin);
 	}
 }
