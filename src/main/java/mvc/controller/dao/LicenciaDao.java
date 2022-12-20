@@ -80,7 +80,7 @@ public class LicenciaDao {
 	public static List<Licencia> getLicenciaxDni(int dni) throws Exception {
 		ArrayList<Licencia> licencia = new ArrayList<Licencia>();
 		try {
-			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones from public.licencia l where id_persona ="+dni+";";                            
+			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones from public.licencia l where l.id_persona ="+dni+";";                            
 			ResultSet rs = ConexionP.consultarDatos(query);
 			System.out.println("llego a DAO" + rs);
 			while(rs.next()) {
@@ -89,6 +89,7 @@ public class LicenciaDao {
 			}
 		}
 		catch(Exception ex) {
+			System.out.println("llego al Licencia DAO, y entro en la ex" + ex);
 			throw ex;
 		}
 		return licencia;

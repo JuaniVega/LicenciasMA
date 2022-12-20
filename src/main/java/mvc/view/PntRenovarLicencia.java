@@ -326,12 +326,12 @@ public class PntRenovarLicencia extends JPanel {
 	
 
 
-	JTextPane txtpnClaseLicencia = new JTextPane();
-	txtpnClaseLicencia.setText("Clase (*)");
-	txtpnClaseLicencia.setEditable(false);
-	txtpnClaseLicencia.setBackground(SystemColor.menu);
-	txtpnClaseLicencia.setBounds(239, 275, 59, 20);
-	panelConductor.add(txtpnClaseLicencia);
+	// JTextPane txtpnClaseLicencia = new JTextPane();
+	// txtpnClaseLicencia.setText("Clase (*)");
+	// txtpnClaseLicencia.setEditable(false);
+	// txtpnClaseLicencia.setBackground(SystemColor.menu);
+	// txtpnClaseLicencia.setBounds(239, 275, 59, 20);
+	// panelConductor.add(txtpnClaseLicencia);
 
 	
 	JTextPane txtpnObservaciones = new JTextPane();
@@ -425,7 +425,9 @@ public class PntRenovarLicencia extends JPanel {
 						// Seleccionar la licencia a renovar
 						
 						List<Licencia> licenciasConductor = new ArrayList<Licencia>();
-						licenciasConductor = GestorLicencia.obtenerLicenciaxDni(conductor.get(0).getId());
+						licenciasConductor = GestorLicencia.obtenerLicenciaxDni(dni);
+						// licenciasConductor = GestorLicencia.obtenerLicenciaxDni(conductor.get(0).getId());
+						
 						//pedir seleccionar una licencia a renovar
 						//habilitar los checkbox de las licencia que puede renovar
 						//habilitarPanelLicencias(licencia)
@@ -464,6 +466,7 @@ public class PntRenovarLicencia extends JPanel {
 
 			if(LicenciaRenovada){
 				//redirigir al impimir licencia
+				//VentanaAdmin.cambiarPantalla(pntImprimirLicencia, n_pntImprimirLicencia);
 				
 			}
 			else{
