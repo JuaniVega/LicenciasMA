@@ -84,7 +84,6 @@ public class LicenciaDao {
 		try {
 			String query = "select l.id, l.id_persona, l.id_tipo_licencia, l.costo, l.fecha_emision, l.fecha_vigencia, l.es_copia, l.estado_licencia, l.observaciones, l.num_copia from public.licencia l where id_persona ="+dni+";";                            
 			ResultSet rs = ConexionP.consultarDatos(query);
-			System.out.println("llego a DAO" + rs);
 			while(rs.next()) {
 				Licencia lic = new Licencia(rs.getInt("id"), rs.getInt("id_persona"), rs.getInt("id_tipo_licencia"), rs.getInt("costo"), rs.getDate("fecha_emision").toLocalDate(), rs.getDate("fecha_vigencia").toLocalDate(), rs.getBoolean("es_copia"), rs.getBoolean("estado_licencia"), rs.getString("observaciones"), rs.getInt("num_copia"));
 				licencia.add(lic);
@@ -182,7 +181,7 @@ public class LicenciaDao {
 
 	public static void newLicencia(Licencia licencia) {
 		
-		String query= "INSERT INTO public.licencia (id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia, usuario, observaciones, num_copia) VALUES("+licencia.getIdPersona()+", "+licencia.getIdTipoLicencia()+", "+licencia.getCosto()+", '"+licencia.getFechaEmision()+"', '"+licencia.getFechaVigencia()+"', "+licencia.getEsCopia()+", "+licencia.getEstaVigente()+", 'aaa', '"+licencia.getObservaciones()+".', "+licencia.getNumCopia()+");";
+		String query= "INSERT INTO public.licencia (id_persona, id_tipo_licencia, costo, fecha_emision, fecha_vigencia, es_copia, estado_licencia, usuario, observaciones, num_copia) VALUES("+licencia.getIdPersona()+", "+licencia.getIdTipoLicencia()+", "+licencia.getCosto()+", '"+licencia.getFechaEmision()+"', '"+licencia.getFechaVigencia()+"', "+licencia.getEsCopia()+", "+licencia.getEstaVigente()+", 'aaa', '"+licencia.getObservaciones()+" ', "+licencia.getNumCopia()+");";
 		
 		Connection con = ConexionP.conectarDB();
 		try {

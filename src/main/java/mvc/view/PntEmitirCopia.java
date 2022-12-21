@@ -66,10 +66,10 @@ public class PntEmitirCopia extends JPanel {
 	private JButton btnEmitirCopia = new JButton("Emitir copia");
 	private JButton btnImprimirLicencia;
 	
-	private ArrayList<String> licenciasSelec = new ArrayList<String>();
-	private ArrayList<Integer> costosLicencias = new ArrayList<Integer>();
-	private ArrayList<Licencia> licenciasObtenidas = new ArrayList<Licencia>();
-	private ArrayList<JCheckBox> licenciasObtenidasChBx = new ArrayList<JCheckBox>();
+	private ArrayList<String> licenciasSelec;
+	private ArrayList<Integer> costosLicencias;
+	private ArrayList<Licencia> licenciasObtenidas;
+	private ArrayList<JCheckBox> licenciasObtenidasChBx;
 	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
@@ -78,6 +78,7 @@ public class PntEmitirCopia extends JPanel {
 	private JTextField tfCopiaNum;
 	
 	int valCopiaNueva = 0;
+	LocalDate fechaVig;
 	
 	public PntEmitirCopia() {
 	}
@@ -222,7 +223,7 @@ public class PntEmitirCopia extends JPanel {
 	taObservaciones.setEditable(false);
 	taObservaciones.setEnabled(false);
 	taObservaciones.setToolTipText("Observaciones");
-	taObservaciones.setBounds(585, 249, 275, 147);
+	taObservaciones.setBounds(585, 221, 275, 192);
 	panelConductor.add(taObservaciones);
 	
 	JTextPane txtpnSexoCliente = new JTextPane();
@@ -450,7 +451,7 @@ public class PntEmitirCopia extends JPanel {
 					limpiarPantalla();
 			}		}
 	});
-	btnImprimirLicencia.setBounds(810, 602, 118, 37);
+	btnImprimirLicencia.setBounds(786, 602, 142, 37);
 	add(btnImprimirLicencia);
 	
 	btnEmitirCopia.addActionListener(new ActionListener() {
@@ -472,7 +473,7 @@ public class PntEmitirCopia extends JPanel {
 		}
 	});
 	btnEmitirCopia.setEnabled(false);
-	btnEmitirCopia.setBounds(513, 602, 232, 37);
+	btnEmitirCopia.setBounds(499, 602, 232, 37);
 	add(btnEmitirCopia);
 	
 	JButton btnBuscarTitular = new JButton("Buscar titular");
@@ -489,11 +490,20 @@ public class PntEmitirCopia extends JPanel {
 					licencia = GestorLicencia.obtenerLicenciaVigentexDni(dni);
 					
 					limpiarPantalla();
+					licenciasObtenidasChBx = new ArrayList<JCheckBox>();
+					licenciasObtenidas = new ArrayList<Licencia>();
+					licenciasSelec = new ArrayList<String>();
+					costosLicencias = new ArrayList<Integer>();
+					
 					if(conductor.size()==0) {
 						VentanaAdmin.mensajeError("Persona no encontrada", "ERROR");
-					}else {						
-						cargarDatosenCamposConductor(conductor.get(0));
-						cargarCheckBoxLicencia(licencia);
+					}else {
+						if(licencia.size()>0) {
+							cargarDatosenCamposConductor(conductor.get(0));
+							cargarCheckBoxLicencia(licencia);
+						}else {
+							VentanaAdmin.mensajeError("No existen licencias vigentes para este DNI", "ERROR");
+						}
 					}
 					
 				} catch (Exception e) {
@@ -503,7 +513,7 @@ public class PntEmitirCopia extends JPanel {
 			
 		}
 	});
-	btnBuscarTitular.setBounds(231, 602, 232, 37);
+	btnBuscarTitular.setBounds(217, 602, 232, 37);
 	add(btnBuscarTitular);
 	
 	try {
@@ -568,6 +578,7 @@ public class PntEmitirCopia extends JPanel {
 				taObservaciones.setText(licenciasObtenidas.get(i).getObservaciones());
 				tfCopiaNum.setText(licenciasObtenidas.get(i).getNumCopia().toString());
 				valCopiaNueva = licenciasObtenidas.get(i).getNumCopia()+1;
+				fechaVig = licenciasObtenidas.get(i).getFechaVigencia();
 			}
 		}
 		
@@ -592,6 +603,7 @@ public class PntEmitirCopia extends JPanel {
 		taObservaciones.setEnabled(false);
 		lblErrorLicencias.setText("");
 		lblErrorDonantes.setText("");
+		tfCopiaNum.setText("");
 		deshabilitarCheckBox();
 		chbxTipoLicenciaA.setSelected(false);
 		chbxTipoLicenciaB.setSelected(false);
@@ -634,12 +646,16 @@ public class PntEmitirCopia extends JPanel {
 		emitirLicenciaDTO.setEsDonante(esDonante());
 		emitirLicenciaDTO.setCalle(tfCalleCliente.getText());
 		emitirLicenciaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
-		emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+		if(tfPisoCliente.getText().isEmpty() || tfPisoCliente.getText().equals("")) {
+			emitirLicenciaDTO.setPiso(-1);
+		}else {
+			emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+		}
 		emitirLicenciaDTO.setDpto(tfDptoCliente.getText());
 		emitirLicenciaDTO.setObservaciones(taObservaciones.getText());
 		emitirLicenciaDTO.setLicenciasSeleccionadas(licenciasSelec);
 		emitirLicenciaDTO.setFechaEmision(LocalDate.now());
-		emitirLicenciaDTO.setFechaVigencia(GestorLicencia.calculoVigencia(emitirLicenciaDTO.getFechaNacimiento(), emitirLicenciaDTO.getNumDoc()));
+		emitirLicenciaDTO.setFechaVigencia(fechaVig);
 		emitirLicenciaDTO.setEsCopia(false);
 		emitirLicenciaDTO.setEstaVigente(true);
 		emitirLicenciaDTO.setNumCopia(valCopiaNueva);
@@ -663,7 +679,11 @@ public class PntEmitirCopia extends JPanel {
 		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
 		tfCalleCliente.setText(conductor.getDireccion());
 		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
-		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		if(conductor.getPiso()!=-1) {
+			tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		}else {
+			tfPisoCliente.setText("");
+		}
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
@@ -709,16 +729,20 @@ public class PntEmitirCopia extends JPanel {
 
 	private boolean esDniValido(String val) {
 		int dni=0;
-		if(!val.equals(null) && Integer.parseInt(val) > 0 ) {
-			if (val.length() <= 8 && val.length() >= 7) {
-				dni= Integer.parseInt(val);
-				return true;
+		if(val != null) {
+			if(Integer.parseInt(val) > 0 ) {
+				if (val.length() <= 8 && val.length() >= 7) {
+					dni= Integer.parseInt(val);
+					return true;
+				}else {
+					VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+					return false;
+				}
 			}else {
-				VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+				VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 			return false;
 		}
 		

@@ -147,6 +147,7 @@ public class GestorLicencia {
 			Integer mes=fechaActual.getMonth().getValue()+difMeses;
 			if(mes>12) {
 				mes=mes-12;
+				anio=anio+1;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
 			fechaVigencia = LocalDate.of(anio, mes, dia);
@@ -156,6 +157,7 @@ public class GestorLicencia {
 			Integer mes=fechaActual.getMonth().getValue()+difMeses;
 			if(mes>12) {
 				mes=mes-12;
+				anio=anio+1;
 			}
 			Integer dia=fechaNacimiento.getDayOfMonth();
 			fechaVigencia = LocalDate.of(anio, mes, dia);		

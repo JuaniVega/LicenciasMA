@@ -452,9 +452,15 @@ public class PntImprimirLicencia extends JPanel implements Printable{
 			}
 
 			//Licencia Frente
+			String piso;
 			this.apellidoLbl.setText(datosDTO.getApellidoCond());
 			this.nombreLbl.setText(datosDTO.getNombreCond());
-			this.domicilioLbl.setText(datosDTO.getCalle() + " " + datosDTO.getNumCalle() + " " + datosDTO.getPiso() + " " +  datosDTO.getDpto());
+			if(datosDTO.getPiso()!=-1) {
+				piso = Integer.toString(datosDTO.getPiso());
+			}else {
+				piso = "";
+			}
+			this.domicilioLbl.setText(datosDTO.getCalle() + " " + datosDTO.getNumCalle() + " " + piso + " " +  datosDTO.getDpto());
 			this.fechaNacLbl.setText(datosDTO.getFechaNacimiento().toString());
 			this.fechaVencimLbl.setText(datosDTO.getFechaVigencia().toString());
 

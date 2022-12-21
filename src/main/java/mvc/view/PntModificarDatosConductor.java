@@ -551,16 +551,20 @@ public class PntModificarDatosConductor extends JPanel {
 
 	private boolean esDniValido(String val) {
 		int dni=0;
-		if(!val.equals(null) && Integer.parseInt(val) > 0 ) {
-			if (val.length() <= 8 && val.length() >= 7) {
-				dni= Integer.parseInt(val);
-				return true;
+		if(val != null) {
+			if(Integer.parseInt(val) > 0 ) {
+				if (val.length() <= 8 && val.length() >= 7) {
+					dni= Integer.parseInt(val);
+					return true;
+				}else {
+					VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+					return false;
+				}
 			}else {
-				VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+				VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 			return false;
 		}
 		

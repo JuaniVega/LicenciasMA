@@ -419,7 +419,7 @@ public class PntCrearLicencia extends JPanel {
 	
 	lblErrorLicencias = new JLabel("");
 	lblErrorLicencias.setForeground(Color.RED);
-	lblErrorLicencias.setBounds(28, 348, 388, 25);
+	lblErrorLicencias.setBounds(28, 348, 529, 25);
 	panelConductor.add(lblErrorLicencias);
 	
 	lblErrorDonantes = new JLabel("");
@@ -693,11 +693,15 @@ public class PntCrearLicencia extends JPanel {
 	private int calcularAntiguedadLicB(int dni, LocalDate fechaActual) throws Exception {
 		int aniosAntiguedad=0;
 		List<Licencia> licencia= GestorLicencia.obtenerLicenciaxDnixTipo(dni, 2); 
-		LocalDate fechaEmision=licencia.get(0).getFechaEmision();
-		
-		Period periodAniosEmision = Period.between(fechaEmision, fechaActual);
-		aniosAntiguedad= periodAniosEmision.getYears();
-		return aniosAntiguedad;
+		if (licencia.size()>0) {
+			LocalDate fechaEmision=licencia.get(0).getFechaEmision();
+			
+			Period periodAniosEmision = Period.between(fechaEmision, fechaActual);
+			aniosAntiguedad= periodAniosEmision.getYears();
+			return aniosAntiguedad;
+		}else {
+			return aniosAntiguedad;
+		}
 	}
 
 
@@ -766,7 +770,11 @@ public class PntCrearLicencia extends JPanel {
 		emitirLicenciaDTO.setEsDonante(esDonante());
 		emitirLicenciaDTO.setCalle(tfCalleCliente.getText());
 		emitirLicenciaDTO.setNumCalle(Integer.parseInt(tfNumDirCliente.getText()));
-		emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+		if(tfPisoCliente.getText().isEmpty() || tfPisoCliente.getText().equals("")) {
+			emitirLicenciaDTO.setPiso(-1);
+		}else {
+			emitirLicenciaDTO.setPiso(Integer.parseInt(tfPisoCliente.getText()));
+		}
 		emitirLicenciaDTO.setDpto(tfDptoCliente.getText());
 		emitirLicenciaDTO.setObservaciones(taObservaciones.getText());
 		emitirLicenciaDTO.setLicenciasSeleccionadas(licenciasSelec);
@@ -802,7 +810,11 @@ public class PntCrearLicencia extends JPanel {
 		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
 		tfCalleCliente.setText(conductor.getDireccion());
 		tfNumDirCliente.setText(Integer.toString(conductor.getNumDir()));
-		tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		if(conductor.getPiso()!=-1) {
+			tfPisoCliente.setText(Integer.toString(conductor.getPiso()));
+		}else {
+			tfPisoCliente.setText("");
+		}
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
@@ -844,18 +856,21 @@ public class PntCrearLicencia extends JPanel {
 
 	private boolean esDniValido(String val) {
 		int dni=0;
-		if(!val.equals(null) && Integer.parseInt(val) > 0 ) {
-			if (val.length() <= 8 && val.length() >= 7) {
-				dni= Integer.parseInt(val);
-				return true;
+		if(val != null) {
+			if(Integer.parseInt(val) > 0 ) {
+				if (val.length() <= 8 && val.length() >= 7) {
+					dni= Integer.parseInt(val);
+					return true;
+				}else {
+					VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+					return false;
+				}
 			}else {
-				VentanaAdmin.mensajeError("La longitud del documento no es correcta", "ERROR");
+				VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 				return false;
 			}
 		}else {
-			VentanaAdmin.mensajeError("El valor ingresado es incorrecto.\nIngrese un valor válido.", "ERROR");
 			return false;
 		}
-		
 	}
 }
