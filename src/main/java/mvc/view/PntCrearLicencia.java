@@ -74,7 +74,7 @@ public class PntCrearLicencia extends JPanel {
 	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
 	
 	private boolean licenciasConCDE=false;
 	
@@ -472,7 +472,7 @@ public class PntCrearLicencia extends JPanel {
 	tfFechaEmision.setEditable(false);
 	tfFechaEmision.setColumns(10);
 	tfFechaEmision.setBounds(147, 76, 275, 20);
-	tfFechaEmision.setText(LocalDate.now().toString());
+	tfFechaEmision.setText(LocalDate.now().format(formatter).toString());
 	panelAdmin.add(tfFechaEmision);
 	
 	JButton btnAtras = new JButton("Atr\u00E1s");
@@ -818,7 +818,7 @@ public class PntCrearLicencia extends JPanel {
 		tfDptoCliente.setText(conductor.getDpto());
 		cbGrupoSanguineoConductor.setSelectedIndex(conductor.getTipoGrupoSanguineo());
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
-		tfFechaEmision.setText(LocalDate.now().toString());
+		tfFechaEmision.setText(LocalDate.now().format(formatter).toString());
 
 		tfFechaNacimConductor.setText(String.valueOf(conductor.getFechaNacimiento().format(formatter)));
 	}

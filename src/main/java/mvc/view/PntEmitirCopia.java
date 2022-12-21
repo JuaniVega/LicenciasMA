@@ -73,7 +73,7 @@ public class PntEmitirCopia extends JPanel {
 	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
 	
 	private JTextField tfCopiaNum;
 	

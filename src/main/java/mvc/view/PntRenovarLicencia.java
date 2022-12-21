@@ -72,8 +72,8 @@ public class PntRenovarLicencia extends JPanel {
 	private ArrayList<JCheckBox> licenciasObtenidasChBx;
 	private ArrayList<JCheckBox> licenciasCheckBox = new ArrayList<JCheckBox>();
 	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
-	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
+
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
 	
 	private JTextField tfCopiaNum;
 	private JTextField tfVigencia;

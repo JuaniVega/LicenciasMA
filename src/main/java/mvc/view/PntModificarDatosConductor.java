@@ -68,6 +68,8 @@ public class PntModificarDatosConductor extends JPanel {
 	private JButton btnGuardarCambios;
 	private JDateChooser dcFechaNacim;
 	private int dni;
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
+	private String formatterString = "dd-MM-yyyy";
 	
 	public PntModificarDatosConductor() {
 		
@@ -264,7 +266,7 @@ public class PntModificarDatosConductor extends JPanel {
 	panelConductor.add(cbDonanteDeOrganos);
 	
 	dcFechaNacim = new JDateChooser();
-	dcFechaNacim.setDateFormatString("dd MM yyyy");
+	dcFechaNacim.setDateFormatString(formatterString);
 	dcFechaNacim.setBounds(163, 232, 110, 20);
 	dcFechaNacim.setEnabled(false);
 	panelConductor.add(dcFechaNacim);
@@ -339,7 +341,7 @@ public class PntModificarDatosConductor extends JPanel {
 	tfFechaEmision.setEditable(false);
 	tfFechaEmision.setColumns(10);
 	tfFechaEmision.setBounds(173, 87, 275, 20);
-	tfFechaEmision.setText(LocalDate.now().toString());
+	tfFechaEmision.setText(LocalDate.now().format(formatter).toString());
 	panelAdmin.add(tfFechaEmision);
 	
 	JButton btnCancelar = new JButton("Atr\u00E1s");
@@ -503,7 +505,7 @@ public class PntModificarDatosConductor extends JPanel {
 		cbTipoDocumentoCliente.setSelectedIndex(conductor.getTipoDoc());
 		tfNroDocumentoCliente.setText(Integer.toString(conductor.getDni()));
 		cbSexoCliente.setSelectedIndex(conductor.getCodSexo());
-		tfFechaEmision.setText(LocalDate.now().toString());
+		tfFechaEmision.setText(LocalDate.now().format(formatter).toString());
 		LocalDate fechaNac = conductor.getFechaNacimiento();
 		dcFechaNacim.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		tfCalleCliente.setText(conductor.getDireccion());

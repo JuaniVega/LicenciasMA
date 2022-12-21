@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -64,6 +65,8 @@ private ConductorDTO conductorDTO = new ConductorDTO();
 private JLabel lblSexo;
 private JLabel lblDonanteDeOrganos;
 
+private String formatter = "dd-MM-yyyy";
+
 public PntDarAltaTitularUI() {              
 }
 public PntDarAltaTitularUI(final AdministradorDTO admin) {
@@ -90,6 +93,7 @@ public PntDarAltaTitularUI(final AdministradorDTO admin) {
 	dcFechaNacTitular = new JDateChooser();
 	dcFechaNacTitular.setBounds(673, 229, 147, 20);
 	dcFechaNacTitular.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	dcFechaNacTitular.setDateFormatString(formatter);
 	panelDireccion_1.add(dcFechaNacTitular);
 	
 	JLabel txtNombre = new JLabel("Nombre completo (*)");

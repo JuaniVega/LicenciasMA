@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class PntLicenciaExpirada extends JPanel{
 	
 	public static JTable table;
 	public static DefaultTableModel dm ;
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LL-yyyy");
 	
 	public PntLicenciaExpirada() {
 	}
@@ -128,7 +130,7 @@ public class PntLicenciaExpirada extends JPanel{
 					}
 				}
 				
-				Object[] rowData= {nombre, apellido, licenExp.get(i).getFechaVigencia().toString(), tipoLicencia}; 
+				Object[] rowData= {nombre, apellido, licenExp.get(i).getFechaVigencia().format(formatter).toString(), tipoLicencia}; 
 				dm.addRow(rowData);
 			}
 		}
