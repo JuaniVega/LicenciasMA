@@ -13,6 +13,10 @@ import mvc.controller.dto.AdministradorDTO;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
 
 public class MenuPrincipal extends JPanel{
 	
@@ -25,26 +29,22 @@ public class MenuPrincipal extends JPanel{
 	private JButton btnModificarTitular;
 	private JButton btnRenovarLicencia;
 	private JButton btnSalir;
+	private JPanel panel;
 
 	public MenuPrincipal() {
 		
 	}
 
 	public MenuPrincipal(final AdministradorDTO admin) {
+		setBackground(SystemColor.controlShadow);
 	setLocation(-31, -63);
 	setPreferredSize(new Dimension(980, 650));
 	setLayout(null);
 	
-	txtpnEmitirCopia = new JTextPane();
-	txtpnEmitirCopia.setText("MENÚ");
-	txtpnEmitirCopia.setFont(new Font("Montserrat Light", Font.BOLD, 21));
-	txtpnEmitirCopia.setEditable(false);
-	txtpnEmitirCopia.setBackground(SystemColor.menu);
-	txtpnEmitirCopia.setBounds(428, 30, 80, 37);
-	add(txtpnEmitirCopia);
-	
 	btnEmitirLicencia = new JButton("Emitir licencia");
-	btnEmitirLicencia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnEmitirLicencia.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnEmitirLicencia.setBackground(UIManager.getColor("Button.background"));
+	btnEmitirLicencia.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnEmitirLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			PntCrearLicencia pntCrearLicencia = new PntCrearLicencia(admin);
@@ -55,7 +55,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnEmitirLicencia);
 	
 	btnDarDeAltaTitular = new JButton("Dar de alta titular");
-	btnDarDeAltaTitular.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnDarDeAltaTitular.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnDarDeAltaTitular.setBackground(UIManager.getColor("Button.background"));
+	btnDarDeAltaTitular.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnDarDeAltaTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntDarAltaTitularUI pntDarAltaTitularUI = new PntDarAltaTitularUI(admin);
@@ -66,7 +68,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnDarDeAltaTitular);
 	
 	btnEmitirCopia = new JButton("Emitir copia de licencia");
-	btnEmitirCopia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnEmitirCopia.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnEmitirCopia.setBackground(UIManager.getColor("Button.background"));
+	btnEmitirCopia.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnEmitirCopia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntEmitirCopia pntEmitirCopia = new PntEmitirCopia(admin);
@@ -77,7 +81,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnEmitirCopia);
 	
 	btnLicenciasExpiradas = new JButton("Licencias expiradas");
-	btnLicenciasExpiradas.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnLicenciasExpiradas.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnLicenciasExpiradas.setBackground(UIManager.getColor("Button.background"));
+	btnLicenciasExpiradas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnLicenciasExpiradas.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntLicenciaExpirada pntLicenciaExpirada = new PntLicenciaExpirada(admin);
@@ -88,7 +94,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnLicenciasExpiradas);
 	
 	btnLicenciasVigentes = new JButton("Licencias vigentes");
-	btnLicenciasVigentes.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnLicenciasVigentes.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnLicenciasVigentes.setBackground(UIManager.getColor("Button.background"));
+	btnLicenciasVigentes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnLicenciasVigentes.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntLicenciaVigente pntLicenciaVigente = new PntLicenciaVigente(admin);
@@ -99,7 +107,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnLicenciasVigentes);
 	
 	btnModificarTitular = new JButton("Modificar datos de titular");
-	btnModificarTitular.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnModificarTitular.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnModificarTitular.setBackground(UIManager.getColor("Button.background"));
+	btnModificarTitular.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnModificarTitular.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntModificarDatosConductor pntModificarDatosConductor = new PntModificarDatosConductor(admin);
@@ -110,7 +120,9 @@ public class MenuPrincipal extends JPanel{
 	add(btnModificarTitular);
 	
 	btnRenovarLicencia = new JButton("Renovar licencia");
-	btnRenovarLicencia.setFont(new Font("Montserrat Light", Font.BOLD, 11));
+	btnRenovarLicencia.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnRenovarLicencia.setBackground(UIManager.getColor("Button.background"));
+	btnRenovarLicencia.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	btnRenovarLicencia.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			PntRenovarLicencia pntRenovarLicencia = new PntRenovarLicencia(admin);
@@ -121,6 +133,8 @@ public class MenuPrincipal extends JPanel{
 	add(btnRenovarLicencia);
 	
 	btnSalir = new JButton("Salir");
+	btnSalir.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnSalir.setBackground(UIManager.getColor("Button.background"));
 	btnSalir.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnSalir.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -131,6 +145,8 @@ public class MenuPrincipal extends JPanel{
 	add(btnSalir);
 	
 	JButton btnCerrarSesin = new JButton("Cerrar sesi\u00F3n");
+	btnCerrarSesin.setBorder(new LineBorder(new Color(0, 0, 0)));
+	btnCerrarSesin.setBackground(UIManager.getColor("Button.background"));
 	btnCerrarSesin.setFont(new Font("Montserrat Light", Font.BOLD, 11));
 	btnCerrarSesin.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -139,6 +155,21 @@ public class MenuPrincipal extends JPanel{
 	});
 	btnCerrarSesin.setBounds(732, 604, 139, 23);
 	add(btnCerrarSesin);
+	
+	panel = new JPanel();
+	panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+	panel.setBackground(Color.LIGHT_GRAY);
+	panel.setBounds(214, 11, 515, 549);
+	add(panel);
+	panel.setLayout(null);
+	
+	txtpnEmitirCopia = new JTextPane();
+	txtpnEmitirCopia.setBounds(218, 21, 79, 39);
+	panel.add(txtpnEmitirCopia);
+	txtpnEmitirCopia.setText("MENÚ");
+	txtpnEmitirCopia.setFont(new Font("Tahoma", Font.PLAIN, 27));
+	txtpnEmitirCopia.setEditable(false);
+	txtpnEmitirCopia.setBackground(Color.LIGHT_GRAY);
 		
 	}
 }
