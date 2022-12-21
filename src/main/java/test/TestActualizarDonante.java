@@ -9,10 +9,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import mvc.controller.dao.PersonaDao;
+import mvc.controller.dto.EmitirLicenciaDTO;
+import mvc.controller.gestores.GestorPersona;
 import mvc.model.Persona;
 
 
 public class TestActualizarDonante {
+	
+	private EmitirLicenciaDTO emitirLicenciaDTO = new EmitirLicenciaDTO();
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
@@ -21,22 +25,25 @@ public class TestActualizarDonante {
 	@Test
 	public void test() throws Exception {
 
-        PersonaDao persona = new PersonaDao();
         Integer dni = 41216693;
 
        List<Persona> list = new ArrayList<Persona>();
-        //boolean b= false;
-        list= persona.getPersonaxEsDonante(true);
+        list= GestorPersona.obtenerPersonaxEsDonante(true);
 
         for(int f=0;f<list.size();f++){
             if(list.get(f).getDni().equals(dni)){
+            	cargarEmitirLicenciaDTO(list.get(f).getDni(), false);
 
-                persona.updateConductorDonante(list.get(f).getDni(), false);
+                GestorPersona.actualizarConductorDonante(emitirLicenciaDTO);
             }
         }
-        PersonaDao personaActualizada = new PersonaDao();
-        assertEquals(personaActualizada.getConductorxDni(dni).get(0).getDonaOrganos(), false); 
+        assertEquals(GestorPersona.obtenerConductorxDni(dni).get(0).getDonaOrganos(), false); 
 
     }
+
+	private void cargarEmitirLicenciaDTO(Integer dni, boolean b) {
+		emitirLicenciaDTO.setNumDoc(dni);
+		emitirLicenciaDTO.setEsDonante(b);
+	}
 
 }

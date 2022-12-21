@@ -12,7 +12,7 @@ import mvc.controller.gestores.GestorLicencia;
 import mvc.model.Costo;
 
 
-public class Prueba {
+public class TestValidarCosto {
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
@@ -26,9 +26,9 @@ public class Prueba {
 		int anio = 5;
 		List<Costo> list = new ArrayList<Costo>();
 		list= licencia.getCostoxClasexAnio(clase, anio);
-		Integer i= list.get(0).getCosto();
+		Integer costo= list.get(0).getCosto();
 		Integer a= 20; 
-		assertEquals(a, i); 
+		assertEquals(a, costo); 
 
 	}
 
