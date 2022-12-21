@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import mvc.controller.dto.ConductorDTO;
 import mvc.model.Administrativo;
 import mvc.model.Conductor;
 import mvc.model.Persona;
@@ -18,6 +19,70 @@ public class PersonaDao {
 		ArrayList<Persona> persona = new ArrayList<Persona>();
 		try {
 			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.dni="+dni+";";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxNombre(String nombre) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.nombre='"+nombre+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxApellido(String apellido) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.apellido='"+apellido+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxGrupoSanguineo(int grupoSang) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.conductor c on p.dni = c.dni where c.grupo_sanguineo ="+grupoSang+";";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
+	
+	public static List<Persona> getPersonaxEsDonante(boolean esDonante) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.conductor c on p.dni = c.dni where c.dona_organos  ="+esDonante+";";   
 			ResultSet rs = ConexionP.consultarDatos(query);
 			while(rs.next()) {
 				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
@@ -61,6 +126,22 @@ public class PersonaDao {
 		}
 		return administrativo;
 	}
+
+	public static List<Persona> login(String usu, String cont) throws Exception {
+		ArrayList<Persona> persona = new ArrayList<Persona>();
+		try {
+			String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p inner join public.administrativo a on p.dni = a.dni where a.email='"+usu+"' and a.pass='"+cont+"';";   
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				Persona person = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				persona.add(person);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return persona;
+	}
 	
 	public static List<TipoDocumento> getTiposDocumentos() throws Exception {
 		List<TipoDocumento> tipoDoc = new ArrayList<TipoDocumento>();
@@ -78,6 +159,21 @@ public class PersonaDao {
 		return tipoDoc;
 	}
 	
+	public static TipoDocumento getTipoDocumento(int idTipoDoc) throws Exception {
+		TipoDocumento tipoDocumento = new TipoDocumento();
+		try {
+			String query = "select td.id, td.tipo_doc, td.descripcion from public.tipo_documento td where td.id ="+idTipoDoc+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoDocumento = new TipoDocumento(rs.getInt("id"),rs.getString("tipo_doc"), rs.getString("descripcion"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoDocumento;
+	}
+	
 	public static List<TipoGrupoSanguineo> getTiposGrupoSanguineos() throws Exception {
 		List<TipoGrupoSanguineo> tipoGrupSang = new ArrayList<TipoGrupoSanguineo>();
 		try {
@@ -92,6 +188,40 @@ public class PersonaDao {
 			throw ex;
 		}
 		return tipoGrupSang;
+	}
+
+	public static TipoGrupoSanguineo getTipoGrupoSanguineo(int idTipoGrupSang) throws Exception {
+		TipoGrupoSanguineo tipoGrupSang = new TipoGrupoSanguineo();
+		try {
+			String query = "select tgs.id, tgs.tipo_grupo_sanguineo from public.tipo_grupo_sanguineo tgs where tgs.id ="+idTipoGrupSang+";";                            
+			ResultSet rs = ConexionP.consultarDatos(query);
+			while(rs.next()) {
+				tipoGrupSang = new TipoGrupoSanguineo(rs.getInt("id"),rs.getString("tipo_grupo_sanguineo"));
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return tipoGrupSang;
+	}
+	
+	public static List<Persona> getPersonasxListaDni(List<Integer> listaDniLicencia) throws Exception {
+		List<Persona> listaPersonas = new ArrayList<Persona>();
+		Persona persona = new Persona();
+		try {
+			for(int i=0; i<listaDniLicencia.size();i++) {
+				String query = "select p.id, p.dni, p.tipo_doc, p.nombre, p.apellido, p.fecha_nacimiento, p.sexo from public.persona p where p.dni="+listaDniLicencia.get(i)+";";                            
+				ResultSet rs = ConexionP.consultarDatos(query);
+				while(rs.next()) {
+					persona = new Persona(rs.getInt("id"), rs.getInt("dni"), rs.getInt("tipo_doc"), rs.getString("nombre"), rs.getString("apellido"), rs.getDate("fecha_nacimiento").toLocalDate(), rs.getString("sexo"));
+				}
+				listaPersonas.add(persona);
+			}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		return listaPersonas;
 	}
 	
 	public static void updateConductorDonante (Integer doc, boolean esDonante) {
@@ -117,5 +247,56 @@ public class PersonaDao {
 				}
 		}
 		
+	}
+	public static void updateDatosConductor(ConductorDTO personaDTO, int dni) {
+		String query= "update public.persona set tipo_doc="+personaDTO.getTipoDoc()+", nombre='"+personaDTO.getNombre()+"', apellido='"+personaDTO.getApellido()+"', fecha_nacimiento='"+personaDTO.getFechaNacimiento()+"', sexo='"+personaDTO.getCodSexo()+"' where dni ="+dni+";";
+		String query2= "update public.conductor set direccion='"+personaDTO.getCalle()+"', grupo_sanguineo="+personaDTO.getGrupoSang()+", dona_organos="+personaDTO.getEsDonante()+", num_dir="+personaDTO.getNumCalle()+", departamento='"+personaDTO.getDpto()+"', piso="+personaDTO.getPiso()+" where dni ="+dni+";";
+		
+		Connection con = ConexionP.conectarDB();
+		try {
+			//Comienza transacci�n
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			con.createStatement().executeUpdate(query2);
+			
+			con.commit();
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
+		
+	}
+
+	public static void newConductor(Conductor conductor, String usuAdmin) {
+		
+		String query= "INSERT INTO public.persona (tipo_doc, dni, nombre, apellido, fecha_nacimiento, usuario, sexo) VALUES("+conductor.getTipoDoc()+", "+conductor.getDni()+", '"+conductor.getNombre()+"', '"+conductor.getApellido()+"', '"+conductor.getFechaNacimiento()+"', '"+usuAdmin+"', '"+conductor.getSexo()+"');";
+		String query2= "INSERT INTO public.conductor (dni, direccion, grupo_sanguineo, dona_organos, num_dir, departamento, piso, usuario) VALUES("+conductor.getDni()+", '"+conductor.getDireccion()+"', "+conductor.getTipoGrupoSanguineo()+", "+conductor.getDonaOrganos()+", "+conductor.getNumDir()+", '"+conductor.getDpto()+"', "+conductor.getPiso()+", '"+usuAdmin+"');";
+		
+		Connection con = ConexionP.conectarDB();
+		try {
+			//Comienza transacci�n
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			con.createStatement().executeUpdate(query2);
+			
+			con.commit();
+		}
+		catch (Exception e) {
+		System.err.println("ERROR: " + e.getMessage());
+		try {
+			//deshace todos los cambios realizados en los datos
+			con.rollback();
+			} catch (SQLException ex1) {
+				System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+				}
+		}
 	}
 }

@@ -44,6 +44,15 @@ public class Conductor extends Persona {
 	public Boolean getDonaOrganos() {
 		return donaOrganos;
 	}
+	
+	public Integer getCodDonaOrganos() {
+		if(donaOrganos==true) {
+			return 1;
+		}else if(donaOrganos==false) {
+			return 2;
+		}
+		return 0;
+	}
 
 	public void setDonaOrganos(Boolean donaOrganos) {
 		this.donaOrganos = donaOrganos;

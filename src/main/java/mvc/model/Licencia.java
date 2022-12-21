@@ -1,6 +1,9 @@
 package mvc.model;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import mvc.controller.gestores.GestorLicencia;
 
 public class Licencia {
 	
@@ -13,13 +16,14 @@ public class Licencia {
 	private Boolean esCopia;
 	private Boolean estaVigente;
 	private String observaciones;
+	private Integer numCopia;
 	
 	public Licencia() {
 		super();
 	}
 
 	public Licencia(Integer idLicencia, Integer idPersona, Integer idTipoLicencia, Integer costo,
-			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente, String observaciones) {
+			LocalDate fechaEmision, LocalDate fechaVigencia, Boolean esCopia, Boolean estaVigente, String observaciones, Integer numCopia) {
 		super();
 		this.idLicencia 	= idLicencia;
 		this.idPersona 		= idPersona;
@@ -30,6 +34,7 @@ public class Licencia {
 		this.esCopia 		= esCopia;
 		this.estaVigente 	= estaVigente;
 		this.observaciones	= observaciones;
+		this.numCopia 		= numCopia;
 	}
 	
 	public Integer getIdLicencia() {
@@ -102,6 +107,26 @@ public class Licencia {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+	
+	public String getStringClaseLicencia(int idClaseLicencia) throws Exception {
+		List<TipoLicencia> licencias = GestorLicencia.obtenerTiposLicencias();
+		String licencia=null;
+		
+		for(int i=0; i<licencias.size(); i++) {
+			if(licencias.get(i).getId_tipo_licencia()==idClaseLicencia) {
+				licencia=licencias.get(i).getClase();
+			}
+		}
+		return licencia;
+	}
+
+	public Integer getNumCopia() {
+		return numCopia;
+	}
+
+	public void setNumCopia(Integer numCopia) {
+		this.numCopia = numCopia;
 	}
 
 }
